@@ -1,18 +1,16 @@
 import React, { Fragment } from 'react';
 import { render } from 'react-dom';
 import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
-import Root from './containers/Root';
-import { configureStore, history } from './store/configureStore';
+import { createHashHistory } from 'history';
 import './app.global.css';
-
-const store = configureStore();
+import Router from './Router';
 
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
 
 document.addEventListener('DOMContentLoaded', () =>
   render(
     <AppContainer>
-      <Root store={store} history={history} />
+      <Router />
     </AppContainer>,
     document.getElementById('root')
   )
