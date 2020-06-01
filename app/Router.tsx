@@ -5,8 +5,8 @@ import Header from './components/Header';
 
 export default function RouterComponent() {
   return (
-    <Header>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Header>
         <Switch>
           {Routes.map(item => (
             <Route
@@ -16,7 +16,7 @@ export default function RouterComponent() {
             />
           ))}
         </Switch>
-      </BrowserRouter>
-    </Header>
+      </Header>
+    </BrowserRouter>
   );
 }

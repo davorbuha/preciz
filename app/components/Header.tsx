@@ -1,5 +1,7 @@
 import React from 'react';
-
+import {
+  withRouter
+} from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles';
 import SelectMenu from './SelectMenu';
 import { RoutesEnum } from '../routes';
@@ -64,4 +66,4 @@ function Header(p: Props) {
   );
 }
 
-export default Header;
+export default withRouter(Header);
