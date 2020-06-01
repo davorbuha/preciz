@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { render } from 'react-dom';
 import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
-import { createHashHistory } from 'history';
 import './app.global.css';
 import Router from './Router';
 
