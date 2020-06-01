@@ -1,4 +1,5 @@
 import HomeContainer from '../containers/HomeContainer';
+import VoziloContainer from '../containers/MaticniPodaci/Vozilo';
 
 interface Route {
   path: string;
@@ -30,6 +31,10 @@ const Routes: Route[] = [
   {
     path: RoutesEnum.Home,
     component: HomeContainer
+  },
+  {
+    path: RoutesEnum.MaticniPodaciVozilo,
+    component: VoziloContainer
   }
 ];
 
