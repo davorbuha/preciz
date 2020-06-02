@@ -59,11 +59,11 @@ const Routes: Route[] = [
   {
     path: RoutesEnum.MaticniPodaciPrikolica,
     component: PrikolicaContainer
-  }, 
+  },
   {
     path: RoutesEnum.MaticniPodaciRoba,
     component: RobaContainer
-  }, 
+  },
   {
     path: RoutesEnum.MaticniPodaciPartner,
     component: PartnerContainer
@@ -95,11 +95,11 @@ const Routes: Route[] = [
   {
     path: RoutesEnum.PregledZaRobu,
     component: PregledZaRobuContainer
-  }, 
+  },
   {
     path: RoutesEnum.PregledZaKupca,
     component: PregledZaKupcaContainer
-  }, 
+  },
   {
     path: RoutesEnum.ArhiviranjeBaze,
     component: ArhiviranjeBazeContainer

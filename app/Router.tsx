@@ -1,6 +1,5 @@
 import React from 'react';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import { Modal, makeStyles } from '@material-ui/core';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import Routes from './routes';
 import Header from './components/Header';
 import setup from './db/createDatabase';
@@ -28,19 +27,21 @@ export default function RouterComponent() {
     <ContextProvider value={mainContext}>
       <>
         <SetupModal showSetupModal={showSetupModal} />
-          <BrowserRouter>
-        <Header>
-            <Switch>
-              {Routes.map(item => (
+        <HashRouter>
+          <Header />
+          <div>
+            {Routes.map(item => {
+              return (
                 <Route
-                  key={item.path}
+                  exact={item.path === '/' ? true : false}
                   path={item.path}
+                  key={item.path}
                   component={item.component}
                 />
-              ))}
-            </Switch>
-        </Header>
-          </BrowserRouter>
+              );
+            })}
+          </div>
+        </HashRouter>
       </>
     </ContextProvider>
   );

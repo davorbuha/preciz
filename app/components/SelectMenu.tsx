@@ -7,9 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
-import {
-  withRouter
-} from 'react-router-dom'
+import { withRouter } from 'react-router';
+import { History } from 'history';
 import colors from '../styles/colors';
 import useWindowDimensions from '../useDimensions';
 
@@ -21,7 +20,7 @@ interface MenuItemI {
 interface Props {
   title: string;
   menuItems: MenuItemI[];
-  history: any
+  history: History;
 }
 
 function SelectMenu(props: Props) {
@@ -37,11 +36,7 @@ function SelectMenu(props: Props) {
     if (anchorEl.current!.contains(event.target)) {
       return;
     }
-    if (path) {
-      console.log(path)
-      console.log(props)
-      props.history.push(path);
-    }
+    props.history.push(path);
     setOpen(false);
   };
   return (

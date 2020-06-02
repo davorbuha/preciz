@@ -2,7 +2,7 @@ import React from 'react';
 import PartnerScreen from '../../screens/MaticniPodaci/PartnerScreen';
 
 function PartnerContainer() {
-  return < PartnerScreen/>;
+  return <PartnerScreen />;
 }
 
 export default PartnerContainer;
