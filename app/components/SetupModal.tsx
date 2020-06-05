@@ -5,12 +5,37 @@ import { useForm, Controller } from 'react-hook-form';
 import { TextField } from '@material-ui/core';
 import useWindowDimensions from '../useDimensions';
 import colors from '../styles/colors';
+import CompanyDetails from '../types/CompanyDetails';
+import setToSetupDB from '../db/setupDatabaseFunctions';
 
 function renderErrorForField(errors: any, fieldName: string) {
   if (errors[fieldName]) {
-    return <p style={{fontSize: 12, color: 'red'}}>{errors[fieldName].message}</p>;
+    return (
+      <p style={{ fontSize: 12, color: 'red' }}>{errors[fieldName].message}</p>
+    );
   }
   return null;
+}
+
+const fields = {
+  companyName: 'CompanyName',
+  companyAddress: 'CompanyAddress',
+  oib: 'Oib',
+  phone: 'Phone',
+  mail: 'Mail'
+};
+
+function submit(cb: () => voic) {
+  return (maybe: any) => {
+    const companyDetails = new CompanyDetails(
+      maybe[fields.companyName],
+      maybe[fields.companyAddress],
+      maybe[fields.oib],
+      maybe[fields.phone],
+      maybe[fields.mail]
+    );
+    setToSetupDB(companyDetails, cb);
+  };
 }
 
 const useStyles = makeStyles(theme => ({
@@ -24,12 +49,12 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 32,
-    width: ((width / 2) - 32) + 'px',
-    height: ((height / 2)-32) + 'px',
-    top: ((height / 4)-32) + 'px',
-    left: ((width / 4)-32) + 'px'
+    width: `${width / 2 - 32}px`,
+    height: `${height / 2 - 32}px`,
+    top: `${height / 4 - 32}px`,
+    left: `${width / 4 - 32}px`
   }),
-  textfieldWrapperFullWidth:{
+  textfieldWrapperFullWidth: {
     width: '100%'
   },
   textfieldWrapper: {
@@ -39,7 +64,7 @@ const useStyles = makeStyles(theme => ({
   },
   inputRowWrapper: {
     marginTop: '10px',
-    display: "flex",
+    display: 'flex',
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -51,60 +76,59 @@ const useStyles = makeStyles(theme => ({
 
 interface Props {
   showSetupModal: boolean;
+  setShowSetupModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const rules = {
-  CompanyName: {
+  [fields.companyName]: {
     required: true,
     minLength: {
       value: 2,
-      message: "Ime tvrtke je pre kratko"
+      message: 'Ime tvrtke je prekratko'
     },
     maxLength: {
       value: 100,
-      message: "Ime tvrtke je pre dugačko"
+      message: 'Ime tvrtke je predugačko'
     }
   },
-  CompanyAddress: {
+  [fields.companyAddress]: {
     required: true,
     minLength: {
       value: 2,
-      message: "Adresa tvrtke je pre kratka"
+      message: 'Adresa tvrtke je prekratka'
     },
     maxLength: {
       value: 100,
-      message: "Adresa tvrtke je pre dugačka"
+      message: 'Adresa tvrtke je predugačka'
     }
   },
-  Oib: {
+  [fields.oib]: {
     minLength: {
       value: 11,
-      message: "OIB mora sadrzavati 11 znakova"
+      message: 'OIB mora sadrzavati 11 znakova'
     },
     maxLength: {
       value: 11,
-      message: "OIB mora sadrzavati 11 znakova"
+      message: 'OIB mora sadrzavati 11 znakova'
     }
   },
-  Telephone: {
+  [fields.phone]: {
     maxLength: {
       value: 100,
-      message: "Broj Telefona je pre dugacak"
+      message: 'Broj Telefona je predugacak'
     }
   },
-  Email: {
+  [fields.mail]: {
     maxLength: {
       value: 100,
-      message: "Email je pre dugacak"
+      message: 'Email je predugacak'
     }
   }
-}
-
-//Ime tvrtke, adresa, oib, telefon, mail
+};
 
 function SetupModal(props: Props) {
   const { width, height } = useWindowDimensions();
-  const { register, handleSubmit, watch, errors, control } = useForm({
+  const { handleSubmit, errors, control } = useForm({
     mode: 'onChange'
   });
   const classes = useStyles({ width, height });
@@ -120,70 +144,75 @@ function SetupModal(props: Props) {
       <div className={classes.paper}>
         <h1>Unesite podatke firme:</h1>
         <div className={classes.wrapper}>
-        <div className={classes.inputRowWrapper}>
-        <div className={classes.textfieldWrapper}>
-          <Controller
-            rules={rules.CompanyName}
-            as={TextField}
-            name="CompanyName"
-            label="Ime tvrtke"
-            control={control}
-            defaultValue=""
-          />
-          {renderErrorForField(errors, 'CompanyName')}
+          <div className={classes.inputRowWrapper}>
+            <div className={classes.textfieldWrapper}>
+              <Controller
+                rules={rules[fields.companyName]}
+                as={TextField}
+                name={fields.companyName}
+                label="Ime tvrtke"
+                control={control}
+                defaultValue=""
+              />
+              {renderErrorForField(errors, fields.companyName)}
+            </div>
+            <div className={classes.textfieldWrapper}>
+              <Controller
+                rules={rules[fields.companyAddress]}
+                as={TextField}
+                name={fields.companyAddress}
+                label="Adresa"
+                control={control}
+                defaultValue=""
+              />
+              {renderErrorForField(errors, fields.companyAddress)}
+            </div>
+          </div>
+          <div className={classes.inputRowWrapper}>
+            <div className={classes.textfieldWrapper}>
+              <Controller
+                rules={rules[fields.oib]}
+                as={TextField}
+                name={fields.oib}
+                label="OIB"
+                control={control}
+                defaultValue=""
+              />
+              {renderErrorForField(errors, fields.oib)}
+            </div>
+            <div className={classes.textfieldWrapper}>
+              <Controller
+                rules={rules[fields.phone]}
+                as={TextField}
+                name={fields.phone}
+                label="Broj telefona"
+                control={control}
+                defaultValue=""
+              />
+              {renderErrorForField(errors, fields.phone)}
+            </div>
+          </div>
+          <div className={classes.inputRowWrapper}>
+            <div className={classes.textfieldWrapperFullWidth}>
+              <Controller
+                rules={rules[fields.mail]}
+                className={classes.textfieldWrapperFullWidth}
+                as={TextField}
+                name={fields.mail}
+                label="Email"
+                control={control}
+                defaultValue=""
+              />
+              {renderErrorForField(errors, fields.mail)}
+            </div>
+          </div>
         </div>
-        <div className={classes.textfieldWrapper}>
-          <Controller
-            rules={rules.CompanyAddress}
-            as={TextField}
-            name="CompanyAddress"
-            label="Adresa"
-            control={control}
-            defaultValue=""
-          />
-          {renderErrorForField(errors, 'CompanyAddress')}
-        </div>
-        </div>
-        <div className={classes.inputRowWrapper}>
-        <div className={classes.textfieldWrapper}>
-          <Controller
-            rules={rules.Oib}
-            as={TextField}
-            name="Oib"
-            label="OIB"
-            control={control}
-            defaultValue=""
-          />
-          {renderErrorForField(errors, 'Oib')}
-        </div>
-        <div className={classes.textfieldWrapper}>
-          <Controller
-            rules={rules.Telephone}
-            as={TextField}
-            name="Telephone"
-            label="Broj telefona"
-            control={control}
-            defaultValue=""
-          />
-          {renderErrorForField(errors, 'Telephone')}
-        </div>
-        </div>
-        <div className={classes.inputRowWrapper}>
-        <div className={classes.textfieldWrapperFullWidth}>
-          <Controller
-            rules={rules.Email}
-            className={classes.textfieldWrapperFullWidth}
-            as={TextField}
-            name="Email"
-            label="Email"
-            control={control}
-            defaultValue=""
-          />
-          {renderErrorForField(errors, 'Email')}
-        </div>
-        </div>
-        </div>
-        <Button onClick={handleSubmit((a) => console.log(a))} variant="contained" style={{width: '40%', height: '40px'}} color="primary">
+        <Button
+          onClick={handleSubmit(submit(() => props.setShowSetupModal(false)))}
+          variant="contained"
+          style={{ width: '40%', height: '40px' }}
+          color="primary"
+        >
           Spremi
         </Button>
       </div>

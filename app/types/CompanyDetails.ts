@@ -29,8 +29,8 @@ class CompanyDetails {
     if (maybe.address.length > 100) {
       throw new Error('Company address is too long');
     }
-    if (typeof maybe.oib !== 'number') {
-      throw new Error('Company oib is not number');
+    if (maybe.oib.length !== 11) {
+      throw new Error('Company oib length is not equal to 11');
     }
     if (maybe.phone.length > 20) {
       throw new Error('Company phone is too long');
@@ -43,7 +43,7 @@ class CompanyDetails {
       maybe.address,
       maybe.oib,
       maybe.phone,
-      maybe.email
+      maybe.mail
     );
   }
 }

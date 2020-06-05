@@ -26,14 +26,17 @@ export default function RouterComponent() {
   return (
     <ContextProvider value={mainContext}>
       <>
-        <SetupModal showSetupModal={showSetupModal} />
+        <SetupModal
+          setShowSetupModal={setShowSetupModal}
+          showSetupModal={showSetupModal}
+        />
         <HashRouter>
           <Header />
           <div>
             {Routes.map(item => {
               return (
                 <Route
-                  exact={item.path === '/' ? true : false}
+                  exact={item.path === '/'}
                   path={item.path}
                   key={item.path}
                   component={item.component}

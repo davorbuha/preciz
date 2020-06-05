@@ -1,5 +1,6 @@
+/* eslint-disable import/no-cycle */
 import HomeContainer from '../containers/HomeContainer';
-import VoziloContainer from '../containers/MaticniPodaci/Vozilo';
+import VoziloContainer from '../containers/MaticniPodaci/VoziloContainer';
 import VozacContainer from '../containers/MaticniPodaci/Vozac';
 import PrikolicaContainer from '../containers/MaticniPodaci/Prikolica';
 import RobaContainer from '../containers/MaticniPodaci/Roba';
