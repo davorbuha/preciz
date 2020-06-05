@@ -17,10 +17,6 @@ class Vozilo {
     if (!(maybe.tip_vozila.length > 0 && maybe.tip_vozila.length < 100)) {
       throw new Error('tipVozila not valid');
     }
-
-    if (typeof maybe.tezina !== 'number') {
-      throw new Error('tezina not valid');
-    }
     return new Vozilo(maybe.registracija, maybe.tip_vozila, maybe.tezina);
   }
 
