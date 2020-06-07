@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  withRouter
-} from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
 import SelectMenu from './SelectMenu';
 import { RoutesEnum } from '../routes';
@@ -20,7 +18,7 @@ interface Props {
 
 const MaticniPodaciItems = [
   { path: RoutesEnum.MaticniPodaciVozilo, title: 'Vozilo' },
-  { path: RoutesEnum.MaticniPodaciVozac, title: 'Vozac' },
+  { path: RoutesEnum.MaticniPodaciVozac, title: 'Vozač' },
   { path: RoutesEnum.MaticniPodaciPrikolica, title: 'Prikolica' },
   { path: RoutesEnum.MaticniPodaciRoba, title: 'Roba' },
   { path: RoutesEnum.MaticniPodaciPartner, title: 'Partner' },
@@ -37,7 +35,7 @@ const VaganjaItems = [
 const IzvjescaItems = [
   { path: RoutesEnum.PregledVaganja, title: 'Pregled vaganja' },
   { path: RoutesEnum.PregledZaRobu, title: 'Pregled za robu' },
-  { path: RoutesEnum.PregledZaKupca, title: 'Pregled za kupca - dobavljaca' }
+  { path: RoutesEnum.PregledZaKupca, title: 'Pregled za kupca - dobavljača' }
 ];
 
 const BazaItems = [
