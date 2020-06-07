@@ -64,7 +64,7 @@ function SelectMenu(props: Props) {
             }}
           >
             <Paper>
-              <ClickAwayListener onClickAway={handleClose('')}>
+              <ClickAwayListener onClickAway={() => setOpen(false)}>
                 <MenuList style={{ minWidth: width * 0.2 }}>
                   {props.menuItems.map(item => (
                     <MenuItem key={item.path} onClick={handleClose(item.path)}>

@@ -64,4 +64,4 @@ function Header(p: Props) {
   );
 }
 
-export default withRouter(Header);
+export default Header;

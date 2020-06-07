@@ -22,7 +22,6 @@ import {
   Button
 } from '@material-ui/core';
 import Vozac from '../../types/Vozac';
-import { kMaxLength } from 'buffer';
 
 function renderErrorForField(errors: any, fieldName: string) {
   if (errors[fieldName]) {
@@ -117,7 +116,7 @@ function VozacScreen(props: Props) {
         <div style={{ display: 'flex', flexDirection: 'column', width: '50%' }}>
           <div>
             <Controller
-              style={{ width: '70%' }}
+              style={{ width: '70%', zIndex: -1 }}
               rules={rules[fields.ime]}
               as={<TextField variant="outlined" />}
               name={fields.ime}
@@ -129,7 +128,7 @@ function VozacScreen(props: Props) {
           </div>
           <div className={classes.inputWrapper}>
             <Controller
-              style={{ width: '70%' }}
+              style={{ width: '70%', zIndex: -1 }}
               rules={rules[fields.prezime]}
               as={<TextField variant="outlined" />}
               name={fields.prezime}
@@ -141,7 +140,7 @@ function VozacScreen(props: Props) {
           </div>
           <div className={classes.inputWrapper}>
             <Controller
-              style={{ width: '70%' }}
+              style={{ width: '70%', zIndex: -1 }}
               rules={rules[fields.oib]}
               as={<TextField variant="outlined" />}
               name={fields.oib}
