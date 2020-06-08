@@ -10,6 +10,7 @@ import {
   TextField,
   TableContainer,
   Table,
+  InputAdornment,
   Paper,
   TableHead,
   TableRow,
@@ -27,6 +28,9 @@ function renderErrorForField(errors: any, fieldName: string) {
   }
   return null;
 }
+const endAdornment = {
+  endAdornment: <InputAdornment position="end">Kg</InputAdornment>
+};
 
 interface Props {
   editId: number | undefined;
@@ -115,9 +119,15 @@ function RobaScreen(props: Props) {
           <div className={classes.inputWrapper}>
             <Controller
               style={{ width: '70%', zIndex: 2 }}
-              as={<TextField variant="outlined" />}
+              as={
+                <TextField
+                  variant="outlined"
+                  disabled
+                  InputProps={endAdornment}
+                />
+              }
               name={fields.jedinicaMjere}
-              label="Jedinica mjere"
+              label="Mjerna jedinica"
               control={props.control}
               defaultValue=""
             />
@@ -173,7 +183,7 @@ function RobaScreen(props: Props) {
               <TableRow key={i}>
                 <TableCell align="left">{item.sifraRobe}</TableCell>
                 <TableCell align="left">{item.naziv}</TableCell>
-                <TableCell align="left">{item.jedinicaMjere}</TableCell>
+                <TableCell align="left">{item.jedinicaMjere} kg</TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
                     onClick={() => props.onEditPress(item, i)}

@@ -5,6 +5,7 @@ class Partner {
   ulica: string;
   grad: string;
   telefon: string;
+  fax: string;
   email: string;
   napomena: string;
 
@@ -14,6 +15,7 @@ class Partner {
     ulica: string,
     grad: string,
     telefon: string,
+    fax: string,
     email: string,
     napomena: string
   ) {
@@ -24,6 +26,7 @@ class Partner {
     this.telefon = telefon;
     this.email = email;
     this.napomena = napomena;
+    this.fax = fax;
   }
 
   public static fromJSON(maybe: any): Partner {
@@ -39,11 +42,14 @@ class Partner {
     if (!(maybe.telefon.length > 0 && maybe.telefon.length < 20)) {
       throw new Error('telefon not valid');
     }
-    if (!(maybe.email.length > 0 && maybe.email.length < 20)) {
+    if (!(maybe.email.length > 0 && maybe.email.length < 100)) {
       throw new Error('email not valid');
     }
-    if (!(maybe.napomena.length > 0 && maybe.napomena.length < 20)) {
+    if (!(maybe.napomena.length > 0 && maybe.napomena.length < 100)) {
       throw new Error('napomena not valid');
+    }
+    if (!(maybe.fax.length > 0 && maybe.fax.length < 100)) {
+      throw new Error('fax not valid');
     }
     return new Partner(
       maybe.sifra,
@@ -52,7 +58,8 @@ class Partner {
       maybe.grad,
       maybe.telefon,
       maybe.email,
-      maybe.napomena
+      maybe.napomena,
+      maybe.fax
     );
   }
 
@@ -64,7 +71,8 @@ class Partner {
       grad: this.grad,
       telefon: this.telefon,
       email: this.email,
-      napomena: this.napomena
+      napomena: this.napomena,
+      fax: this.fax
     };
   }
 }

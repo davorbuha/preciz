@@ -25,7 +25,7 @@ const fields = {
   mail: 'Mail'
 };
 
-function submit(cb: () => voic) {
+function submit(cb: () => void) {
   return (maybe: any) => {
     const companyDetails = new CompanyDetails(
       maybe[fields.companyName],

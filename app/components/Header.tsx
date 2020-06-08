@@ -6,6 +6,7 @@ import { RoutesEnum } from '../routes';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    height: '5vh',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around'
