@@ -1,13 +1,17 @@
+/* eslint-disable lines-between-class-members */
 class Prikolica {
+  id: string;
   registracijaPrikolice: string;
   tipPrikolice: string;
   tezinaPrikolice: number;
 
   constructor(
+    id: string,
     registracijaPrikolice: string,
     tipPrikolice: string,
     tezinaPrikolice: number
   ) {
+    this.id = id;
     this.registracijaPrikolice = registracijaPrikolice;
     this.tipPrikolice = tipPrikolice;
     this.tezinaPrikolice = tezinaPrikolice;
@@ -26,6 +30,7 @@ class Prikolica {
       throw new Error('tipPrikolice not valid');
     }
     return new Prikolica(
+      maybe.id,
       maybe.registracija_prikolice,
       maybe.tip_prikolice,
       maybe.tezina_prikolice
@@ -34,6 +39,7 @@ class Prikolica {
 
   public toJSON() {
     return {
+      id: this.id,
       registracija: this.registracijaPrikolice,
       tip_vozila: this.tipPrikolice,
       tezina: this.tezinaPrikolice

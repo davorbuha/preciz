@@ -1,10 +1,17 @@
 /* eslint-disable lines-between-class-members */
 class Roba {
+  id: string;
   naziv: string;
   sifraRobe: string;
   jedinicaMjere: string;
 
-  constructor(naziv: string, sifraRobe: string, jedinicaMjere: string) {
+  constructor(
+    id: string,
+    naziv: string,
+    sifraRobe: string,
+    jedinicaMjere: string
+  ) {
+    this.id = id;
     this.naziv = naziv;
     this.sifraRobe = sifraRobe;
     this.jedinicaMjere = jedinicaMjere;
@@ -22,11 +29,17 @@ class Roba {
     ) {
       throw new Error('sifraRobe not valid');
     }
-    return new Roba(maybe.naziv, maybe.sifra_robe, maybe.jedinica_mjere);
+    return new Roba(
+      maybe.id,
+      maybe.naziv,
+      maybe.sifra_robe,
+      maybe.jedinica_mjere
+    );
   }
 
   public toJSON() {
     return {
+      id: this.id,
       naziv: this.naziv,
       sifra_robe: this.sifraRobe,
       jedinica_mjere: this.jedinicaMjere

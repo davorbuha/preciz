@@ -1,13 +1,17 @@
+/* eslint-disable promise/always-return */
 import React from 'react';
+import storage from 'electron-json-storage';
+import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 import PrikolicaScreen, {
   fields
 } from '../../screens/MaticniPodaci/PrikolicaScreen';
 import Prikolica from '../../types/Prikolica';
-import storage from 'electron-json-storage';
 import dbnames from '../../db/dbnames';
-import { useForm } from 'react-hook-form';
+import ErrorDialog from '../../components/ErrorDialog';
 
 function PrikolicaContainer() {
+  const [errorText, setErrorText] = React.useState<string>();
   const [prikolice, setPrikolice] = React.useState<Prikolica[]>([]);
   const [editId, setEditId] = React.useState<number | undefined>();
   const { handleSubmit, errors, control, setValue } = useForm({
@@ -23,18 +27,31 @@ function PrikolicaContainer() {
       })
     )
       .then(res => {
-        const pRes = (res as Array<any>).map(Prikolica.fromJSON);
-        setPrikolice(pRes);
+        if (Array.isArray(res)) {
+          const pRes = (res as Array<any>).map(Prikolica.fromJSON);
+          setPrikolice(pRes);
+        }
       })
       .catch(e => {
         console.log(e);
       });
   }, []);
   const addPrikolica = (p: any) => {
+    if (
+      prikolice.find(
+        pri =>
+          p[fields.registracijaPrikolice].toLowerCase() ===
+          pri.registracijaPrikolice.toLowerCase()
+      )
+    ) {
+      setErrorText('Unesena registracija već postoji u bazi');
+      return;
+    }
     setValue(fields.registracijaPrikolice, '');
     setValue(fields.tipPrikolice, '');
     setValue(fields.tezinaPrikolice, '');
     const prikolica = new Prikolica(
+      uuidv4(),
       p[fields.registracijaPrikolice],
       p[fields.tipPrikolice],
       p[fields.tezinaPrikolice]
@@ -54,7 +71,20 @@ function PrikolicaContainer() {
 
   const editPrikolica = () => {
     handleSubmit(p => {
+      if (
+        p[fields.registracijaPrikolice].toLowerCase() !==
+          prikolice[editId!].registracijaPrikolice.toLowerCase() &&
+        prikolice.find(
+          pri =>
+            pri.registracijaPrikolice.toLowerCase() ===
+            p[fields.registracijaPrikolice].toLowerCase()
+        )
+      ) {
+        setErrorText('Unesena registracija već postoji u bazi');
+        return;
+      }
       const prikolica = new Prikolica(
+        prikolice[editId!].id,
         p[fields.registracijaPrikolice],
         p[fields.tipPrikolice],
         p[fields.tezinaPrikolice]
@@ -67,6 +97,7 @@ function PrikolicaContainer() {
       setValue(fields.registracijaPrikolice, '');
       setValue(fields.tezinaPrikolice, '');
       setValue(fields.tipPrikolice, '');
+      setEditId(undefined);
       setPrikolice(prikolicaToSet);
     })();
   };
@@ -87,17 +118,23 @@ function PrikolicaContainer() {
     setPrikolice(prikolicaToSet);
   };
   return (
-    <PrikolicaScreen
-      odbaciUredivanje={odbaciUredivanje}
-      editId={editId}
-      onEditPress={onEditPress}
-      deletePrikolice={deletePrikolica}
-      editPrikolica={editPrikolica}
-      addPrikolica={handleSubmit(addPrikolica)}
-      control={control}
-      errors={errors}
-      prikolice={prikolice}
-    />
+    <>
+      <ErrorDialog
+        errorText={errorText}
+        handleClose={() => setErrorText(undefined)}
+      />
+      <PrikolicaScreen
+        odbaciUredivanje={odbaciUredivanje}
+        editId={editId}
+        onEditPress={onEditPress}
+        deletePrikolice={deletePrikolica}
+        editPrikolica={editPrikolica}
+        addPrikolica={handleSubmit(addPrikolica)}
+        control={control}
+        errors={errors}
+        prikolice={prikolice}
+      />
+    </>
   );
 }
 export default PrikolicaContainer;
