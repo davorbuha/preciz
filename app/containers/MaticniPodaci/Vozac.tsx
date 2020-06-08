@@ -1,11 +1,15 @@
+/* eslint-disable promise/always-return */
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import storage from 'electron-json-storage';
+import { v4 as uuidv4 } from 'uuid';
 import VozacScreen, { fields } from '../../screens/MaticniPodaci/VozacScreen';
 import Vozac from '../../types/Vozac';
-import { useForm } from 'react-hook-form';
 import dbnames from '../../db/dbnames';
-import storage from 'electron-json-storage';
+import ErrorDialog from '../../components/ErrorDialog';
 
 function VozacContainer() {
+  const [errorText, setErrorText] = React.useState<string>();
   const [vozaci, setVozaci] = React.useState<Vozac[]>([]);
   const [editId, setEditId] = React.useState<number | undefined>();
   const { handleSubmit, errors, control, setValue } = useForm({
@@ -21,18 +25,31 @@ function VozacContainer() {
       })
     )
       .then(res => {
-        const vRes = (res as Array<any>).map(Vozac.fromJSON);
-        setVozaci(vRes);
+        if (Array.isArray(res)) {
+          const vRes = (res as Array<any>).map(Vozac.fromJSON);
+          setVozaci(vRes);
+        }
       })
       .catch(e => {
         console.log(e);
       });
   }, []);
   const addVozac = (v: any) => {
+    if (
+      vozaci.find(voz => v[fields.oib].toLowerCase() === voz.oib.toLowerCase())
+    ) {
+      setErrorText('Uneseni OIB već postoji u bazi');
+      return;
+    }
     setValue(fields.ime, '');
     setValue(fields.prezime, '');
     setValue(fields.oib, '');
-    const vozac = new Vozac(v[fields.ime], v[fields.prezime], v[fields.oib]);
+    const vozac = new Vozac(
+      uuidv4(),
+      v[fields.ime],
+      v[fields.prezime],
+      v[fields.oib]
+    );
     const vozaciToSet = [...vozaci, vozac];
     storage.set(dbnames.vozaci, vozaciToSet, err =>
       console.log('vozaci error', err)
@@ -47,7 +64,21 @@ function VozacContainer() {
   };
   const editVozac = () => {
     handleSubmit(z => {
-      const vozac = new Vozac(z[fields.ime], z[fields.prezime], z[fields.oib]);
+      if (
+        z[fields.oib].toLowerCase() !== vozaci[editId!].oib.toLowerCase() &&
+        vozaci.find(
+          voz => voz.oib.toLowerCase() === z[fields.oib].toLowerCase()
+        )
+      ) {
+        setErrorText('Uneseni OIB već postoji u bazi');
+        return;
+      }
+      const vozac = new Vozac(
+        vozaci[editId!].id,
+        z[fields.ime],
+        z[fields.prezime],
+        z[fields.oib]
+      );
       const vozaciToSet = [...vozaci];
       vozaciToSet[editId!] = vozac;
       storage.set(dbnames.vozaci, vozaciToSet, err =>
@@ -56,6 +87,7 @@ function VozacContainer() {
       setValue(fields.ime, '');
       setValue(fields.prezime, '');
       setValue(fields.oib, '');
+      setEditId(undefined);
       setVozaci(vozaciToSet);
     })();
   };
@@ -76,17 +108,23 @@ function VozacContainer() {
     setVozaci(vozaciToSet);
   };
   return (
-    <VozacScreen
-      odbaciUredivanje={odbaciUredivanje}
-      editId={editId}
-      onEditPress={onEditPress}
-      deleteVozac={deleteVozac}
-      editVozac={editVozac}
-      addVozac={handleSubmit(addVozac)}
-      control={control}
-      errors={errors}
-      vozaci={vozaci}
-    />
+    <>
+      <ErrorDialog
+        errorText={errorText}
+        handleClose={() => setErrorText(undefined)}
+      />
+      <VozacScreen
+        odbaciUredivanje={odbaciUredivanje}
+        editId={editId}
+        onEditPress={onEditPress}
+        deleteVozac={deleteVozac}
+        editVozac={editVozac}
+        addVozac={handleSubmit(addVozac)}
+        control={control}
+        errors={errors}
+        vozaci={vozaci}
+      />
+    </>
   );
 }
 

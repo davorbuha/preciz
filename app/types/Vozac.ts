@@ -1,10 +1,12 @@
 /* eslint-disable lines-between-class-members */
 class Vozac {
+  id: string;
   ime: string;
   prezime: string;
   oib: string;
 
-  constructor(ime: string, prezime: string, oib: string) {
+  constructor(id: string, ime: string, prezime: string, oib: string) {
+    this.id = id;
     this.ime = ime;
     this.prezime = prezime;
     this.oib = oib;
@@ -17,14 +19,15 @@ class Vozac {
     if (!(maybe.prezime.length > 0 && maybe.prezime.length < 100)) {
       throw new Error('prezime not valid');
     }
-    if (!(maybe.oib.length > 0 && maybe.oib.length < 11)) {
+    if (maybe.oib.length !== 11) {
       throw new Error('oib not valid');
     }
-    return new Vozac(maybe.ime, maybe.prezime, maybe.oib);
+    return new Vozac(maybe.id, maybe.ime, maybe.prezime, maybe.oib);
   }
 
   public toJSON() {
     return {
+      id: this.id,
       ime: this.ime,
       prezime: this.prezime,
       oib: this.oib

@@ -3,11 +3,14 @@
 import React from 'react';
 import storage from 'electron-json-storage';
 import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 import RobaScreen, { fields } from '../../screens/MaticniPodaci/RobaScreen';
 import dbnames from '../../db/dbnames';
 import Roba from '../../types/Roba';
+import ErrorDialog from '../../components/ErrorDialog';
 
 function RobaContainer() {
+  const [errorText, setErrorText] = React.useState<string>();
   const [robe, setRobe] = React.useState<Roba[]>([]);
   const [editId, setEditId] = React.useState<number | undefined>();
   const { handleSubmit, errors, control, setValue } = useForm({
@@ -23,18 +26,29 @@ function RobaContainer() {
       })
     )
       .then(res => {
-        const vRes = (res as Array<any>).map(Roba.fromJSON);
-        setRobe(vRes);
+        if (Array.isArray(res)) {
+          const vRes = (res as Array<any>).map(Roba.fromJSON);
+          setRobe(vRes);
+        }
       })
       .catch(e => {
         console.log(e);
       });
   }, []);
   const addRoba = (r: any) => {
+    if (
+      robe.find(
+        rob => r[fields.sifraRobe].toLowerCase() === rob.sifraRobe.toLowerCase()
+      )
+    ) {
+      setErrorText('Unesena sifra robe već postoji u bazi');
+      return;
+    }
     setValue(fields.sifraRobe, '');
     setValue(fields.naziv, '');
     setValue(fields.jedinicaMjere, '');
     const roba = new Roba(
+      uuidv4(),
       r[fields.sifraRobe],
       r[fields.naziv],
       r[fields.jedinicaMjere]
@@ -51,7 +65,19 @@ function RobaContainer() {
   };
   const editRoba = () => {
     handleSubmit(r => {
+      if (
+        r[fields.sifraRobe].toLowerCase() !==
+          robe[editId!].sifraRobe.toLowerCase() &&
+        robe.find(
+          rob =>
+            rob.sifraRobe.toLowerCase() === r[fields.sifraRobe].toLowerCase()
+        )
+      ) {
+        setErrorText('Unesena sifra robe već postoji u bazi');
+        return;
+      }
       const roba = new Roba(
+        robe[editId!].id,
         r[fields.sifraRobe],
         r[fields.naziv],
         r[fields.jedinicaMjere]
@@ -64,6 +90,7 @@ function RobaContainer() {
       setValue(fields.sifraRobe, '');
       setValue(fields.naziv, '');
       setValue(fields.jedinicaMjere, '');
+      setEditId(undefined);
       setRobe(robeToSet);
     })();
   };
@@ -82,17 +109,23 @@ function RobaContainer() {
     setRobe(robeToSet);
   };
   return (
-    <RobaScreen
-      odbaciUredivanje={odbaciUredivanje}
-      editId={editId}
-      onEditPress={onEditPress}
-      deleteRoba={deleteRoba}
-      editRoba={editRoba}
-      addRoba={handleSubmit(addRoba)}
-      control={control}
-      errors={errors}
-      robe={robe}
-    />
+    <>
+      <ErrorDialog
+        errorText={errorText}
+        handleClose={() => setErrorText(undefined)}
+      />
+      <RobaScreen
+        odbaciUredivanje={odbaciUredivanje}
+        editId={editId}
+        onEditPress={onEditPress}
+        deleteRoba={deleteRoba}
+        editRoba={editRoba}
+        addRoba={handleSubmit(addRoba)}
+        control={control}
+        errors={errors}
+        robe={robe}
+      />
+    </>
   );
 }
 

@@ -3,6 +3,7 @@
 import React from 'react';
 import storage from 'electron-json-storage';
 import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 import MjestoIsporukeScreen, {
   fields
 } from '../../screens/MaticniPodaci/MjestoIsporukeScreen';
@@ -25,16 +26,16 @@ function MjestoIsporukeContainer() {
       })
     )
       .then(res => {
-        const vRes = (res as Array<any>).map(MjestoIsporuke.fromJSON);
-        setMjesta(vRes);
+        if (Array.isArray(res)) {
+          const vRes = (res as Array<any>).map(MjestoIsporuke.fromJSON);
+          setMjesta(vRes);
+        }
       })
-      .catch(e => {
-        console.log(e);
-      });
+      .catch(e => {});
   }, []);
   const addMjestoIsporuke = (m: any) => {
     setValue(fields.naziv, '');
-    const mjestoIsporuke = new MjestoIsporuke(m[fields.naziv]);
+    const mjestoIsporuke = new MjestoIsporuke(uuidv4(), m[fields.naziv]);
     const mjestaToSet = [...mjesta, mjestoIsporuke];
     storage.set(dbnames.vozila, mjestaToSet, err =>
       console.log('vozila error', err)
@@ -47,7 +48,10 @@ function MjestoIsporukeContainer() {
   };
   const editMjestoIsporuke = () => {
     handleSubmit(m => {
-      const mjestoIsporuke = new MjestoIsporuke(m[fields.naziv]);
+      const mjestoIsporuke = new MjestoIsporuke(
+        mjesta[editId!].id,
+        m[fields.naziv]
+      );
       const mjestaToSet = [...mjesta];
       mjestaToSet[editId!] = mjestoIsporuke;
       storage.set(dbnames.mjesta, mjestaToSet, err =>

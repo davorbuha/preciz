@@ -3,11 +3,14 @@
 import React from 'react';
 import storage from 'electron-json-storage';
 import { useForm } from 'react-hook-form';
+import { v4 as uuidv4 } from 'uuid';
 import VoziloScreen, { fields } from '../../screens/MaticniPodaci/VoziloScreen';
 import dbnames from '../../db/dbnames';
 import Vozilo from '../../types/Vozilo';
+import ErrorDialog from '../../components/ErrorDialog';
 
 function VoziloContainer() {
+  const [errorText, setErrorText] = React.useState<string>();
   const [vozila, setVozila] = React.useState<Vozilo[]>([]);
   const [editId, setEditId] = React.useState<number | undefined>();
   const { handleSubmit, errors, control, setValue } = useForm({
@@ -23,18 +26,31 @@ function VoziloContainer() {
       })
     )
       .then(res => {
-        const vRes = (res as Array<any>).map(Vozilo.fromJSON);
-        setVozila(vRes);
+        if (Array.isArray(res)) {
+          const vRes = (res as Array<any>).map(Vozilo.fromJSON);
+          setVozila(vRes);
+        }
       })
       .catch(e => {
         console.log(e);
       });
   }, []);
   const addVozilo = (v: any) => {
+    if (
+      vozila.find(
+        voz =>
+          v[fields.registracija].toLowerCase() ===
+          voz.registracija.toLowerCase()
+      )
+    ) {
+      setErrorText('Unesena registracija već postoji u bazi');
+      return;
+    }
     setValue(fields.registracija, '');
     setValue(fields.tipVozila, '');
     setValue(fields.tezina, '');
     const vozilo = new Vozilo(
+      uuidv4(),
       v[fields.registracija],
       v[fields.tipVozila],
       v[fields.tezina]
@@ -53,7 +69,20 @@ function VoziloContainer() {
   };
   const editVozilo = () => {
     handleSubmit(v => {
+      if (
+        v[fields.registracija].toLowerCase() !==
+          vozila[editId!].registracija.toLowerCase() &&
+        vozila.find(
+          voz =>
+            voz.registracija.toLowerCase() ===
+            v[fields.registracija].toLowerCase()
+        )
+      ) {
+        setErrorText('Unesena registracija već postoji u bazi');
+        return;
+      }
       const vozilo = new Vozilo(
+        vozila[editId!].id,
         v[fields.registracija],
         v[fields.tipVozila],
         v[fields.tezina]
@@ -66,6 +95,7 @@ function VoziloContainer() {
       setValue(fields.registracija, '');
       setValue(fields.tezina, '');
       setValue(fields.tipVozila, '');
+      setEditId(undefined);
       setVozila(vozilaToSet);
     })();
   };
@@ -86,17 +116,23 @@ function VoziloContainer() {
     setVozila(vozilaToSet);
   };
   return (
-    <VoziloScreen
-      odbaciUredivanje={odbaciUredivanje}
-      editId={editId}
-      onEditPress={onEditPress}
-      deleteVozilo={deleteVozilo}
-      editVozilo={editVozilo}
-      addVozilo={handleSubmit(addVozilo)}
-      control={control}
-      errors={errors}
-      vozila={vozila}
-    />
+    <>
+      <ErrorDialog
+        errorText={errorText}
+        handleClose={() => setErrorText(undefined)}
+      />
+      <VoziloScreen
+        odbaciUredivanje={odbaciUredivanje}
+        editId={editId}
+        onEditPress={onEditPress}
+        deleteVozilo={deleteVozilo}
+        editVozilo={editVozilo}
+        addVozilo={handleSubmit(addVozilo)}
+        control={control}
+        errors={errors}
+        vozila={vozila}
+      />
+    </>
   );
 }
 

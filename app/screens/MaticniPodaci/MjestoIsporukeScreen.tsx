@@ -46,6 +46,7 @@ interface Props {
 export const fields = {
   naziv: 'Naziv'
 };
+
 const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',

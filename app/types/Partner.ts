@@ -1,5 +1,6 @@
 /* eslint-disable lines-between-class-members */
 class Partner {
+  id: string;
   sifra: string;
   naziv: string;
   ulica: string;
@@ -9,6 +10,7 @@ class Partner {
   napomena: string;
 
   constructor(
+    id: string,
     sifra: string,
     naziv: string,
     ulica: string,
@@ -17,6 +19,7 @@ class Partner {
     email: string,
     napomena: string
   ) {
+    this.id = id;
     this.sifra = sifra;
     this.naziv = naziv;
     this.ulica = ulica;
@@ -46,6 +49,7 @@ class Partner {
       throw new Error('napomena not valid');
     }
     return new Partner(
+      maybe.id,
       maybe.sifra,
       maybe.naziv,
       maybe.ulica,
@@ -58,6 +62,7 @@ class Partner {
 
   public toJSON() {
     return {
+      id: this.id,
       sifra: this.sifra,
       naziv: this.naziv,
       ulica: this.ulica,
