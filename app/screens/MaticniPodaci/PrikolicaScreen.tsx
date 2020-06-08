@@ -123,7 +123,7 @@ function PrikolicaScreen(props: Props) {
           </div>
           <div className={classes.inputWrapper}>
             <Controller
-              style={{ width: '70%' }}
+              style={{ width: '70%', zIndex: -1 }}
               rules={rules[fields.tipPrikolice]}
               as={<TextField variant="outlined" />}
               name={fields.tipPrikolice}
@@ -135,7 +135,7 @@ function PrikolicaScreen(props: Props) {
           </div>
           <div className={classes.inputWrapper}>
             <Controller
-              style={{ width: '70%' }}
+              style={{ width: '70%', zIndex: -1 }}
               rules={rules[fields.tezinaPrikolice]}
               as={<TextField InputProps={endAdornment} variant="outlined" />}
               name={fields.tezinaPrikolice}

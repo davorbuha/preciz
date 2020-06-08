@@ -3,5 +3,7 @@ export default {
   setup: 'setup',
   prikolice: 'prikolice',
   vozaci: 'vozaci',
-  roba: 'roba'
+  roba: 'roba',
+  partneri: 'partneri',
+  mjesta: 'mjesta'
 };

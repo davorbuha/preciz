@@ -40,7 +40,11 @@ function SelectMenu(props: Props) {
     setOpen(false);
   };
   return (
-    <div>
+    <div
+      style={{
+        zIndex: 3
+      }}
+    >
       <Button
         style={{
           width: width * 0.2,

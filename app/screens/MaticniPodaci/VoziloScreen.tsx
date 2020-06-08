@@ -116,9 +116,9 @@ function VoziloScreen(props: Props) {
         <div style={{ display: 'flex', flexDirection: 'column', width: '50%' }}>
           <div>
             <Controller
-              style={{ width: '70%', zIndex: -1 }}
+              style={{ width: '70%', zIndex: 2 }}
               rules={rules[fields.registracija]}
-              as={<TextField style={{ zIndex: -1 }} variant="outlined" />}
+              as={<TextField style={{ zIndex: 2 }} variant="outlined" />}
               name={fields.registracija}
               label="Registracija"
               control={props.control}
@@ -128,7 +128,7 @@ function VoziloScreen(props: Props) {
           </div>
           <div className={classes.inputWrapper}>
             <Controller
-              style={{ width: '70%', zIndex: -1 }}
+              style={{ width: '70%', zIndex: 2 }}
               rules={rules[fields.tipVozila]}
               as={<TextField variant="outlined" />}
               name={fields.tipVozila}
@@ -140,7 +140,7 @@ function VoziloScreen(props: Props) {
           </div>
           <div className={classes.inputWrapper}>
             <Controller
-              style={{ width: '70%', zIndex: -1 }}
+              style={{ width: '70%', zIndex: 2 }}
               rules={rules[fields.tezina]}
               as={<TextField InputProps={endAdornment} variant="outlined" />}
               name={fields.tezina}

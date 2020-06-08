@@ -11,7 +11,6 @@ import {
 import {
   makeStyles,
   TextField,
-  InputAdornment,
   TableContainer,
   Table,
   Paper,
@@ -116,7 +115,7 @@ function VozacScreen(props: Props) {
         <div style={{ display: 'flex', flexDirection: 'column', width: '50%' }}>
           <div>
             <Controller
-              style={{ width: '70%', zIndex: -1 }}
+              style={{ width: '70%', zIndex: 2 }}
               rules={rules[fields.ime]}
               as={<TextField variant="outlined" />}
               name={fields.ime}
@@ -128,7 +127,7 @@ function VozacScreen(props: Props) {
           </div>
           <div className={classes.inputWrapper}>
             <Controller
-              style={{ width: '70%', zIndex: -1 }}
+              style={{ width: '70%', zIndex: 2 }}
               rules={rules[fields.prezime]}
               as={<TextField variant="outlined" />}
               name={fields.prezime}
@@ -140,7 +139,7 @@ function VozacScreen(props: Props) {
           </div>
           <div className={classes.inputWrapper}>
             <Controller
-              style={{ width: '70%', zIndex: -1 }}
+              style={{ width: '70%', zIndex: 2 }}
               rules={rules[fields.oib]}
               as={<TextField variant="outlined" />}
               name={fields.oib}
