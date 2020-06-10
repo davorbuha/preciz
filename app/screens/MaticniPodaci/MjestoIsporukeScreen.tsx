@@ -118,7 +118,13 @@ function MjestoIsporukeScreen(props: Props) {
                 ? props.editMjestoIsporuke
                 : props.addMjestoIsporuke
             }
-            style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+            style={{
+              color: '#fff',
+              backgroundColor: '#0275d8',
+              height: '50px',
+              width: '150px',
+              alignSelf: 'center'
+            }}
             variant="contained"
           >
             Spremi
@@ -126,10 +132,15 @@ function MjestoIsporukeScreen(props: Props) {
           {props.editId !== undefined ? (
             <Button
               onClick={props.odbaciUredivanje}
-              style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+              style={{
+                marginTop: '20px',
+                height: '50px',
+                width: '150px',
+                alignSelf: 'center'
+              }}
               variant="contained"
             >
-              Odbaci Uredivanje
+              Odbaci Uređivanje
             </Button>
           ) : null}
         </div>
@@ -153,6 +164,7 @@ function MjestoIsporukeScreen(props: Props) {
                 <TableCell align="left">{item.naziv}</TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#0275d8', color: '#fff' }}
                     onClick={() => props.onEditPress(item, i)}
                     variant="contained"
                   >
@@ -161,6 +173,7 @@ function MjestoIsporukeScreen(props: Props) {
                 </TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#d9534f', color: '#fff' }}
                     onClick={() => props.deleteMjestoIsporuke(i)}
                     variant="contained"
                   >

@@ -42,7 +42,7 @@ class Prikolica {
       id: this.id,
       registracija: this.registracijaPrikolice,
       tip_vozila: this.tipPrikolice,
-      tezina: this.tezinaPrikolice
+      tezina_prikolice: this.tezinaPrikolice
     };
   }
 }

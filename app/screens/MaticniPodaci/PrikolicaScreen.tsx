@@ -123,7 +123,7 @@ function PrikolicaScreen(props: Props) {
           </div>
           <div className={classes.inputWrapper}>
             <Controller
-              style={{ width: '70%', zIndex: -1 }}
+              style={{ width: '70%' }}
               rules={rules[fields.tipPrikolice]}
               as={<TextField variant="outlined" />}
               name={fields.tipPrikolice}
@@ -135,7 +135,7 @@ function PrikolicaScreen(props: Props) {
           </div>
           <div className={classes.inputWrapper}>
             <Controller
-              style={{ width: '70%', zIndex: -1 }}
+              style={{ width: '70%' }}
               rules={rules[fields.tezinaPrikolice]}
               as={<TextField InputProps={endAdornment} variant="outlined" />}
               name={fields.tezinaPrikolice}
@@ -161,7 +161,13 @@ function PrikolicaScreen(props: Props) {
                 ? props.editPrikolica
                 : props.addPrikolica
             }
-            style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+            style={{
+              backgroundColor: '#0275d8',
+              color: '#fff',
+              height: '50px',
+              width: '150px',
+              alignSelf: 'center'
+            }}
             variant="contained"
           >
             Spremi
@@ -169,10 +175,15 @@ function PrikolicaScreen(props: Props) {
           {props.editId !== undefined ? (
             <Button
               onClick={props.odbaciUredivanje}
-              style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+              style={{
+                marginTop: '20px',
+                height: '50px',
+                width: '150px',
+                alignSelf: 'center'
+              }}
               variant="contained"
             >
-              Odbaci Uredivanje
+              Odbaci Uređivanje
             </Button>
           ) : null}
         </div>
@@ -200,6 +211,7 @@ function PrikolicaScreen(props: Props) {
                 <TableCell align="left">{item.tezinaPrikolice} Kg</TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#0275d8', color: '#fff' }}
                     onClick={() => props.onEditPress(item, i)}
                     variant="contained"
                   >
@@ -208,6 +220,7 @@ function PrikolicaScreen(props: Props) {
                 </TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#d9534f', color: '#fff' }}
                     onClick={() => props.deletePrikolice(i)}
                     variant="contained"
                   >

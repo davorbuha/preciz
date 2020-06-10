@@ -164,7 +164,13 @@ function VoziloScreen(props: Props) {
             onClick={
               props.editId !== undefined ? props.editVozilo : props.addVozilo
             }
-            style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+            style={{
+              color: '#fff',
+              backgroundColor: '#0275d8',
+              height: '50px',
+              width: '150px',
+              alignSelf: 'center'
+            }}
             variant="contained"
           >
             Spremi
@@ -172,10 +178,15 @@ function VoziloScreen(props: Props) {
           {props.editId !== undefined ? (
             <Button
               onClick={props.odbaciUredivanje}
-              style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+              style={{
+                marginTop: '20px',
+                height: '50px',
+                width: '150px',
+                alignSelf: 'center'
+              }}
               variant="contained"
             >
-              Odbaci Uredivanje
+              Odbaci Uređivanje
             </Button>
           ) : null}
         </div>
@@ -203,6 +214,7 @@ function VoziloScreen(props: Props) {
                 <TableCell align="left">{item.tezina} Kg</TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#0275d8', color: '#fff' }}
                     onClick={() => props.onEditPress(item, i)}
                     variant="contained"
                   >
@@ -211,6 +223,7 @@ function VoziloScreen(props: Props) {
                 </TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#d9534f', color: '#fff' }}
                     onClick={() => props.deleteVozilo(i)}
                     variant="contained"
                   >

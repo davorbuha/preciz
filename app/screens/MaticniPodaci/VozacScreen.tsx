@@ -163,7 +163,13 @@ function VozacScreen(props: Props) {
             onClick={
               props.editId !== undefined ? props.editVozac : props.addVozac
             }
-            style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+            style={{
+              backgroundColor: '#0275d8',
+              color: '#fff',
+              height: '50px',
+              width: '150px',
+              alignSelf: 'center'
+            }}
             variant="contained"
           >
             Spremi
@@ -171,10 +177,15 @@ function VozacScreen(props: Props) {
           {props.editId !== undefined ? (
             <Button
               onClick={props.odbaciUredivanje}
-              style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+              style={{
+                marginTop: '20px',
+                height: '50px',
+                width: '150px',
+                alignSelf: 'center'
+              }}
               variant="contained"
             >
-              Odbaci Uredivanje
+              Odbaci Uređivanje
             </Button>
           ) : null}
         </div>
@@ -182,7 +193,7 @@ function VozacScreen(props: Props) {
       <TableContainer className={classes.tableContainer} component={Paper}>
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow style={{ backgroundColor: '#cbd0d6' }}>
               <TableCell align="left">Ime</TableCell>
               <TableCell align="left">Prezime</TableCell>
               <TableCell align="left">OIB</TableCell>
@@ -202,6 +213,7 @@ function VozacScreen(props: Props) {
                 <TableCell align="left">{item.oib}</TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#0275d8', color: '#fff' }}
                     onClick={() => props.onEditPress(item, i)}
                     variant="contained"
                   >
@@ -210,6 +222,7 @@ function VozacScreen(props: Props) {
                 </TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#d9534f', color: '#fff' }}
                     onClick={() => props.deleteVozac(i)}
                     variant="contained"
                   >

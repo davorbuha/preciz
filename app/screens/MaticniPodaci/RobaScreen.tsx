@@ -127,7 +127,10 @@ function RobaScreen(props: Props) {
                 />
               }
               name={fields.jedinicaMjere}
-              label="Mjerna jedinica"
+              label="Jedinica mjere"
+              InputLabelProps={{
+                shrink: true
+              }}
               control={props.control}
               defaultValue=""
             />
@@ -147,7 +150,13 @@ function RobaScreen(props: Props) {
             onClick={
               props.editId !== undefined ? props.editRoba : props.addRoba
             }
-            style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+            style={{
+              height: '50px',
+              width: '150px',
+              alignSelf: 'center',
+              color: '#fff',
+              backgroundColor: '#0275d8'
+            }}
             variant="contained"
           >
             Spremi
@@ -155,10 +164,15 @@ function RobaScreen(props: Props) {
           {props.editId !== undefined ? (
             <Button
               onClick={props.odbaciUredivanje}
-              style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+              style={{
+                marginTop: '20px',
+                height: '50px',
+                width: '150px',
+                alignSelf: 'center'
+              }}
               variant="contained"
             >
-              Odbaci Uredivanje
+              Odbaci Uređivanje
             </Button>
           ) : null}
         </div>
@@ -186,6 +200,7 @@ function RobaScreen(props: Props) {
                 <TableCell align="left">{item.jedinicaMjere} kg</TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#0275d8', color: '#fff' }}
                     onClick={() => props.onEditPress(item, i)}
                     variant="contained"
                   >
@@ -194,6 +209,7 @@ function RobaScreen(props: Props) {
                 </TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#d9534f', color: '#fff' }}
                     onClick={() => props.deleteRoba(i)}
                     variant="contained"
                   >

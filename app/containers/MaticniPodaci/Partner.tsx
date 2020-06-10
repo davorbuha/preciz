@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable promise/always-return */
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import storage from 'electron-json-storage';
 import { useForm } from 'react-hook-form';
 import PartnerScreen, {
@@ -8,8 +9,10 @@ import PartnerScreen, {
 } from '../../screens/MaticniPodaci/PartnerScreen';
 import dbnames from '../../db/dbnames';
 import Partner from '../../types/Partner';
+import ErrorDialog from '../../components/ErrorDialog';
 
 function PartnerContainer() {
+  const [errorText, setErrorText] = React.useState<string>();
   const [partneri, setPartneri] = React.useState<Partner[]>([]);
   const [editId, setEditId] = React.useState<number | undefined>();
   const { handleSubmit, errors, control, setValue } = useForm({
@@ -36,6 +39,14 @@ function PartnerContainer() {
       });
   }, []);
   const addPartner = (p: any) => {
+    if (
+      partneri.find(
+        par => p[fields.sifra].toLowerCase() === par.sifra.toLowerCase()
+      )
+    ) {
+      setErrorText('Unesena šifra robe već postoji u bazi');
+      return;
+    }
     setValue(fields.naziv, '');
     setValue(fields.sifra, '');
     setValue(fields.ulica, '');
@@ -46,6 +57,7 @@ function PartnerContainer() {
     setValue(fields.napomena, '');
 
     const partner = new Partner(
+      uuidv4(),
       p[fields.naziv],
       p[fields.sifra],
       p[fields.ulica],
@@ -75,6 +87,7 @@ function PartnerContainer() {
   const editPartner = () => {
     handleSubmit(p => {
       const partner = new Partner(
+        uuidv4(),
         p[fields.naziv],
         p[fields.sifra],
         p[fields.ulica],
@@ -121,17 +134,23 @@ function PartnerContainer() {
     setPartneri(partneriToSet);
   };
   return (
-    <PartnerScreen
-      odbaciUredivanje={odbaciUredivanje}
-      editId={editId}
-      onEditPress={onEditPress}
-      deletePartner={deletePartner}
-      editPartner={editPartner}
-      addPartner={handleSubmit(addPartner)}
-      control={control}
-      errors={errors}
-      partneri={partneri}
-    />
+    <>
+      <ErrorDialog
+        errorText={errorText}
+        handleClose={() => setErrorText(undefined)}
+      />
+      <PartnerScreen
+        odbaciUredivanje={odbaciUredivanje}
+        editId={editId}
+        onEditPress={onEditPress}
+        deletePartner={deletePartner}
+        editPartner={editPartner}
+        addPartner={handleSubmit(addPartner)}
+        control={control}
+        errors={errors}
+        partneri={partneri}
+      />
+    </>
   );
 }
 

@@ -18,6 +18,7 @@ import {
   Button
 } from '@material-ui/core';
 import Partner from '../../types/Partner';
+import { blue } from '@material-ui/core/colors';
 
 function renderErrorForField(errors: any, fieldName: string) {
   if (errors[fieldName]) {
@@ -120,6 +121,7 @@ const rules = {
     }
   }
 };
+
 function PartnerScreen(props: Props) {
   const classes = useStyles();
   return (
@@ -239,7 +241,13 @@ function PartnerScreen(props: Props) {
             onClick={
               props.editId !== undefined ? props.editPartner : props.addPartner
             }
-            style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+            style={{
+              height: '50px',
+              width: '150px',
+              alignSelf: 'center',
+              color: '#fff',
+              backgroundColor: '#0275d8'
+            }}
             variant="contained"
           >
             Spremi
@@ -247,10 +255,15 @@ function PartnerScreen(props: Props) {
           {props.editId !== undefined ? (
             <Button
               onClick={props.odbaciUredivanje}
-              style={{ height: '50px', width: '150px', alignSelf: 'center' }}
+              style={{
+                marginTop: '20px',
+                height: '50px',
+                width: '150px',
+                alignSelf: 'center'
+              }}
               variant="contained"
             >
-              Odbaci Uredivanje
+              Odbaci Uređivanje
             </Button>
           ) : null}
         </div>
@@ -288,6 +301,7 @@ function PartnerScreen(props: Props) {
                 <TableCell align="left">{item.napomena}</TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#0275d8', color: '#fff' }}
                     onClick={() => props.onEditPress(item, i)}
                     variant="contained"
                   >
@@ -296,6 +310,7 @@ function PartnerScreen(props: Props) {
                 </TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button
+                    style={{ backgroundColor: '#d9534f', color: '#fff' }}
                     onClick={() => props.deletePartner(i)}
                     variant="contained"
                   >

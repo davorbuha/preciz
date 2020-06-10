@@ -73,7 +73,7 @@ function RobaContainer() {
             rob.sifraRobe.toLowerCase() === r[fields.sifraRobe].toLowerCase()
         )
       ) {
-        setErrorText('Unesena sifra robe već postoji u bazi');
+        setErrorText('Unesena šifra robe već postoji u bazi');
         return;
       }
       const roba = new Roba(

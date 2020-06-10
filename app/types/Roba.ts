@@ -24,11 +24,11 @@ class Roba {
     if (!(maybe.sifra_robe.length > 0 && maybe.sifra_robe.length < 100)) {
       throw new Error('sifraRobe not valid');
     }
-    if (
-      !(maybe.jedinica_mjere.length > 0 && maybe.jedinica_mjere.length < 100)
-    ) {
-      throw new Error('sifraRobe not valid');
-    }
+    //    if (
+    //      !(maybe.jedinica_mjere.length > 0 && maybe.jedinica_mjere.length < 100)
+    //    ) {
+    //      throw new Error('sifraRobe not valid');
+    //    }
     return new Roba(
       maybe.id,
       maybe.naziv,
