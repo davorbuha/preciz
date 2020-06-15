@@ -40,8 +40,8 @@ class Prikolica {
   public toJSON() {
     return {
       id: this.id,
-      registracija: this.registracijaPrikolice,
-      tip_vozila: this.tipPrikolice,
+      registracija_prikolice: this.registracijaPrikolice,
+      tip_prikolice: this.tipPrikolice,
       tezina_prikolice: this.tezinaPrikolice
     };
   }
