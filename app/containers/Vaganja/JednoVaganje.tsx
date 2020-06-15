@@ -8,6 +8,7 @@ import Vozac from '../../types/Vozac';
 import Roba from '../../types/Roba';
 import Partner from '../../types/Partner';
 import MjestoIsporuke from '../../types/MjestoIsporuke';
+import { useForm } from 'react-hook-form';
 
 function JednoVaganjeContainer() {
   const [vozila, setVozila] = React.useState<Vozilo[]>([]);
@@ -18,6 +19,7 @@ function JednoVaganjeContainer() {
   const [mjestaIsporuke, setMjestaIsporuke] = React.useState<MjestoIsporuke[]>(
     []
   );
+  const { watch, control, handleSubmit } = useForm({ mode: 'onChange' });
   useEffect(() => {
     storage.get(dbnames.vozila, (err, data: any) => {
       if (!err) {
@@ -74,15 +76,12 @@ function JednoVaganjeContainer() {
       }
     });
   }, []);
-  console.log('vozila', vozila);
-  console.log('prikolice', prikolice);
-  console.log('vozaci', vozaci);
-  console.log('roba', roba);
-  console.log('partneri', partneri);
-  console.log('mjestaIsporuke', mjestaIsporuke);
 
   return (
     <JednoVaganjeScreen
+      watch={watch}
+      control={control}
+      handleSubmit={() => {}}
       vozila={vozila}
       prikolice={prikolice}
       vozaci={vozaci}

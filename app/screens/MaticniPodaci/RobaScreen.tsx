@@ -1,3 +1,5 @@
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-wrap-multilines */
 import React from 'react';
 import {
   Control,
