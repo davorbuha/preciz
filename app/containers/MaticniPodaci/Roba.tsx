@@ -49,8 +49,8 @@ function RobaContainer() {
     setValue(fields.jedinicaMjere, '');
     const roba = new Roba(
       uuidv4(),
-      r[fields.sifraRobe],
       r[fields.naziv],
+      r[fields.sifraRobe],
       r[fields.jedinicaMjere]
     );
     const robeToSet = [...robe, roba];
@@ -78,8 +78,8 @@ function RobaContainer() {
       }
       const roba = new Roba(
         robe[editId!].id,
-        r[fields.sifraRobe],
         r[fields.naziv],
+        r[fields.sifraRobe],
         r[fields.jedinicaMjere]
       );
       const robeToSet = [...robe];

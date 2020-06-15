@@ -263,7 +263,7 @@ function PartnerScreen(props: Props) {
               }}
               variant="contained"
             >
-              Odbaci Uređivanje
+              Odbaci
             </Button>
           ) : null}
         </div>

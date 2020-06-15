@@ -45,8 +45,8 @@ interface Props {
 }
 
 export const fields = {
-  sifraRobe: 'SifraRobe',
   naziv: 'Naziv',
+  sifraRobe: 'SifraRobe',
   jedinicaMjere: 'JedinicaMjere'
 };
 const useStyles = makeStyles(() => ({
@@ -172,7 +172,7 @@ function RobaScreen(props: Props) {
               }}
               variant="contained"
             >
-              Odbaci Uređivanje
+              Odbaci
             </Button>
           ) : null}
         </div>
