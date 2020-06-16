@@ -58,8 +58,8 @@ function PartnerContainer() {
 
     const partner = new Partner(
       uuidv4(),
-      p[fields.naziv],
       p[fields.sifra],
+      p[fields.naziv],
       p[fields.ulica],
       p[fields.grad],
       p[fields.telefon],
@@ -88,8 +88,8 @@ function PartnerContainer() {
     handleSubmit(p => {
       const partner = new Partner(
         uuidv4(),
-        p[fields.naziv],
         p[fields.sifra],
+        p[fields.naziv],
         p[fields.ulica],
         p[fields.grad],
         p[fields.telefon],

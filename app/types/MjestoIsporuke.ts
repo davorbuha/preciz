@@ -12,7 +12,7 @@ class MjestoIsporuke {
     if (!(maybe.naziv.length > 0 && maybe.naziv.length < 100)) {
       throw new Error('naziv not valid');
     }
-    return new MjestoIsporuke(maybe.naziv, maybe.id);
+    return new MjestoIsporuke(maybe.id, maybe.naziv);
   }
 
   public toJSON() {

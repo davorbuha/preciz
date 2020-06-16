@@ -37,7 +37,7 @@ function MjestoIsporukeContainer() {
     setValue(fields.naziv, '');
     const mjestoIsporuke = new MjestoIsporuke(uuidv4(), m[fields.naziv]);
     const mjestaToSet = [...mjesta, mjestoIsporuke];
-    storage.set(dbnames.vozila, mjestaToSet, err =>
+    storage.set(dbnames.mjesta, mjestaToSet, err =>
       console.log('vozila error', err)
     );
     setMjesta(mjestaToSet);

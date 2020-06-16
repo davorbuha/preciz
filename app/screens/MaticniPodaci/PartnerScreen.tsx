@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import {
   Control,
@@ -18,7 +19,6 @@ import {
   Button
 } from '@material-ui/core';
 import Partner from '../../types/Partner';
-import { blue } from '@material-ui/core/colors';
 
 function renderErrorForField(errors: any, fieldName: string) {
   if (errors[fieldName]) {
@@ -290,7 +290,7 @@ function PartnerScreen(props: Props) {
           </TableHead>
           <TableBody>
             {props.partneri.map((item, i) => (
-              <TableRow key={i}>
+              <TableRow key={item.id}>
                 <TableCell align="left">{item.naziv}</TableCell>
                 <TableCell align="left">{item.sifra}</TableCell>
                 <TableCell align="left">{item.ulica}</TableCell>

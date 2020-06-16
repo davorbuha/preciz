@@ -13,6 +13,9 @@ import Prikolica from '../../types/Prikolica';
 import Vozac from '../../types/Vozac';
 import Roba from '../../types/Roba';
 import FreeDropdown from '../../components/FreeDropdown';
+import Partner from '../../types/Partner';
+import MjestoIsporuke from '../../types/MjestoIsporuke';
+import OutlinedTextField from '../../components/OutlinedTextField';
 
 const tipoviVaganja = [
   { title: 'Ulaz', value: 'ulaz' },
@@ -24,12 +27,14 @@ const fields = {
   vozilo: 'vozilo',
   prikolica: 'prikolica',
   vozac: 'vozac',
-  roba: 'roba'
+  roba: 'roba',
+  dobavljac: 'dobavljac',
+  mjestoIsporuke: 'mjestoIsporuke'
 };
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: '50px',
+    padding: '20px 50px',
     display: 'flex',
     flexDirection: 'column'
   },
@@ -43,7 +48,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 50
   },
   span: {
-    minWidth: 100,
+    minWidth: 160,
     fontSize: 20
   },
   titleRow: {
@@ -64,6 +69,8 @@ interface Props {
   prikolice: Prikolica[];
   vozaci: Vozac[];
   roba: Roba[];
+  partneri: Partner[];
+  mjestaIsporuke: MjestoIsporuke[];
   control: Control<Record<string, any>>;
   watch: any;
 }
@@ -208,6 +215,58 @@ function JednoVaganjeScreen(props: Props) {
           Šifra:
         </span>
         <DisabledOutlined suffix={' '} ref={sifraRobeRef} marginLeft={80} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div>
+          <div className={classes.inputRow}>
+            <span className={classes.span}>Dobavljač: </span>
+            <Controller
+              defaultValue=""
+              control={control}
+              name={fields.dobavljac}
+              as={
+                <FreeDropdown
+                  width={250}
+                  marginLeft={60}
+                  data={props.partneri.map(item => ({
+                    title: item.naziv,
+                    value: item.id
+                  }))}
+                />
+              }
+            />
+          </div>
+          <div className={classes.inputRow}>
+            <span className={classes.span}>Mjesto Isporuke: </span>
+            <Controller
+              defaultValue=""
+              control={control}
+              name={fields.mjestoIsporuke}
+              as={
+                <FreeDropdown
+                  width={250}
+                  marginLeft={60}
+                  data={props.mjestaIsporuke.map(item => ({
+                    title: item.naziv,
+                    value: item.id
+                  }))}
+                />
+              }
+            />
+          </div>
+          <div className={classes.inputRow}>
+            <span className={classes.span}>Broj naloga: </span>
+            <Controller
+              defaultValue=""
+              control={control}
+              name={fields.mjestoIsporuke}
+              as={<OutlinedTextField width={250} marginLeft={60} />}
+            />
+          </div>
+        </div>
+        <div style={{ marginTop: 30 }}>
+          <p>aaaaa</p>
+        </div>
       </div>
     </div>
   );

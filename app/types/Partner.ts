@@ -51,9 +51,9 @@ class Partner {
     if (!(maybe.napomena.length > 0 && maybe.napomena.length < 100)) {
       throw new Error('napomena not valid');
     }
-    if (!(maybe.fax.length > 0 && maybe.fax.length < 100)) {
-      throw new Error('fax not valid');
-    }
+    // if (!(maybe.fax.length > 0 && maybe.fax.length < 100)) {
+    //   throw new Error('fax not valid');
+    // }
     return new Partner(
       maybe.id,
       maybe.sifra,
@@ -61,9 +61,9 @@ class Partner {
       maybe.ulica,
       maybe.grad,
       maybe.telefon,
+      maybe.fax,
       maybe.email,
-      maybe.napomena,
-      maybe.fax
+      maybe.napomena
     );
   }
 
