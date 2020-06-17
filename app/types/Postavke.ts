@@ -1,9 +1,9 @@
 /* eslint-disable lines-between-class-members */
 class Postavke {
-  communicationPort: number;
+  communicationPort: string;
   baudRate: number;
 
-  constructor(communicationPort: number, baudRate: number) {
+  constructor(communicationPort: string, baudRate: number) {
     this.communicationPort = communicationPort;
     this.baudRate = baudRate;
   }

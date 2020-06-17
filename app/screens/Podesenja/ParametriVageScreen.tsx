@@ -3,28 +3,28 @@ import {
   Control,
   NestDataObject,
   FieldError,
-  OnSubmit,
   Controller
 } from 'react-hook-form';
+import storage from 'electron-json-storage';
+import { Button } from '@material-ui/core';
 import Dropdown, { Element } from '../../components/Dropdown';
+import dbnames from '../../db/dbnames';
+import Postavke from '../../types/Postavke';
 
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 
 interface Props {
   getValues: (a: string) => any;
+  setValue: (k: string, v: any) => void;
   control: Control<Record<string, any>>;
   errors: NestDataObject<Record<string, any>, FieldError>;
-  handleSubmit: (
-    callback: OnSubmit<Record<string, any>>
-  ) => (
-    e?: React.BaseSyntheticEvent<object, any, any> | undefined
-  ) => Promise<void>;
+  handleSubmit: () => void;
 }
 
-const fields = {
+export const fields = {
   communicationPort: 'communicationPort',
-  baudRates: 'baudRates'
+  baudRate: 'baudRate'
 };
 
 const communicationPorts: Element[] = [
@@ -47,14 +47,23 @@ const baudRates: Element[] = [
 ];
 
 function ParametriVageScreen(p: Props) {
+  const [stringVage, setStringVage] = React.useState('');
   const { control } = p;
   React.useEffect(() => {
-    const port = new SerialPort('/dev/tty.usbserial-14320', { baudRate: 9600 });
+    storage.get(dbnames.postavke, (err, data) => {
+      const postavke = Postavke.fromJSON(data);
+      p.setValue(fields.communicationPort, postavke.communicationPort);
+      p.setValue(fields.baudRate, postavke.baudRate);
+      if (postavke.communicationPort) {
+        const port = new SerialPort(postavke.communicationPort, {
+          baudRate: postavke.baudRate
+        });
+        const parser = new Readline();
+        port.pipe(parser);
 
-    const parser = new Readline();
-    port.pipe(parser);
-
-    parser.on('data', line => console.log(`> ${line}`));
+        parser.on('data', line => setStringVage(line));
+      }
+    });
   }, []);
   return (
     <div style={{ padding: '20px 50px' }}>
@@ -62,6 +71,7 @@ function ParametriVageScreen(p: Props) {
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <span style={{ fontSize: 20 }}>Communication port: </span>
         <Controller
+          defaultValue=""
           name={fields.communicationPort}
           control={control}
           as={
@@ -74,11 +84,16 @@ function ParametriVageScreen(p: Props) {
           Bits per second:
         </span>
         <Controller
-          name={fields.baudRates}
+          defaultValue=""
+          name={fields.baudRate}
           control={control}
           as={<Dropdown data={baudRates} width={250} marginLeft={60} />}
         />
       </div>
+      <Button onClick={p.handleSubmit} variant="contained">
+        Spremi
+      </Button>
+      <p>{stringVage}</p>
     </div>
   );
 }

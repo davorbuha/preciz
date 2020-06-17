@@ -43,6 +43,11 @@ function Dropdown(p: Props) {
         height: 50
       }}
       MenuProps={{
+        PaperProps: {
+          style: {
+            maxHeight: 200
+          }
+        },
         getContentAnchorEl: null,
         anchorOrigin: {
           vertical: 'bottom',
@@ -53,13 +58,11 @@ function Dropdown(p: Props) {
       value={p.value}
       onChange={ev => p.onChange!(ev.target.value)}
     >
-      <div style={{ maxHeight: 200 }}>
-        {p.data.map(item => (
-          <MenuItem key={item.value} value={item.value}>
-            {item.title}
-          </MenuItem>
-        ))}
-      </div>
+      {p.data.map(item => (
+        <MenuItem key={item.value} value={item.value}>
+          {item.title}
+        </MenuItem>
+      ))}
     </Select>
   );
 }
