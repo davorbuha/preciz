@@ -182,7 +182,7 @@ function RobaScreen(props: Props) {
       <TableContainer className={classes.tableContainer} component={Paper}>
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow style={{ backgroundColor: '#cbd0d6' }}>
               <TableCell align="left">Šifra robe</TableCell>
               <TableCell align="left">Naziv</TableCell>
               <TableCell align="left">Jedinica mjere</TableCell>
@@ -196,7 +196,7 @@ function RobaScreen(props: Props) {
           </TableHead>
           <TableBody>
             {props.robe.map((item, i) => (
-              <TableRow key={i}>
+              <TableRow key={i} style={{ backgroundColor: '#f5f7f7' }}>
                 <TableCell align="left">{item.sifraRobe}</TableCell>
                 <TableCell align="left">{item.naziv}</TableCell>
                 <TableCell align="left">{item.jedinicaMjere} kg</TableCell>

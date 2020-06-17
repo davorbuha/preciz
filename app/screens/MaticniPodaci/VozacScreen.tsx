@@ -207,7 +207,7 @@ function VozacScreen(props: Props) {
           </TableHead>
           <TableBody>
             {props.vozaci.map((item, i) => (
-              <TableRow key={i}>
+              <TableRow key={i} style={{ backgroundColor: '#f5f7f7' }}>
                 <TableCell align="left">{item.ime}</TableCell>
                 <TableCell align="left">{item.prezime}</TableCell>
                 <TableCell align="left">{item.oib}</TableCell>

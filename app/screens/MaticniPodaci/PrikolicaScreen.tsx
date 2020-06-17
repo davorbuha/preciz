@@ -191,7 +191,7 @@ function PrikolicaScreen(props: Props) {
       <TableContainer className={classes.tableContainer} component={Paper}>
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow style={{ backgroundColor: '#cbd0d6' }}>
               <TableCell align="left">Registracija</TableCell>
               <TableCell align="left">Tip prikolice</TableCell>
               <TableCell align="left">Težina prikolice</TableCell>
@@ -205,7 +205,7 @@ function PrikolicaScreen(props: Props) {
           </TableHead>
           <TableBody>
             {props.prikolice.map((item, i) => (
-              <TableRow key={i}>
+              <TableRow key={i} style={{ backgroundColor: '#f5f7f7' }}>
                 <TableCell align="left">{item.registracijaPrikolice}</TableCell>
                 <TableCell align="left">{item.tipPrikolice}</TableCell>
                 <TableCell align="left">{item.tezinaPrikolice} Kg</TableCell>
