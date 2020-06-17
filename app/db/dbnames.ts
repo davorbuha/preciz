@@ -5,5 +5,6 @@ export default {
   vozaci: 'vozaci',
   roba: 'roba',
   partneri: 'partneri',
-  mjesta: 'mjesta'
+  mjesta: 'mjesta',
+  postavke: 'postavke'
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { Select, OutlinedInput, MenuItem, makeStyles } from '@material-ui/core';
 import colors from '../styles/colors';
 
-type Element = {
+export type Element = {
   title: string;
   value: any;
 };
@@ -53,11 +53,13 @@ function Dropdown(p: Props) {
       value={p.value}
       onChange={ev => p.onChange!(ev.target.value)}
     >
-      {p.data.map(item => (
-        <MenuItem key={item.value} value={item.value}>
-          {item.title}
-        </MenuItem>
-      ))}
+      <div style={{ maxHeight: 200 }}>
+        {p.data.map(item => (
+          <MenuItem key={item.value} value={item.value}>
+            {item.title}
+          </MenuItem>
+        ))}
+      </div>
     </Select>
   );
 }

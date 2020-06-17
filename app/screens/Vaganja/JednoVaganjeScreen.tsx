@@ -16,6 +16,7 @@ import FreeDropdown from '../../components/FreeDropdown';
 import Partner from '../../types/Partner';
 import MjestoIsporuke from '../../types/MjestoIsporuke';
 import OutlinedTextField from '../../components/OutlinedTextField';
+import IzvaganaMasaComponent from '../../components/IzvaganaMasaComponent';
 
 const tipoviVaganja = [
   { title: 'Ulaz', value: 'ulaz' },
@@ -29,7 +30,8 @@ const fields = {
   vozac: 'vozac',
   roba: 'roba',
   dobavljac: 'dobavljac',
-  mjestoIsporuke: 'mjestoIsporuke'
+  mjestoIsporuke: 'mjestoIsporuke',
+  brojNaloga: 'brojNaloga'
 };
 
 const useStyles = makeStyles(theme => ({
@@ -39,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column'
   },
   weigthingDataTitle: {
-    marginBottom: 30,
+    marginBottom: 10,
     color: colors.primary
   },
   formcontrol: {
@@ -259,14 +261,12 @@ function JednoVaganjeScreen(props: Props) {
             <Controller
               defaultValue=""
               control={control}
-              name={fields.mjestoIsporuke}
+              name={fields.brojNaloga}
               as={<OutlinedTextField width={250} marginLeft={60} />}
             />
           </div>
         </div>
-        <div style={{ marginTop: 30 }}>
-          <p>aaaaa</p>
-        </div>
+        <IzvaganaMasaComponent />
       </div>
     </div>
   );
