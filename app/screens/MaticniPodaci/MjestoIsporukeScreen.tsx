@@ -148,7 +148,7 @@ function MjestoIsporukeScreen(props: Props) {
       <TableContainer className={classes.tableContainer} component={Paper}>
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow style={{ backgroundColor: '#cbd0d6' }}>
               <TableCell align="left">Naziv</TableCell>
               <TableCell style={{ width: 30 }} align="left">
                 {' '}
@@ -160,7 +160,7 @@ function MjestoIsporukeScreen(props: Props) {
           </TableHead>
           <TableBody>
             {props.mjesta.map((item, i) => (
-              <TableRow key={i}>
+              <TableRow key={i} style={{ backgroundColor: '#f5f7f7' }}>
                 <TableCell align="left">{item.naziv}</TableCell>
                 <TableCell style={{ width: 30 }} align="left">
                   <Button

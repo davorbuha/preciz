@@ -194,7 +194,7 @@ function VoziloScreen(props: Props) {
       <TableContainer className={classes.tableContainer} component={Paper}>
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow style={{ backgroundColor: '#cbd0d6' }}>
               <TableCell align="left">Registracija</TableCell>
               <TableCell align="left">Tip vozila</TableCell>
               <TableCell align="left">Težina</TableCell>
@@ -208,7 +208,7 @@ function VoziloScreen(props: Props) {
           </TableHead>
           <TableBody>
             {props.vozila.map((item, i) => (
-              <TableRow key={i}>
+              <TableRow key={i} style={{ backgroundColor: '#f5f7f7' }}>
                 <TableCell align="left">{item.registracija}</TableCell>
                 <TableCell align="left">{item.tipVozila}</TableCell>
                 <TableCell align="left">{item.tezina} Kg</TableCell>
