@@ -1,8 +1,9 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/styles';
+import ReactPDF from '@react-pdf/renderer';
 import SelectMenu from './SelectMenu';
 import { RoutesEnum } from '../routes';
+import MyDocument from './PDF';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -12,10 +13,6 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-around'
   }
 }));
-
-interface Props {
-  children: JSX.Element;
-}
 
 const MaticniPodaciItems = [
   { path: RoutesEnum.MaticniPodaciVozilo, title: 'Vozilo' },
@@ -49,7 +46,9 @@ const PodesenjaItems = [
   { path: RoutesEnum.ParametriVage, title: 'Parametri vage' }
 ];
 
-function Header(p: Props) {
+function Header() {
+  console.log(__dirname);
+  ReactPDF.render(<MyDocument />, `${__dirname}/example.pdf`);
   const classes = useStyles();
   return (
     <>
@@ -60,7 +59,6 @@ function Header(p: Props) {
         <SelectMenu title="Baza podataka" menuItems={BazaItems} />
         <SelectMenu title="Podešenja" menuItems={PodesenjaItems} />
       </div>
-      {p.children}
     </>
   );
 }
