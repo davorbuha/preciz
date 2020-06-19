@@ -57,8 +57,9 @@ const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
-    padding: 40
+    height: '85vh',
+    padding: 40,
+    overflowY: 'scroll'
   },
   titlestyle: {
     marginBottom: '20px'

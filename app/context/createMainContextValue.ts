@@ -1,6 +1,7 @@
 import React from 'react';
-import { State, SET_COMPANY } from './reducer';
+import { State, SET_COMPANY, SET_SETTINGS } from './reducer';
 import { MainContextType } from './MainContext';
+import Postavke from '../types/Postavke';
 
 function createMainContextValue(
   state: State,
@@ -8,6 +9,8 @@ function createMainContextValue(
 ): MainContextType {
   return {
     state,
+    setSettings: (settings: Postavke) =>
+      dispatch({ type: SET_SETTINGS, settings }),
     setCompany: (name: string) => dispatch({ type: SET_COMPANY, name })
   };
 }

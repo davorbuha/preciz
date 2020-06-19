@@ -9,7 +9,8 @@ import mainReducer, { State } from './context/reducer';
 import SetupModal from './components/SetupModal';
 
 const initialState: State = {
-  companyName: ''
+  companyName: '',
+  settings: {} as any
 };
 
 export default function RouterComponent() {
@@ -17,7 +18,7 @@ export default function RouterComponent() {
   const [state, dispatch] = React.useReducer(mainReducer, initialState);
   const mainContext = React.useMemo(
     () => createMainContextValue(state, dispatch),
-    []
+    [state]
   );
 
   React.useEffect(() => {

@@ -29,7 +29,7 @@ function OutlinedTextField(p: any) {
   return (
     <TextField
       style={{
-        marginLeft: p.marginLeft ? p.marginLeft : 200,
+        marginLeft: p.marginLeft || p.marginLeft === 0 ? p.marginLeft : 200,
         minWidth: p.width ? p.width : 100,
         height: 50
       }}

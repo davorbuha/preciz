@@ -47,7 +47,6 @@ const PodesenjaItems = [
 ];
 
 function Header() {
-  console.log(__dirname);
   ReactPDF.render(<MyDocument />, `${__dirname}/example.pdf`);
   const classes = useStyles();
   return (

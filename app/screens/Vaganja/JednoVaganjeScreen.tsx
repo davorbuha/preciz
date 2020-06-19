@@ -36,9 +36,11 @@ const fields = {
 
 const useStyles = makeStyles(theme => ({
   container: {
-    padding: '20px 50px',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    height: '85vh',
+    padding: '20px 50px',
+    overflowY: 'scroll'
   },
   weigthingDataTitle: {
     marginBottom: 10,
