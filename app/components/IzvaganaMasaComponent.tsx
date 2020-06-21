@@ -1,13 +1,15 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
-import colors from '../styles/colors';
 import { Button } from '@material-ui/core';
+import colors from '../styles/colors';
 
 interface Props {
   brutto?: string;
   tara?: string;
   neto?: string;
   masa?: string;
+  vrijednostVage: string;
+  mirnaVaga: boolean;
 }
 
 function IzvaganaMasaComponent(p: Props) {
@@ -23,7 +25,10 @@ function IzvaganaMasaComponent(p: Props) {
         padding: 10
       }}
     >
-      <p>Izvagana masa je:</p>
+      <p>Izvagana masa je: {p.vrijednostVage}</p>
+      <p style={{ fontSize: 16, margin: '10px 0px' }}>
+        {p.mirnaVaga ? 'Vaga je mirna' : 'Vaga nije mirna'}
+      </p>
       <div
         style={{
           marginTop: 10,

@@ -35,14 +35,10 @@ function ParametriVageContainer() {
     }
   }, [state]);
   React.useEffect(() => {
-    storage.get(dbnames.postavke, (err, data) => {
-      const postavke = Postavke.fromJSON(data);
-      setValue(fields.communicationPort, postavke.communicationPort);
-      setValue(fields.baudRate, postavke.baudRate);
-      setValue(fields.startPosition, postavke.startPostion);
-      setValue(fields.endPosition, postavke.endPosition);
-      setSettings(postavke);
-    });
+    setValue(fields.communicationPort, state.settings.communicationPort);
+    setValue(fields.baudRate, state.settings.baudRate);
+    setValue(fields.startPosition, state.settings.startPostion);
+    setValue(fields.endPosition, state.settings.endPosition);
   }, []);
 
   const submit = () => {

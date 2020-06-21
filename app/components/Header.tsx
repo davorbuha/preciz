@@ -1,9 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import ReactPDF from '@react-pdf/renderer';
+import storage from 'electron-json-storage';
 import SelectMenu from './SelectMenu';
 import { RoutesEnum } from '../routes';
 import MyDocument from './PDF';
+import dbnames from '../db/dbnames';
+import Postavke from '../types/Postavke';
+import MainContext from '../context/MainContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,6 +51,13 @@ const PodesenjaItems = [
 ];
 
 function Header() {
+  const { setSettings } = React.useContext(MainContext);
+  React.useEffect(() => {
+    storage.get(dbnames.postavke, (err, data) => {
+      const postavke = Postavke.fromJSON(data);
+      setSettings(postavke);
+    });
+  }, []);
   ReactPDF.render(<MyDocument />, `${__dirname}/example.pdf`);
   const classes = useStyles();
   return (

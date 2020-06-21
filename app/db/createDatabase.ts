@@ -9,12 +9,10 @@ function setup(setSetupModal: (val: boolean) => void) {
   storage.get(dbnames.setup, (error, data: any) => {
     try {
       const companyDetails = CompanyDetails.fromJSON(data);
-      console.log(companyDetails);
       if (!companyDetails.companyName) {
         setSetupModal(true);
       }
     } catch (e) {
-      console.log(e);
       setSetupModal(true);
     }
   });

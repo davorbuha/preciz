@@ -77,6 +77,8 @@ interface Props {
   mjestaIsporuke: MjestoIsporuke[];
   control: Control<Record<string, any>>;
   watch: any;
+  vrijednostVage: string;
+  mirnaVaga: boolean;
 }
 
 function JednoVaganjeScreen(props: Props) {
@@ -268,7 +270,10 @@ function JednoVaganjeScreen(props: Props) {
             />
           </div>
         </div>
-        <IzvaganaMasaComponent />
+        <IzvaganaMasaComponent
+          mirnaVaga={props.mirnaVaga}
+          vrijednostVage={props.vrijednostVage}
+        />
       </div>
     </div>
   );
