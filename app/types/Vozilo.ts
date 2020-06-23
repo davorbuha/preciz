@@ -3,13 +3,13 @@ class Vozilo {
   id: string;
   registracija: string;
   tipVozila: string;
-  tezina: number;
+  tezina: string;
 
   constructor(
     id: string,
     registracija: string,
     tipVozila: string,
-    tezina: number
+    tezina: string
   ) {
     this.id = id;
     this.registracija = registracija;

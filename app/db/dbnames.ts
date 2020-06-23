@@ -6,5 +6,7 @@ export default {
   roba: 'roba',
   partneri: 'partneri',
   mjesta: 'mjesta',
-  postavke: 'postavke'
+  postavke: 'postavke',
+  jednoVaganje: 'jednoVaganje',
+  prvoVaganje: 'prvoVaganje'
 };

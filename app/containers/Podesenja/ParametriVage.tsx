@@ -11,22 +11,28 @@ import MainContext from '../../context/MainContext';
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 
+let portState: any;
+
 function ParametriVageContainer() {
   const { setSettings, state } = React.useContext(MainContext);
   const { setValue, control, errors, handleSubmit, getValues } = useForm({
     mode: 'onChange'
   });
   const [stringVage, setStringVage] = React.useState('');
-  const [portState, setPortState] = React.useState();
   React.useEffect(() => {
-    if (portState) portState.close();
+    return () => {
+      if (portState) portState.close();
+    };
+  }, []);
+  React.useEffect(() => {
+    if (portState) (portState as any).close();
     if (state.settings.communicationPort) {
       const port = new SerialPort(state.settings.communicationPort, {
         baudRate: state.settings.baudRate
       });
       const parser = new Readline();
       port.pipe(parser);
-      setPortState(port);
+      portState = port;
       setStringVage('');
       parser.on('data', line => setStringVage(line));
       port.on('close', function() {
@@ -35,10 +41,20 @@ function ParametriVageContainer() {
     }
   }, [state]);
   React.useEffect(() => {
-    setValue(fields.communicationPort, state.settings.communicationPort);
-    setValue(fields.baudRate, state.settings.baudRate);
-    setValue(fields.startPosition, state.settings.startPostion);
-    setValue(fields.endPosition, state.settings.endPosition);
+    if (!state.settings.communicationPort) {
+      storage.get(dbnames.postavke, (err, data) => {
+        const postavke = Postavke.fromJSON(data);
+        setValue(fields.communicationPort, postavke.communicationPort);
+        setValue(fields.baudRate, postavke.baudRate);
+        setValue(fields.startPosition, postavke.startPostion);
+        setValue(fields.endPosition, postavke.endPosition);
+      });
+    } else {
+      setValue(fields.communicationPort, state.settings.communicationPort);
+      setValue(fields.baudRate, state.settings.baudRate);
+      setValue(fields.startPosition, state.settings.startPostion);
+      setValue(fields.endPosition, state.settings.endPosition);
+    }
   }, []);
 
   const submit = () => {

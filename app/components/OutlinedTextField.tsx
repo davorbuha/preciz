@@ -25,18 +25,29 @@ function OutlinedTextField(p: any) {
   const toPass = { ...p };
   delete toPass.marginLeft;
   delete toPass.width;
+  delete toPass.error;
 
   return (
-    <TextField
+    <div
       style={{
         marginLeft: p.marginLeft || p.marginLeft === 0 ? p.marginLeft : 200,
         minWidth: p.width ? p.width : 100,
         height: 50
       }}
-      {...toPass}
-      variant="outlined"
-      classes={{ root: classes.root }}
-    />
+    >
+      <TextField
+        style={{
+          minWidth: p.width ? p.width : 100,
+          height: 50
+        }}
+        {...toPass}
+        variant="outlined"
+        classes={{ root: classes.root }}
+      />
+      <p style={{ marginTop: 5, fontSize: 12, color: 'red' }}>
+        {p.error && p.error.message ? p.error.message : null}
+      </p>
+    </div>
   );
 }
 

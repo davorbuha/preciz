@@ -1,7 +1,10 @@
+/* eslint-disable import/no-cycle */
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import storage from 'electron-json-storage';
+import { withRouter } from 'react-router';
 import JednoVaganjeScreen from '../../screens/Vaganja/JednoVaganjeScreen';
+
 import dbnames from '../../db/dbnames';
 import Vozilo from '../../types/Vozilo';
 import Prikolica from '../../types/Prikolica';
@@ -10,13 +13,18 @@ import Roba from '../../types/Roba';
 import Partner from '../../types/Partner';
 import MjestoIsporuke from '../../types/MjestoIsporuke';
 import MainContext from '../../context/MainContext';
+import VaganjeSpremljenoModal from '../../components/VaganjeSpremljenoModal';
+import { RoutesEnum } from '../../routes';
 
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 
 const stanja = Array(20).fill('');
 
-function JednoVaganjeContainer() {
+function JednoVaganjeContainer(p: any) {
+  const [showSpremljenoVaganje, setShowSpremljenoVaganje] = React.useState(
+    false
+  );
   const { state } = React.useContext(MainContext);
   const [vozila, setVozila] = React.useState<Vozilo[]>([]);
   const [prikolice, setPrikolice] = React.useState<Prikolica[]>([]);
@@ -26,17 +34,22 @@ function JednoVaganjeContainer() {
   const [mjestaIsporuke, setMjestaIsporuke] = React.useState<MjestoIsporuke[]>(
     []
   );
-  const [mirnaVaga, setMirnaVaga] = React.useState<boolean>(false);
+  const [mirnaVaga, setMirnaVaga] = React.useState<boolean>(true);
   const [vrijednostVage, setVrijednostVage] = useState('');
-  const { watch, control, handleSubmit } = useForm({ mode: 'onChange' });
+  const { control, getValues, handleSubmit, errors, reset } = useForm({
+    mode: 'onChange'
+  });
   const handleVagaChange = (data: string) => {
     const value = data
       .split('')
-      .filter(
-        (char, i) =>
-          i >= state.settings.startPostion && i <= state.settings.endPosition
-      )
+      .filter((char, i) => {
+        return (
+          i >= state.settings.startPostion &&
+          i - 1 <= state.settings.endPosition
+        );
+      })
       .join('');
+    console.log(value);
     if (stanja[0]) {
       setVrijednostVage(value);
     } else {
@@ -52,17 +65,23 @@ function JednoVaganjeContainer() {
     }
   };
   useEffect(() => {
+    let port;
     if (state.settings.communicationPort) {
-      const port = new SerialPort(state.settings.communicationPort, {
-        baudRate: state.settings.baudRate
-      });
-      const parser = new Readline();
-      port.pipe(parser);
-      parser.on('data', handleVagaChange);
-      port.on('close', function() {
-        console.log('closed');
-      });
+      setTimeout(() => {
+        port = new SerialPort(state.settings.communicationPort, {
+          baudRate: state.settings.baudRate
+        });
+        const parser = new Readline();
+        port.pipe(parser);
+        parser.on('data', handleVagaChange);
+        port.on('close', function() {
+          console.log('closed');
+        });
+      }, 1000);
     }
+    return () => {
+      if (port) port.close();
+    };
   }, [state.settings]);
   useEffect(() => {
     storage.get(dbnames.vozila, (err, data: any) => {
@@ -122,20 +141,33 @@ function JednoVaganjeContainer() {
   }, []);
 
   return (
-    <JednoVaganjeScreen
-      mirnaVaga={mirnaVaga}
-      vrijednostVage={vrijednostVage}
-      watch={watch}
-      control={control}
-      handleSubmit={() => {}}
-      vozila={vozila}
-      prikolice={prikolice}
-      vozaci={vozaci}
-      roba={roba}
-      partneri={partneri}
-      mjestaIsporuke={mjestaIsporuke}
-    />
+    <>
+      <VaganjeSpremljenoModal
+        path={`${__dirname}/JednoVaganje.pdf`}
+        hide={() => {
+          p.history.push(RoutesEnum.Home);
+          setShowSpremljenoVaganje(false);
+        }}
+        show={showSpremljenoVaganje}
+      />
+      <JednoVaganjeScreen
+        reset={reset}
+        errors={errors}
+        showSpremljenoVaganje={() => setShowSpremljenoVaganje(true)}
+        handleSubmit={handleSubmit}
+        getValues={getValues}
+        mirnaVaga={mirnaVaga}
+        vrijednostVage={vrijednostVage}
+        control={control}
+        vozila={vozila}
+        prikolice={prikolice}
+        vozaci={vozaci}
+        roba={roba}
+        partneri={partneri}
+        mjestaIsporuke={mjestaIsporuke}
+      />
+    </>
   );
 }
 
-export default JednoVaganjeContainer;
+export default withRouter<any, any>(JednoVaganjeContainer);

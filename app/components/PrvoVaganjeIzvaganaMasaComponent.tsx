@@ -10,9 +10,6 @@ import MainContext from '../context/MainContext';
 import { RoutesEnum } from '../routes';
 
 interface Props {
-  brutto: number;
-  tara: number;
-  neto: number;
   masa?: string;
   vrijednostVage: string;
   mirnaVaga: boolean;
@@ -21,7 +18,7 @@ interface Props {
   handleSpremiPress: () => void;
 }
 
-function IzvaganaMasaComponent(p: Props) {
+function PrvoVaganjeIzvaganaMasaComponent(p: Props) {
   const { state } = React.useContext(MainContext);
   return (
     <div
@@ -49,17 +46,6 @@ function IzvaganaMasaComponent(p: Props) {
           justifyContent: 'space-between'
         }}
       >
-        <span
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            height: 36,
-            fontSize: 20,
-            marginTop: 20
-          }}
-        >
-          Brutto: {p.brutto}
-        </span>
         <div
           style={{
             width: '100%',
@@ -70,7 +56,6 @@ function IzvaganaMasaComponent(p: Props) {
             marginTop: 15
           }}
         >
-          <span style={{ fontSize: 20 }}>Tara: {p.tara}</span>
           <Button
             onClick={() => p.history.push(RoutesEnum.Home)}
             variant="contained"
@@ -89,7 +74,6 @@ function IzvaganaMasaComponent(p: Props) {
             marginTop: 15
           }}
         >
-          <span style={{ fontSize: 20 }}>Neto: {p.neto}</span>
           <Button
             disabled={!p.mirnaVaga}
             onClick={p.handleSpremiPress}
@@ -104,4 +88,4 @@ function IzvaganaMasaComponent(p: Props) {
   );
 }
 
-export default withRouter<any, any>(IzvaganaMasaComponent);
+export default withRouter<any, any>(PrvoVaganjeIzvaganaMasaComponent);

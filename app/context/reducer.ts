@@ -1,7 +1,8 @@
 import Postavke from '../types/Postavke';
+import CompanyDetails from '../types/CompanyDetails';
 
 export type State = {
-  companyName: string;
+  company: CompanyDetails;
   settings: Postavke;
 };
 
@@ -13,7 +14,7 @@ const mainReducer = (state: State, action: any): State => {
     case SET_SETTINGS:
       return { ...state, settings: action.settings };
     case SET_COMPANY:
-      return { ...state, companyName: action.name };
+      return { ...state, company: action.company };
     default:
       return state;
   }

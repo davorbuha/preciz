@@ -3,13 +3,13 @@ class Prikolica {
   id: string;
   registracijaPrikolice: string;
   tipPrikolice: string;
-  tezinaPrikolice: number;
+  tezinaPrikolice: string;
 
   constructor(
     id: string,
     registracijaPrikolice: string,
     tipPrikolice: string,
-    tezinaPrikolice: number
+    tezinaPrikolice: string
   ) {
     this.id = id;
     this.registracijaPrikolice = registracijaPrikolice;

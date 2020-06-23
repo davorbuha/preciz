@@ -47,7 +47,7 @@ const communicationPorts: Element[] = [
   { title: 'COM6', value: 'COM6' },
   { title: 'COM7', value: 'COM7' },
   { title: 'COM8', value: 'COM8' },
-  { title: '/dev/tty.usbserial-14310', value: '/dev/tty.usbserial-14310' }
+  { title: '/dev/tty.usbserial-14320', value: '/dev/tty.usbserial-14320' }
 ];
 
 const baudRates: Element[] = [

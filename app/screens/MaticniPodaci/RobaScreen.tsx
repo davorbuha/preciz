@@ -181,7 +181,7 @@ function RobaScreen(props: Props) {
         </div>
       </div>
       <TableContainer className={classes.tableContainer} component={Paper}>
-        <Table>
+        <Table stickyHeader>
           <TableHead>
             <TableRow style={{ backgroundColor: '#cbd0d6' }}>
               <TableCell align="left">Šifra robe</TableCell>

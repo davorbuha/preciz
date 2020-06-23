@@ -7,15 +7,13 @@ import ContextProvider from './context/ContextProvider';
 import createMainContextValue from './context/createMainContextValue';
 import mainReducer, { State } from './context/reducer';
 import SetupModal from './components/SetupModal';
-import MainContext from './context/MainContext';
 
 const initialState: State = {
-  companyName: '',
+  company: {} as any,
   settings: {} as any
 };
 
 export default function RouterComponent() {
-  const a = React.useContext(MainContext);
   const [showSetupModal, setShowSetupModal] = React.useState(false);
   const [state, dispatch] = React.useReducer(mainReducer, initialState);
   const mainContext = React.useMemo(
@@ -24,7 +22,7 @@ export default function RouterComponent() {
   );
 
   React.useEffect(() => {
-    setup(setShowSetupModal);
+    setup(setShowSetupModal, mainContext.setCompany);
   }, []);
   return (
     <ContextProvider value={mainContext}>
