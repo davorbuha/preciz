@@ -9,6 +9,7 @@ class PrvoVaganje {
   vozac: string;
   dobavljac: string;
   roba: string;
+  sifraRobe: string;
   mjestoIsporuke: string;
   brojNaloga: string;
   bruto: number;
@@ -22,6 +23,7 @@ class PrvoVaganje {
     vozac: string,
     dobavljac: string,
     roba: string,
+    sifraRobe: string,
     mjestoIsporuke: string,
     brojNaloga: string,
     bruto: number,
@@ -35,6 +37,7 @@ class PrvoVaganje {
     this.vozac = vozac;
     this.dobavljac = dobavljac;
     this.roba = roba;
+    this.sifraRobe = sifraRobe;
     this.mjestoIsporuke = mjestoIsporuke;
     this.brojNaloga = brojNaloga;
     this.bruto = bruto;
@@ -51,6 +54,7 @@ class PrvoVaganje {
       maybe.vozac,
       maybe.dobavljac,
       maybe.roba,
+      maybe.sifra_robe,
       maybe.mjesto_isporuke,
       maybe.broj_naloga,
       maybe.bruto,
@@ -67,6 +71,7 @@ class PrvoVaganje {
       vozac: this.vozac,
       dobavljac: this.dobavljac,
       roba: this.roba,
+      sifra_robe: this.sifraRobe,
       mjesto_isporuke: this.mjestoIsporuke,
       broj_naloga: this.brojNaloga,
       bruto: this.bruto,

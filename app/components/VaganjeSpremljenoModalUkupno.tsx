@@ -27,9 +27,10 @@ interface Props {
   show: boolean;
   hide: () => void;
   path: string;
+  pathUkupni: string;
 }
 
-function VaganjeSpremljenoModal(p: Props) {
+function VaganjeSpremljenoModalUkupno(p: Props) {
   const { width, height } = useWindowDimensions();
   const classes = useStyles({ width, height });
   return (
@@ -56,14 +57,22 @@ function VaganjeSpremljenoModal(p: Props) {
             Izađi
           </Button>
           <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              ptp.print(p.pathUkupni);
+            }}
+          >
+            Print ukupnog izvještaja
+          </Button>
+          <Button
             color="primary"
             variant="contained"
             onClick={() => {
-              p.hide();
               ptp.print(p.path);
             }}
           >
-            Print
+            Print drugog vaganja
           </Button>
         </div>
       </div>
@@ -71,4 +80,4 @@ function VaganjeSpremljenoModal(p: Props) {
   );
 }
 
-export default VaganjeSpremljenoModal;
+export default VaganjeSpremljenoModalUkupno;

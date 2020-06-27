@@ -43,8 +43,7 @@ function PrvoVaganjeContainer(p: any) {
       .split('')
       .filter(
         (char, i) =>
-          i >= state.settings.startPostion &&
-          i - 1 <= state.settings.endPosition
+          i >= state.settings.startPostion && i <= state.settings.endPosition
       )
       .join('');
     if (stanja[0]) {

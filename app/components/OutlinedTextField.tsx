@@ -26,10 +26,13 @@ function OutlinedTextField(p: any) {
   delete toPass.marginLeft;
   delete toPass.width;
   delete toPass.error;
+  delete toPass.maxWidth;
+  delete toPass.minWidth;
 
   return (
     <div
       style={{
+        maxWidth: p.maxWidth ? p.maxWidth : undefined,
         marginLeft: p.marginLeft || p.marginLeft === 0 ? p.marginLeft : 200,
         minWidth: p.width ? p.width : 100,
         height: 50
@@ -37,6 +40,7 @@ function OutlinedTextField(p: any) {
     >
       <TextField
         style={{
+          maxWidth: p.maxWidth ? p.maxWidth : undefined,
           minWidth: p.width ? p.width : 100,
           height: 50
         }}

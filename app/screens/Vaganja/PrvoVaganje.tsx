@@ -124,6 +124,7 @@ function PrvoVaganjeScreen(props: Props) {
       const found = props.roba.find(
         item => item.naziv.toLowerCase() === ev[0].toLowerCase()
       )!;
+
       if (found) {
         (sifraRobeRef.current as any).setTitle(found.sifraRobe);
       } else {
@@ -172,6 +173,7 @@ function PrvoVaganjeScreen(props: Props) {
         imeVozaca,
         dobavljac,
         roba,
+        (sifraRobeRef.current as any).title,
         mjestoIsporuke,
         brojNaloga,
         brutto,
@@ -184,7 +186,7 @@ function PrvoVaganjeScreen(props: Props) {
           detalji={detalji}
           company={state.company}
         />,
-        `${__dirname}/JednoVaganje.pdf`,
+        `${__dirname}/PrvoVaganje.pdf`,
         () => {}
       );
       storage.get(dbnames.prvoVaganje, (err1, data) => {

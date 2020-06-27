@@ -8,5 +8,6 @@ export default {
   mjesta: 'mjesta',
   postavke: 'postavke',
   jednoVaganje: 'jednoVaganje',
-  prvoVaganje: 'prvoVaganje'
+  prvoVaganje: 'prvoVaganje',
+  drugoVaganje: 'drugoVaganje'
 };

@@ -12,6 +12,7 @@ interface Props {
 function DisabledOutlined(p: Props, ref: any) {
   const [title, setTitle] = React.useState(0);
   React.useImperativeHandle(ref, () => ({
+    title,
     setTitle: (uppertitle: any) => setTitle(uppertitle)
   }));
   const suffix = React.useMemo(() => (p.suffix ? p.suffix : 'Kg'), [p.suffix]);
