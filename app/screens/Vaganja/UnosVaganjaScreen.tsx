@@ -124,8 +124,8 @@ function UnosVaganjaScreen(props: Props) {
     props.handleSubmit(async values => {
       console.log(moment(prvoDate), moment(drugoDate));
       const idDrugog = uuidv4();
-      Font.register({ family: 'Poppins', src: font });
-      Font.register({ family: 'Poppins-Bold', src: bold });
+      // Font.register({ family: 'Poppins', src: font });
+      // Font.register({ family: 'Poppins-Bold', src: bold });
       const voziloId = values[fields.vozilo];
       const { registracija } = await getRegistracijaById(voziloId);
       const prikolicaId = values[fields.prikolica];

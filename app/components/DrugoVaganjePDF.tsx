@@ -20,12 +20,10 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12,
-    fontWeight: 600,
-    fontFamily: 'Poppins-Bold'
+    fontWeight: 600
   },
   regularText: {
-    fontSize: 12,
-    fontFamily: 'Poppins'
+    fontSize: 12
   },
   body: {
     margin: '20px 20px'
@@ -93,11 +91,11 @@ const DrugoVaganjePDF = (props: Props) => (
           <Text style={styles.regularText}>{props.detalji.prikolica}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.regularText, styles.minWidth]}>Vozač:</Text>
+          <Text style={[styles.regularText, styles.minWidth]}>vozac:</Text>
           <Text style={styles.regularText}>{props.detalji.vozac}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.regularText, styles.minWidth]}>Dobavljač:</Text>
+          <Text style={[styles.regularText, styles.minWidth]}>Dobavljac:</Text>
           <Text style={styles.regularText}>{props.detalji.dobavljac}</Text>
         </View>
         <View style={styles.row}>

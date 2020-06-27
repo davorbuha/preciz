@@ -196,8 +196,8 @@ function JednoVaganjeScreen(props: Props) {
         brojNalog: brojNaloga
       };
       const ts = moment();
-      Font.register({ family: 'Poppins', src: font });
-      Font.register({ family: 'Poppins-Bold', src: bold });
+      // Font.register({ family: 'Poppins', src: font });
+      // Font.register({ family: 'Poppins-Bold', src: bold });
       const vaganje = new JednoVaganje(
         uuidv4(),
         tip,

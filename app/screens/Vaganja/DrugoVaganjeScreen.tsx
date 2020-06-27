@@ -155,8 +155,8 @@ function DrugoVaganjeScreen(props: Props) {
       mjestoIsporuke: selected!.mjestoIsporuke,
       brojNalog: selected!.brojNaloga
     };
-    Font.register({ family: 'Poppins', src: font });
-    Font.register({ family: 'Poppins-Bold', src: bold });
+    // Font.register({ family: 'Poppins', src: font });
+    // Font.register({ family: 'Poppins-Bold', src: bold });
     ReactPDF.render(
       <DrugoVaganjePDF
         ts={ts}
