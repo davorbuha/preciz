@@ -47,7 +47,7 @@ const communicationPorts: Element[] = [
   { title: 'COM6', value: 'COM6' },
   { title: 'COM7', value: 'COM7' },
   { title: 'COM8', value: 'COM8' },
-  { title: '/dev/tty.usbserial-14320', value: '/dev/tty.usbserial-14320' }
+  { title: '/dev/tty.usbserial-14120', value: '/dev/tty.usbserial-14120' }
 ];
 
 const baudRates: Element[] = [
@@ -92,12 +92,12 @@ function ParametriVageScreen(p: Props) {
         </span>
         <div style={{ marginLeft: 60 }}>
           <Controller
-            rules={{
-              pattern: {
-                value: /^\d+$/,
-                message: 'Unesena vrijednost mora biti broj'
-              }
-            }}
+            // rules={{
+            //   pattern: {
+            //     value: /^\d+$/,
+            //     message: 'Unesena vrijednost mora biti broj'
+            //   }
+            // }}
             defaultValue=""
             name={fields.startPosition}
             control={control}
@@ -119,12 +119,12 @@ function ParametriVageScreen(p: Props) {
         </span>
         <div style={{ marginLeft: 60 }}>
           <Controller
-            rules={{
-              pattern: {
-                value: /^\d+$/,
-                message: 'Unesena vrijednost mora biti broj'
-              }
-            }}
+            // rules={{
+            //   pattern: {
+            //     value: /^\d+$/,
+            //     message: 'Unesena vrijednost mora biti broj'
+            //   }
+            // }}
             defaultValue=""
             name={fields.endPosition}
             control={control}

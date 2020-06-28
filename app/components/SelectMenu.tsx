@@ -53,6 +53,7 @@ function SelectMenu(props: Props) {
     >
       <Button
         style={{
+          height: '100%',
           width: '100%',
           backgroundColor: open ? colors.primary : colors.grey,
           borderRadius: 0

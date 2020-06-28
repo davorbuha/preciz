@@ -22,7 +22,7 @@ const style = {
     fontSize: 16,
     padding: '0px 10px',
     margin: '10px 0px',
-    width: '28%',
+    width: '29%',
     display: 'flex'
   }
 };
