@@ -94,7 +94,9 @@ const JednoVaganjePDF = (props: Props) => (
           <Text style={styles.regularText}>{props.detalji.vozac}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={[styles.regularText, styles.minWidth]}>Dobavljac:</Text>
+          <Text style={[styles.regularText, styles.minWidth]}>
+            Dobavljac/Kupac:
+          </Text>
           <Text style={styles.regularText}>{props.detalji.dobavljac}</Text>
         </View>
         <View style={styles.row}>

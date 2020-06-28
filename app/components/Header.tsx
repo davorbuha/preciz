@@ -10,6 +10,7 @@ import MainContext from '../context/MainContext';
 const useStyles = makeStyles(theme => ({
   root: {
     height: '5vh',
+    width: '100vw',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around'

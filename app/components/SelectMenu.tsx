@@ -42,12 +42,13 @@ function SelectMenu(props: Props) {
   return (
     <div
       style={{
-        zIndex: 3
+        zIndex: 3,
+        width: '100%'
       }}
     >
       <Button
         style={{
-          width: width * 0.2,
+          width: '100%',
           backgroundColor: open ? colors.primary : colors.grey,
           borderRadius: 0
         }}

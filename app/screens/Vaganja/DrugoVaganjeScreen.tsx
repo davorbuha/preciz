@@ -210,7 +210,7 @@ function DrugoVaganjeScreen(props: Props) {
               <TableCell> </TableCell>
               <TableCell align="left">Registracija</TableCell>
               <TableCell align="left">Vozač</TableCell>
-              <TableCell align="left">Dobavljač</TableCell>
+              <TableCell align="left">Dobavljač/Kupac</TableCell>
               <TableCell align="left">Roba</TableCell>
               <TableCell align="left">Mjesto isporuke</TableCell>
               <TableCell align="left">Broj naloga </TableCell>

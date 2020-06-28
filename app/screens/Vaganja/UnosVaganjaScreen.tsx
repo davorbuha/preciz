@@ -427,7 +427,7 @@ function UnosVaganjaScreen(props: Props) {
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div>
           <div className={classes.inputRow}>
-            <span className={classes.span}>Dobavljač: </span>
+            <span className={classes.span}>Dobavljač/Kupac: </span>
             <Controller
               defaultValue=""
               control={control}
