@@ -17,6 +17,8 @@ import dbnames from '../../db/dbnames';
 import { RoutesEnum } from '../../routes';
 import VaganjeSpremljenoModalUnos from '../../components/VaganjeSpremljenoModalUnos';
 
+const app = require('electron').remote.app;
+
 interface Props {
   history: History;
 }
@@ -117,9 +119,9 @@ function UnosVaganjaContainer(props: Props) {
       <VaganjeSpremljenoModalUnos
         show={showSpremljenoVaganje}
         hide={() => props.history.push(RoutesEnum.Home)}
-        pathUkupni={`${__dirname}/UkupniIzvjestaj.pdf`}
-        pathDrugo={`${__dirname}/DrugoVaganje.pdf`}
-        pathPrvo={`${__dirname}/PrvoVaganje.pdf`}
+        pathUkupni={`${app.getPath('appData')}/UkupniIzvjestaj.pdf`}
+        pathDrugo={`${app.getPath('appData')}/DrugoVaganje.pdf`}
+        pathPrvo={`${app.getPath('appData')}/PrvoVaganje.pdf`}
       />
     </>
   );

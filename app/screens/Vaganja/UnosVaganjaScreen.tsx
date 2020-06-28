@@ -38,6 +38,8 @@ import DrugoVaganje from '../../types/DrugoVaganje';
 import DrugoVaganjePDF from '../../components/DrugoVaganjePDF';
 import UkupniIzvjestajPDF from '../../components/UkupniIzvjestajPDF';
 
+const app = require('electron').remote.app;
+
 const tipoviVaganja = [
   { title: 'Ulaz', value: 'Ulaz' },
   { title: 'Izlaz', value: 'Izlaz' }
@@ -191,7 +193,7 @@ function UnosVaganjaScreen(props: Props) {
           detalji={detalji}
           company={state.company}
         />,
-        `${__dirname}/PrvoVaganje.pdf`,
+        `${app.getPath('appData')}/PrvoVaganje.pdf`,
         () => {
           ReactPDF.render(
             <DrugoVaganjePDF
@@ -202,7 +204,7 @@ function UnosVaganjaScreen(props: Props) {
               detalji={detalji}
               company={state.company}
             />,
-            `${__dirname}/DrugoVaganje.pdf`,
+            `${app.getPath('appData')}/DrugoVaganje.pdf`,
             () => {
               ReactPDF.render(
                 <UkupniIzvjestajPDF
@@ -216,7 +218,7 @@ function UnosVaganjaScreen(props: Props) {
                   detalji={detalji}
                   company={state.company}
                 />,
-                `${__dirname}/UkupniIzvjestaj.pdf`,
+                `${app.getPath('appData')}/UkupniIzvjestaj.pdf`,
                 () => {}
               );
             }

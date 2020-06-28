@@ -39,6 +39,8 @@ import DrugoVaganjePDF from '../../components/DrugoVaganjePDF';
 import UkupniIzvjestajPDF from '../../components/UkupniIzvjestajPDF';
 import VaganjeSpremljenoModalUkupno from '../../components/VaganjeSpremljenoModalUkupno';
 
+const app = require('electron').remote.app;
+
 interface Props {
   mirnaVaga: boolean;
   vrijednostVage: string;
@@ -166,7 +168,7 @@ function DrugoVaganjeScreen(props: Props) {
         detalji={detalji}
         company={state.company}
       />,
-      `${__dirname}/DrugoVaganje.pdf`,
+      `${app.getPath('appData')}/DrugoVaganje.pdf`,
       () => {
         ReactPDF.render(
           <UkupniIzvjestajPDF
@@ -180,7 +182,7 @@ function DrugoVaganjeScreen(props: Props) {
             detalji={detalji}
             company={state.company}
           />,
-          `${__dirname}/UkupniIzvjestaj.pdf`,
+          `${app.getPath('appData')}/UkupniIzvjestaj.pdf`,
           () => {}
         );
       }
@@ -194,8 +196,8 @@ function DrugoVaganjeScreen(props: Props) {
       <VaganjeSpremljenoModalUkupno
         show={showSuccessModal}
         hide={() => props.history.push(RoutesEnum.Home)}
-        pathUkupni={`${__dirname}/UkupniIzvjestaj.pdf`}
-        path={`${__dirname}/DrugoVaganje.pdf`}
+        pathUkupni={`${app.getPath('appData')}/UkupniIzvjestaj.pdf`}
+        path={`${app.getPath('appData')}/DrugoVaganje.pdf`}
       />
       <div className={classes.titleRow}>
         <h2>Drugo vaganje</h2>

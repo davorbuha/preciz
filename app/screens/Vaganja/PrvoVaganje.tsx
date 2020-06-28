@@ -36,6 +36,8 @@ import dbnames from '../../db/dbnames';
 import PrvoVaganjePDF from '../../components/PrvoVaganjePDF';
 import PrvoVaganje from '../../types/PrvoVaganje';
 
+const app = require('electron').remote.app;
+
 const tipoviVaganja = [
   { title: 'Ulaz', value: 'Ulaz' },
   { title: 'Izlaz', value: 'Izlaz' }
@@ -186,7 +188,7 @@ function PrvoVaganjeScreen(props: Props) {
           detalji={detalji}
           company={state.company}
         />,
-        `${__dirname}/PrvoVaganje.pdf`,
+        `${app.getPath('appData')}/PrvoVaganje.pdf`,
         () => {}
       );
       storage.get(dbnames.prvoVaganje, (err1, data) => {
