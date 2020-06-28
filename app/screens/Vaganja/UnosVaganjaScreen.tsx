@@ -10,7 +10,8 @@ import ReactPDF, { Font } from '@react-pdf/renderer';
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
 import storage from 'electron-json-storage';
-import font from '../../assets/fonts/Capriola-Regular.ttf';
+import font from '../../assets/fonts/Poppins-Regular.ttf';
+import fontBold from '../../assets/fonts/Poppins-Bold.ttf';
 import Vozilo from '../../types/Vozilo';
 import Prikolica from '../../types/Prikolica';
 import Vozac from '../../types/Vozac';
@@ -124,10 +125,10 @@ function UnosVaganjaScreen(props: Props) {
   const handleSpremiPress = (prvoDate: Date, drugoDate: Date) => {
     props.handleSubmit(async values => {
       const idDrugog = uuidv4();
-      Font.register({ family: 'Capriola-Regular', src: font });
+      Font.register({ family: 'Poppins-Regular', src: font });
       Font.register({
-        family: 'Capriola-Regular-Bold',
-        src: font,
+        family: 'Poppins-Bold',
+        src: fontBold,
         fontWeight: 600
       });
       const voziloId = values[fields.vozilo];

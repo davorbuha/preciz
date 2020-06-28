@@ -11,7 +11,8 @@ import ReactPDF, { Font } from '@react-pdf/renderer';
 import moment from 'moment';
 import storage from 'electron-json-storage';
 import { v4 as uuidv4 } from 'uuid';
-import font from '../../assets/fonts/Capriola-Regular.ttf';
+import font from '../../assets/fonts/Poppins-Regular.ttf';
+import fontBold from '../../assets/fonts/Poppins-Bold.ttf';
 import Vozilo from '../../types/Vozilo';
 import Prikolica from '../../types/Prikolica';
 import Vozac from '../../types/Vozac';
@@ -164,10 +165,10 @@ function PrvoVaganjeScreen(props: Props) {
         brojNalog: brojNaloga
       };
       const ts = moment();
-      Font.register({ family: 'Capriola-Regular', src: font });
+      Font.register({ family: 'Poppins-Regular', src: font });
       Font.register({
-        family: 'Capriola-Regular-Bold',
-        src: font,
+        family: 'Poppins-Bold',
+        src: fontBold,
         fontWeight: 600
       });
       const vaganje = new PrvoVaganje(

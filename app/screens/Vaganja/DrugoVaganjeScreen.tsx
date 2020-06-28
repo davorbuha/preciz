@@ -23,7 +23,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { withRouter } from 'react-router';
 import { History } from 'history';
 import ReactPDF, { Font } from '@react-pdf/renderer';
-import font from '../../assets/fonts/Capriola-Regular.ttf';
+import font from '../../assets/fonts/Poppins-Regular.ttf';
+import fontBold from '../../assets/fonts/Poppins-Bold.ttf';
 import PrvoVaganje from '../../types/PrvoVaganje';
 import colors from '../../styles/colors';
 import OutlinedTextField from '../../components/OutlinedTextField';
@@ -156,10 +157,10 @@ function DrugoVaganjeScreen(props: Props) {
       mjestoIsporuke: selected!.mjestoIsporuke,
       brojNalog: selected!.brojNaloga
     };
-    Font.register({ family: 'Capriola-Regular', src: font });
+    Font.register({ family: 'Poppins-Regular', src: font });
     Font.register({
-      family: 'Capriola-Regular-Bold',
-      src: font,
+      family: 'Poppins-Bold',
+      src: fontBold,
       fontWeight: 600
     });
     ReactPDF.render(

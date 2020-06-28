@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     fontWeight: 600,
-    fontFamily: 'Capriola-Regular-Bold'
+    fontFamily: 'Poppins-Bold'
   },
   regularText: {
-    fontSize: 12,
-    fontFamily: 'Capriola-Regular'
+    fontFamily: 'Poppins-Regular',
+    fontSize: 12
   },
   body: {
     margin: '20px 20px'

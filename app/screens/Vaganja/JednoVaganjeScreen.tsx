@@ -19,7 +19,8 @@ import DisabledOutlined from '../../components/DisabledOutlined';
 import Prikolica from '../../types/Prikolica';
 import Vozac from '../../types/Vozac';
 import Roba from '../../types/Roba';
-import font from '../../assets/fonts/Capriola-Regular.ttf';
+import font from '../../assets/fonts/Poppins-Regular.ttf';
+import fontBold from '../../assets/fonts/Poppins-Bold.ttf';
 import FreeDropdown from '../../components/FreeDropdown';
 import Partner from '../../types/Partner';
 import MjestoIsporuke from '../../types/MjestoIsporuke';
@@ -197,10 +198,10 @@ function JednoVaganjeScreen(props: Props) {
         brojNalog: brojNaloga
       };
       const ts = moment();
-      Font.register({ family: 'Capriola-Regular', src: font });
+      Font.register({ family: 'Poppins-Regular', src: font });
       Font.register({
-        family: 'Capriola-Regular-Bold',
-        src: font,
+        family: 'Poppins-Bold',
+        src: fontBold,
         fontWeight: 600
       });
       const vaganje = new JednoVaganje(
