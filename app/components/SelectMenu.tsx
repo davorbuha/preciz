@@ -24,10 +24,6 @@ interface Props {
   history: History;
 }
 
-const { getCurrentWebContents } = require('electron').remote;
-
-const webContents = getCurrentWebContents();
-
 function SelectMenu(props: Props) {
   const { width } = useWindowDimensions();
   const [open, setOpen] = React.useState(false);
