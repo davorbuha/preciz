@@ -7,6 +7,8 @@ import ContextProvider from './context/ContextProvider';
 import createMainContextValue from './context/createMainContextValue';
 import mainReducer, { State } from './context/reducer';
 import SetupModal from './components/SetupModal';
+import font from './assets/fonts/Poppins-Regular.ttf';
+import fontBold from './assets/fonts/Poppins-Bold.ttf';
 
 const initialState: State = {
   company: {} as any,
@@ -22,6 +24,12 @@ export default function RouterComponent() {
   );
 
   React.useEffect(() => {
+    Font.register({ family: 'Poppins-Regular', src: font });
+    Font.register({
+      family: 'Poppins-Bold',
+      src: fontBold,
+      fontWeight: 600
+    });
     setup(setShowSetupModal, mainContext.setCompany);
   }, []);
   return (

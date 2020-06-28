@@ -165,12 +165,6 @@ function PrvoVaganjeScreen(props: Props) {
         brojNalog: brojNaloga
       };
       const ts = moment();
-      Font.register({ family: 'Poppins-Regular', src: font });
-      Font.register({
-        family: 'Poppins-Bold',
-        src: fontBold,
-        fontWeight: 600
-      });
       const vaganje = new PrvoVaganje(
         uuidv4(),
         tip,

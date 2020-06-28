@@ -125,12 +125,6 @@ function UnosVaganjaScreen(props: Props) {
   const handleSpremiPress = (prvoDate: Date, drugoDate: Date) => {
     props.handleSubmit(async values => {
       const idDrugog = uuidv4();
-      Font.register({ family: 'Poppins-Regular', src: font });
-      Font.register({
-        family: 'Poppins-Bold',
-        src: fontBold,
-        fontWeight: 600
-      });
       const voziloId = values[fields.vozilo];
       const { registracija } = await getRegistracijaById(voziloId);
       const prikolicaId = values[fields.prikolica];
