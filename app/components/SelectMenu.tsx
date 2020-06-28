@@ -38,7 +38,6 @@ function SelectMenu(props: Props) {
   }
 
   const handleClose = (path: string) => (event: any) => {
-    webContents.inspectElement(0, 0);
     if (anchorEl.current!.contains(event.target)) {
       return;
     }
