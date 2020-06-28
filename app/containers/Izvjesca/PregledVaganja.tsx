@@ -41,14 +41,14 @@ function PregledVaganjaContainer() {
     storage.get(dbnames.vozila, (err, data) => {
       if (Array.isArray(data)) {
         const vozilaTemp = data.map(Vozilo.fromJSON);
-        vozilaTemp.unshift(new Vozilo('0', '0', '0', '0'));
+        vozilaTemp.unshift(new Vozilo('0', 'sva vozila', '0', '0'));
         setVozila(vozilaTemp);
       }
     });
     storage.get(dbnames.roba, (err, data) => {
       if (Array.isArray(data)) {
         const robaTemp = data.map(Roba.fromJSON);
-        robaTemp.unshift(new Roba('0', '0', '0', '0'));
+        robaTemp.unshift(new Roba('0', 'sva roba', '0', '0'));
         setRoba(robaTemp);
       }
     });
@@ -56,7 +56,7 @@ function PregledVaganjaContainer() {
       if (Array.isArray(data)) {
         const kupciTemp = data.map(Partner.fromJSON);
         kupciTemp.unshift(
-          new Partner('0', '0', '0', '0', '0', '0', '0', '0', '0')
+          new Partner('0', '0', 'svi partneri', '0', '0', '0', '0', '0', '0')
         );
         setKupci(kupciTemp);
       }
@@ -126,6 +126,12 @@ function PregledVaganjaContainer() {
   }, [prvaVaganja, drugaVaganja, jednaVaganja]);
   return (
     <PregledVaganjaScreen
+      removeJednoVaganje={(id: string) => {
+        setJednaVaganja(jednaVaganja.filter(item => item.id !== id));
+      }}
+      removePrvoVaganje={(id: string) => {
+        setPrvaVaganja(prvaVaganja.filter(item => item.id !== id));
+      }}
       kupci={kupci}
       roba={roba}
       vozila={vozila}

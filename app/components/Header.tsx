@@ -34,9 +34,7 @@ const VaganjaItems = [
 ];
 
 const IzvjescaItems = [
-  { path: RoutesEnum.PregledVaganja, title: 'Pregled vaganja' },
-  { path: RoutesEnum.PregledZaRobu, title: 'Pregled za robu' },
-  { path: RoutesEnum.PregledZaKupca, title: 'Pregled za kupca - dobavljača' }
+  { path: RoutesEnum.PregledVaganja, title: 'Pregled vaganja' }
 ];
 
 const BazaItems = [
@@ -64,7 +62,6 @@ function Header() {
         <SelectMenu title="Matični Podaci" menuItems={MaticniPodaciItems} />
         <SelectMenu title="Vaganja" menuItems={VaganjaItems} />
         <SelectMenu title="Izvješća" menuItems={IzvjescaItems} />
-        <SelectMenu title="Baza podataka" menuItems={BazaItems} />
         <SelectMenu title="Podešenja" menuItems={PodesenjaItems} />
       </div>
     </>

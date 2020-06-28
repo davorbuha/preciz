@@ -8,22 +8,33 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  TableBody
+  TableBody,
+  Radio
 } from '@material-ui/core';
 import { PregledType } from '../containers/Izvjesca/PregledVaganja';
 import useWindowDimensions from '../useDimensions';
+import colors from '../styles/colors';
 
 interface Props {
   vaganja: PregledType[];
+  selectedVaganje: PregledType | undefined;
+  setSelectedVaganje: (pregled: PregledType) => void;
 }
 
 const useStyles = makeStyles(() => ({
   tableContainer: {
     display: 'flex',
     marginTop: '30px',
-    maxHeight: '500px',
+    maxHeight: '400px',
     boxSizing: 'border-box',
     overflow: 'scroll'
+  },
+  tr: {
+    background: colors.grey,
+    '&:hover': {
+      cursor: 'pointer',
+      background: colors.darkGrey
+    }
   }
 }));
 
@@ -33,7 +44,7 @@ const style = {
   }
 };
 
-function PregledTable({ vaganja }: Props) {
+function PregledTable({ vaganja, selectedVaganje, setSelectedVaganje }: Props) {
   const classes = useStyles();
   const { width } = useWindowDimensions();
   return (
@@ -45,6 +56,9 @@ function PregledTable({ vaganja }: Props) {
       <Table stickyHeader style={{ overflow: 'scroll' }}>
         <TableHead>
           <TableRow style={{ backgroundColor: '#cbd0d6' }}>
+            <TableCell style={style.cellStyle} align="left">
+              {' '}
+            </TableCell>
             <TableCell style={style.cellStyle} align="left">
               Registracija
             </TableCell>
@@ -91,7 +105,25 @@ function PregledTable({ vaganja }: Props) {
         </TableHead>
         <TableBody>
           {vaganja.map(vaganje => (
-            <TableRow key={vaganje.id}>
+            <TableRow
+              className={classes.tr}
+              onClick={() => setSelectedVaganje(vaganje)}
+              style={{
+                backgroundColor:
+                  vaganje.id === selectedVaganje?.id
+                    ? colors.primary
+                    : undefined
+              }}
+              key={vaganje.id}
+            >
+              <TableCell style={style.cellStyle} align="left">
+                <Radio
+                  color="primary"
+                  checked={selectedVaganje?.id === vaganje.id}
+                  name="radio-button-demo"
+                  inputProps={{ 'aria-label': 'D' }}
+                />
+              </TableCell>
               <TableCell style={style.cellStyle} align="left">
                 {vaganje.registracija}
               </TableCell>
