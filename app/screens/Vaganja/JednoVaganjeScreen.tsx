@@ -19,8 +19,7 @@ import DisabledOutlined from '../../components/DisabledOutlined';
 import Prikolica from '../../types/Prikolica';
 import Vozac from '../../types/Vozac';
 import Roba from '../../types/Roba';
-import font from '../../assets/fonts/Poppins-Medium.ttf';
-import bold from '../../assets/fonts/Poppins-Bold.ttf';
+import font from '../../assets/fonts/Capriola-Regular.ttf';
 import FreeDropdown from '../../components/FreeDropdown';
 import Partner from '../../types/Partner';
 import MjestoIsporuke from '../../types/MjestoIsporuke';
@@ -198,8 +197,12 @@ function JednoVaganjeScreen(props: Props) {
         brojNalog: brojNaloga
       };
       const ts = moment();
-      // Font.register({ family: 'Poppins', src: font });
-      // Font.register({ family: 'Poppins-Bold', src: bold });
+      Font.register({ family: 'Capriola-Regular', src: font });
+      Font.register({
+        family: 'Capriola-Regular-Bold',
+        src: font,
+        fontWeight: 600
+      });
       const vaganje = new JednoVaganje(
         uuidv4(),
         tip,
@@ -384,7 +387,7 @@ function JednoVaganjeScreen(props: Props) {
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div>
           <div className={classes.inputRow}>
-            <span className={classes.span}>Dobavljač: </span>
+            <span className={classes.span}>Dobavljač/Kupac: </span>
             <Controller
               defaultValue=""
               control={control}

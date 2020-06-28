@@ -20,10 +20,12 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12,
-    fontWeight: 600
+    fontWeight: 600,
+    fontFamily: 'Capriola-Regular-Bold'
   },
   regularText: {
-    fontSize: 12
+    fontSize: 12,
+    fontFamily: 'Capriola-Regular'
   },
   body: {
     margin: '20px 20px'

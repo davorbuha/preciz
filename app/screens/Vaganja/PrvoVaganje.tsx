@@ -11,8 +11,7 @@ import ReactPDF, { Font } from '@react-pdf/renderer';
 import moment from 'moment';
 import storage from 'electron-json-storage';
 import { v4 as uuidv4 } from 'uuid';
-import font from '../../assets/fonts/Poppins-Medium.ttf';
-import bold from '../../assets/fonts/Poppins-Bold.ttf';
+import font from '../../assets/fonts/Capriola-Regular.ttf';
 import Vozilo from '../../types/Vozilo';
 import Prikolica from '../../types/Prikolica';
 import Vozac from '../../types/Vozac';
@@ -165,8 +164,12 @@ function PrvoVaganjeScreen(props: Props) {
         brojNalog: brojNaloga
       };
       const ts = moment();
-      // Font.register({ family: 'Poppins', src: font });
-      // Font.register({ family: 'Poppins-Bold', src: bold });
+      Font.register({ family: 'Capriola-Regular', src: font });
+      Font.register({
+        family: 'Capriola-Regular-Bold',
+        src: font,
+        fontWeight: 600
+      });
       const vaganje = new PrvoVaganje(
         uuidv4(),
         tip,
@@ -337,7 +340,7 @@ function PrvoVaganjeScreen(props: Props) {
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div>
           <div className={classes.inputRow}>
-            <span className={classes.span}>Dobavljač: </span>
+            <span className={classes.span}>Dobavljač/Kupac: </span>
             <Controller
               defaultValue=""
               control={control}

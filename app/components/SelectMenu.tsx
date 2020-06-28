@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint react/jsx-props-no-spreading: off */
 import React from 'react';
 import Button from '@material-ui/core/Button';
