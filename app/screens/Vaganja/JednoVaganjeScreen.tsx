@@ -36,6 +36,8 @@ import JednoVaganje from '../../types/JednoVaganje';
 import MainContext from '../../context/MainContext';
 import dbnames from '../../db/dbnames';
 
+const app = require('electron').remote.app;
+
 const tipoviVaganja = [
   { title: 'Ulaz', value: 'Ulaz' },
   { title: 'Izlaz', value: 'Izlaz' }
@@ -222,7 +224,7 @@ function JednoVaganjeScreen(props: Props) {
           detalji={detalji}
           company={state.company}
         />,
-        `${__dirname}/JednoVaganje.pdf`,
+        `${app.getPath('appData')}/JednoVaganje.pdf`,
         () => {}
       );
       storage.get(dbnames.jednoVaganje, (err1, data) => {

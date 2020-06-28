@@ -16,6 +16,7 @@ import MainContext from '../../context/MainContext';
 import VaganjeSpremljenoModal from '../../components/VaganjeSpremljenoModal';
 import { RoutesEnum } from '../../routes';
 
+const app = require('electron').remote.app;
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
 
@@ -141,7 +142,7 @@ function JednoVaganjeContainer(p: any) {
   return (
     <>
       <VaganjeSpremljenoModal
-        path={`${__dirname}/JednoVaganje.pdf`}
+        path={`${app.getPath('appData')}/JednoVaganje.pdf`}
         hide={() => {
           p.history.push(RoutesEnum.Home);
           setShowSpremljenoVaganje(false);
