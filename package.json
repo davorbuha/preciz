@@ -1,6 +1,6 @@
 {
   "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
+  "productName": "Preciz",
   "version": "1.1.0",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
   "scripts": {
@@ -52,8 +52,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
+    "productName": "Preciz",
+    "appId": "org.develar.Preciz",
     "files": [
       "dist/",
       "node_modules/",
@@ -107,7 +107,7 @@
   },
   "author": {
     "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
+    "email": "Precizboilerplate@gmail.com",
     "url": "https://electron-react-boilerplate.js.org"
   },
   "contributors": [
