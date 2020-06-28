@@ -309,7 +309,7 @@ function PartnerScreen(props: Props) {
         </div>
       </div>
       <TableContainer className={classes.tableContainer} component={Paper}>
-        <Table style={{ height: 300 }}>
+        <Table stickyHeader style={{ maxHeight: 300 }}>
           <TableHead>
             <TableRow style={{ backgroundColor: '#cbd0d6' }}>
               <TableCell align="left">Naziv</TableCell>
@@ -330,7 +330,10 @@ function PartnerScreen(props: Props) {
           </TableHead>
           <TableBody>
             {props.partneri.map((item, i) => (
-              <TableRow key={item.id} style={{ backgroundColor: '#f5f7f7' }}>
+              <TableRow
+                key={item.id}
+                style={{ backgroundColor: '#f5f7f7', height: 40 }}
+              >
                 <TableCell align="left">{item.naziv}</TableCell>
                 <TableCell align="left">{item.sifra}</TableCell>
                 <TableCell align="left">{item.ulica}</TableCell>

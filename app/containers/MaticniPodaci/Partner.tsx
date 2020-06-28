@@ -110,6 +110,7 @@ function PartnerContainer() {
       setValue(fields.fax, '');
       setValue(fields.email, '');
       setValue(fields.napomena, '');
+      setEditId(undefined);
     })();
   };
   const odbaciUredivanje = () => {

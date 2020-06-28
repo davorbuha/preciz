@@ -122,7 +122,6 @@ function UnosVaganjaScreen(props: Props) {
   const [tezinaPrikolice, setTezinaPrikolice] = React.useState('');
   const handleSpremiPress = (prvoDate: Date, drugoDate: Date) => {
     props.handleSubmit(async values => {
-      console.log(moment(prvoDate), moment(drugoDate));
       const idDrugog = uuidv4();
       // Font.register({ family: 'Poppins', src: font });
       // Font.register({ family: 'Poppins-Bold', src: bold });

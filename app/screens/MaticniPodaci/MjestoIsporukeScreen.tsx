@@ -147,7 +147,7 @@ function MjestoIsporukeScreen(props: Props) {
         </div>
       </div>
       <TableContainer className={classes.tableContainer} component={Paper}>
-        <Table>
+        <Table stickyHeader style={{ maxHeight: 300, overflow: 'scroll' }}>
           <TableHead>
             <TableRow style={{ backgroundColor: '#cbd0d6' }}>
               <TableCell align="left">Naziv</TableCell>

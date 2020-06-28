@@ -9,8 +9,10 @@ import MjestoIsporukeScreen, {
 } from '../../screens/MaticniPodaci/MjestoIsporukeScreen';
 import dbnames from '../../db/dbnames';
 import MjestoIsporuke from '../../types/MjestoIsporuke';
+import ErrorDialog from '../../components/ErrorDialog';
 
 function MjestoIsporukeContainer() {
+  const [errorText, setErrorText] = React.useState<string>();
   const [mjesta, setMjesta] = React.useState<MjestoIsporuke[]>([]);
   const [editId, setEditId] = React.useState<number | undefined>();
   const { handleSubmit, errors, control, setValue } = useForm({
@@ -34,6 +36,14 @@ function MjestoIsporukeContainer() {
       .catch(e => {});
   }, []);
   const addMjestoIsporuke = (m: any) => {
+    if (
+      mjesta.find(
+        mjesto => m[fields.naziv].toLowerCase() === mjesto.naziv.toLowerCase()
+      )
+    ) {
+      setErrorText('Unesena uneseno mjesto isporuke već postoji u bazi');
+      return;
+    }
     setValue(fields.naziv, '');
     const mjestoIsporuke = new MjestoIsporuke(uuidv4(), m[fields.naziv]);
     const mjestaToSet = [...mjesta, mjestoIsporuke];
@@ -59,6 +69,7 @@ function MjestoIsporukeContainer() {
       );
       setValue(fields.naziv, '');
       setMjesta(mjestaToSet);
+      setEditId(undefined);
     })();
   };
   const odbaciUredivanje = () => {
@@ -76,17 +87,23 @@ function MjestoIsporukeContainer() {
     setMjesta(mjestaToSet);
   };
   return (
-    <MjestoIsporukeScreen
-      odbaciUredivanje={odbaciUredivanje}
-      editId={editId}
-      onEditPress={onEditPress}
-      deleteMjestoIsporuke={deleteMjestoIsporuke}
-      editMjestoIsporuke={editMjestoIsporuke}
-      addMjestoIsporuke={handleSubmit(addMjestoIsporuke)}
-      control={control}
-      errors={errors}
-      mjesta={mjesta}
-    />
+    <>
+      <ErrorDialog
+        errorText={errorText}
+        handleClose={() => setErrorText(undefined)}
+      />
+      <MjestoIsporukeScreen
+        odbaciUredivanje={odbaciUredivanje}
+        editId={editId}
+        onEditPress={onEditPress}
+        deleteMjestoIsporuke={deleteMjestoIsporuke}
+        editMjestoIsporuke={editMjestoIsporuke}
+        addMjestoIsporuke={handleSubmit(addMjestoIsporuke)}
+        control={control}
+        errors={errors}
+        mjesta={mjesta}
+      />
+    </>
   );
 }
 
