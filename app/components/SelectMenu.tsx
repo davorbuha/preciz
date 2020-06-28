@@ -24,6 +24,10 @@ interface Props {
   history: History;
 }
 
+const { getCurrentWebContents } = require('electron').remote;
+
+const webContents = getCurrentWebContents();
+
 function SelectMenu(props: Props) {
   const { width } = useWindowDimensions();
   const [open, setOpen] = React.useState(false);
@@ -34,6 +38,7 @@ function SelectMenu(props: Props) {
   }
 
   const handleClose = (path: string) => (event: any) => {
+    webContents.inspectElement(0, 0);
     if (anchorEl.current!.contains(event.target)) {
       return;
     }
