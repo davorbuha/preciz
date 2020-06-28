@@ -11,17 +11,11 @@ import font from './assets/fonts/Poppins-Regular.ttf';
 import fontBold from './assets/fonts/Poppins-Bold.ttf';
 import { Font } from '@react-pdf/renderer';
 
-// Font.register({ family: 'Poppins-Regular', src: font });
-// Font.register({
-//   family: 'Poppins-Bold',
-//   src: fontBold
-// });
-
 Font.register({
   family: 'Poppins-Regular',
   fonts: [
     {
-      src: fontBold
+      src: font
     }
   ]
 });
