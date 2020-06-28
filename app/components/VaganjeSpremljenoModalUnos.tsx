@@ -81,7 +81,7 @@ function VaganjeSpremljenoModalUnos(p: Props) {
                 ptp.print(p.pathDrugo);
               }}
             >
-              Print drugog vaganja
+              Print drugog izvještaja
             </Button>
           </div>
           <div
