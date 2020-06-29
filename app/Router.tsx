@@ -23,7 +23,8 @@ Font.register({
   family: 'Poppins-Bold',
   fonts: [
     {
-      src: fontBold
+      src: font,
+      fontWeight: 600
     }
   ]
 });
