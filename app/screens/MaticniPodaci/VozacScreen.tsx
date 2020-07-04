@@ -93,17 +93,7 @@ const rules = {
       message: 'Prezime je predugo'
     }
   },
-  [fields.oib]: {
-    required: true,
-    minLength: {
-      value: 11,
-      message: 'Oib mora sadržavati 11 znakova'
-    },
-    maxLength: {
-      value: 11,
-      message: 'Oib sadrži više od 11 znakova'
-    }
-  }
+  [fields.oib]: {}
 };
 function VozacScreen(props: Props) {
   const classes = useStyles();

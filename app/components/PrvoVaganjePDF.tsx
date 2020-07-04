@@ -47,6 +47,7 @@ export interface Detalji {
   vozac: string;
   dobavljac: string;
   roba: string;
+  vlaga?: string;
   mjestoIsporuke: string;
   brojNalog: string;
 }
@@ -100,6 +101,12 @@ const PrvoVaganjePDF = (props: Props) => (
           </Text>
           <Text style={styles.regularText}>{props.detalji.dobavljac}</Text>
         </View>
+        {props.detalji.vlaga ? (
+          <View style={styles.row}>
+            <Text style={[styles.regularText, styles.minWidth]}>Vlaga:</Text>
+            <Text style={styles.regularText}>{props.detalji.vlaga}</Text>
+          </View>
+        ) : null}
         <View style={styles.row}>
           <Text style={[styles.regularText, styles.minWidth]}>Roba:</Text>
           <Text style={styles.regularText}>{props.detalji.roba}</Text>

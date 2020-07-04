@@ -51,7 +51,8 @@ export const fields = {
   roba: 'roba',
   dobavljac: 'dobavljac',
   mjestoIsporuke: 'mjestoIsporuke',
-  brojNaloga: 'brojNaloga'
+  brojNaloga: 'brojNaloga',
+  vlaga: 'vlaga'
 };
 
 const useStyles = makeStyles(theme => ({
@@ -187,11 +188,13 @@ function JednoVaganjeScreen(props: Props) {
       const dobavljac = values[fields.dobavljac];
       const mjestoIsporuke = values[fields.mjestoIsporuke];
       const brojNaloga = values[fields.brojNaloga];
+      const vlaga = values[fields.vlaga];
       const detalji: Detalji = {
         tip,
         registracija,
         prikolica,
         vozac: imeVozaca,
+        vlaga,
         roba,
         dobavljac,
         mjestoIsporuke,
@@ -206,6 +209,7 @@ function JednoVaganjeScreen(props: Props) {
         imeVozaca,
         dobavljac,
         roba,
+        vlaga,
         mjestoIsporuke,
         brojNaloga,
         brutto,
@@ -243,7 +247,8 @@ function JednoVaganjeScreen(props: Props) {
               [fields.roba]: undefined,
               [fields.tipoviVaganja]: '',
               [fields.vozac]: '',
-              [fields.vozilo]: ''
+              [fields.vozilo]: '',
+              [fields.vlaga]: ''
             },
             {
               errors: true, // errors will not be reset
@@ -428,6 +433,23 @@ function JednoVaganjeScreen(props: Props) {
                 as={
                   <OutlinedTextField
                     error={props.errors[fields.brojNaloga]}
+                    width={250}
+                    marginLeft={60}
+                  />
+                }
+              />
+            </div>
+          </div>
+          <div className={classes.inputRow}>
+            <span className={classes.span}>Vlaga: </span>
+            <div className={classes.column}>
+              <Controller
+                defaultValue=""
+                control={control}
+                name={fields.vlaga}
+                as={
+                  <OutlinedTextField
+                    error={props.errors[fields.vlaga]}
                     width={250}
                     marginLeft={60}
                   />

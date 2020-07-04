@@ -49,7 +49,7 @@ function FreeDropdown(p: Props) {
       style={{
         marginLeft: p.marginLeft ? p.marginLeft : 200,
         minWidth: p.width ? p.width : 100,
-        height: 50
+        height: 38
       }}
     >
       <Autocomplete
@@ -62,6 +62,15 @@ function FreeDropdown(p: Props) {
         renderInput={params => (
           <TextField
             {...params}
+            inputProps={{
+              ...params.inputProps,
+              style: {
+                fontSize: 16,
+                lineHeight: 18,
+                height: 20,
+                padding: '0px 10px'
+              }
+            }}
             variant="outlined"
             classes={{ root: classes.root }}
           />

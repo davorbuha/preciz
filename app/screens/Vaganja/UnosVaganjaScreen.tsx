@@ -55,7 +55,8 @@ export const fields = {
   mjestoIsporuke: 'mjestoIsporuke',
   brojNaloga: 'brojNaloga',
   vaganje1: 'vaganje1',
-  vaganje2: 'vaganje2'
+  vaganje2: 'vaganje2',
+  vlaga: 'vlaga'
 };
 
 const useStyles = makeStyles(theme => ({
@@ -117,38 +118,32 @@ function UnosVaganjaScreen(props: Props) {
   const { state } = React.useContext(MainContext);
   const classes = useStyles();
   const { control } = props;
-  const voziloMasaRef = React.useRef();
-  const prikolicaMasaRef = React.useRef();
   const sifraRobeRef = React.useRef();
   const [tezinaVozila, setTezinaVozila] = React.useState('');
   const [tezinaPrikolice, setTezinaPrikolice] = React.useState('');
   const handleSpremiPress = (prvoDate: Date, drugoDate: Date) => {
     props.handleSubmit(async values => {
       const idDrugog = uuidv4();
-      const voziloId = values[fields.vozilo];
-      const { registracija } = await getRegistracijaById(voziloId);
-      const prikolicaId = values[fields.prikolica];
-      const prikolica = prikolicaId
-        ? (await getPrikolicaRegistracijaById(prikolicaId))
-            .registracijaPrikolice
-        : '';
-      const vozacId = values[fields.vozac];
-      const vozac = await getVozacById(vozacId);
+      const registracija = values[fields.vozilo];
+      const prikolica = values[fields.prikolica];
+      const vozac = values[fields.vozac];
       const tip = values[fields.tipoviVaganja];
-      const imeVozaca = vozac.ime + ' ' + vozac.prezime;
       const roba = values[fields.roba];
       const dobavljac = values[fields.dobavljac];
       const mjestoIsporuke = values[fields.mjestoIsporuke];
       const brojNaloga = values[fields.brojNaloga];
+      const vlaga = values[fields.vlaga];
+
       const detalji: Detalji = {
         tip,
         registracija,
         prikolica,
-        vozac: imeVozaca,
+        vozac,
         roba,
         dobavljac,
         mjestoIsporuke,
-        brojNalog: brojNaloga
+        brojNalog: brojNaloga,
+        vlaga
       };
       const bruto =
         tip === 'Ulaz'
@@ -173,7 +168,7 @@ function UnosVaganjaScreen(props: Props) {
         tip,
         registracija,
         prikolica,
-        imeVozaca,
+        vozac,
         dobavljac,
         roba,
         (sifraRobeRef.current as any).title,
@@ -181,7 +176,8 @@ function UnosVaganjaScreen(props: Props) {
         brojNaloga,
         parseInt(values[fields.vaganje1]),
         moment(prvoDate),
-        idDrugog
+        idDrugog,
+        vlaga
       );
       ReactPDF.render(
         <PrvoVaganjePDF
@@ -262,28 +258,6 @@ function UnosVaganjaScreen(props: Props) {
       });
     })();
   };
-  const onVoziloChange = React.useCallback(
-    ev => {
-      (voziloMasaRef.current as any).setTitle(
-        props.vozila.find(item => item.id === ev[0])!.tezina
-      );
-      setTezinaVozila(props.vozila.find(item => item.id === ev[0])!.tezina);
-      return ev[0];
-    },
-    [props.vozila]
-  );
-  const onPrikolicaChange = React.useCallback(
-    ev => {
-      (prikolicaMasaRef.current as any).setTitle(
-        props.prikolice.find(item => item.id === ev[0])!.tezinaPrikolice
-      );
-      setTezinaPrikolice(
-        props.prikolice.find(item => item.id === ev[0])!.tezinaPrikolice
-      );
-      return ev[0];
-    },
-    [props.prikolice]
-  );
 
   const onRobaChange = React.useCallback(
     ev => {
@@ -328,12 +302,11 @@ function UnosVaganjaScreen(props: Props) {
         <div className={classes.column}>
           <Controller
             rules={{ required: { value: true, message: 'Obavezan unos' } }}
-            onChange={onVoziloChange}
             defaultValue=""
             control={control}
             name={fields.vozilo}
             as={
-              <Dropdown
+              <FreeDropdown
                 error={props.errors[fields.vozilo]}
                 width={250}
                 marginLeft={60}
@@ -345,20 +318,15 @@ function UnosVaganjaScreen(props: Props) {
             }
           />
         </div>
-        <span style={{ marginLeft: 80 }} className={classes.span}>
-          Masa:
-        </span>
-        <DisabledOutlined ref={voziloMasaRef} marginLeft={80} />
       </div>
       <div className={classes.inputRow}>
         <span className={classes.span}>Prikolica: </span>
         <Controller
-          onChange={onPrikolicaChange}
           defaultValue=""
           control={control}
           name={fields.prikolica}
           as={
-            <Dropdown
+            <FreeDropdown
               width={250}
               marginLeft={60}
               data={props.prikolice.map(item => ({
@@ -368,10 +336,6 @@ function UnosVaganjaScreen(props: Props) {
             />
           }
         />
-        <span style={{ marginLeft: 80 }} className={classes.span}>
-          Masa:
-        </span>
-        <DisabledOutlined ref={prikolicaMasaRef} marginLeft={80} />
       </div>
       <div className={classes.inputRow}>
         <span className={classes.span}>Vozač: </span>
@@ -382,7 +346,7 @@ function UnosVaganjaScreen(props: Props) {
             control={control}
             name={fields.vozac}
             as={
-              <Dropdown
+              <FreeDropdown
                 error={props.errors[fields.vozac]}
                 width={350}
                 marginLeft={60}
@@ -471,6 +435,23 @@ function UnosVaganjaScreen(props: Props) {
                 as={
                   <OutlinedTextField
                     error={props.errors[fields.brojNaloga]}
+                    width={250}
+                    marginLeft={60}
+                  />
+                }
+              />
+            </div>
+          </div>
+          <div className={classes.inputRow}>
+            <span className={classes.span}>Vlaga: </span>
+            <div className={classes.column}>
+              <Controller
+                defaultValue=""
+                control={control}
+                name={fields.vlaga}
+                as={
+                  <OutlinedTextField
+                    error={props.errors[fields.vlaga]}
                     width={250}
                     marginLeft={60}
                   />

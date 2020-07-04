@@ -5,6 +5,7 @@ import colors from '../styles/colors';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    height: 38,
     '& .MuiOutlinedInput-notchedOutline': {
       borderWidth: '2px',
       borderColor: colors.primary
@@ -35,14 +36,17 @@ function OutlinedTextField(p: any) {
         maxWidth: p.maxWidth ? p.maxWidth : undefined,
         marginLeft: p.marginLeft || p.marginLeft === 0 ? p.marginLeft : 200,
         minWidth: p.width ? p.width : 100,
-        height: 50
+        height: 38
       }}
     >
       <TextField
-        style={{
-          maxWidth: p.maxWidth ? p.maxWidth : undefined,
-          minWidth: p.width ? p.width : 100,
-          height: 50
+        inputProps={{
+          style: {
+            height: 38,
+            padding: '0px 20px',
+            fontSize: 16,
+            lineHeight: 18
+          }
         }}
         {...toPass}
         variant="outlined"

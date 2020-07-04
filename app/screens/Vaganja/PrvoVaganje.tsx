@@ -11,8 +11,6 @@ import ReactPDF, { Font } from '@react-pdf/renderer';
 import moment from 'moment';
 import storage from 'electron-json-storage';
 import { v4 as uuidv4 } from 'uuid';
-import font from '../../assets/fonts/Poppins-Regular.ttf';
-import fontBold from '../../assets/fonts/Poppins-Bold.ttf';
 import Vozilo from '../../types/Vozilo';
 import Prikolica from '../../types/Prikolica';
 import Vozac from '../../types/Vozac';
@@ -66,6 +64,7 @@ export const fields = {
   prikolica: 'prikolica',
   vozac: 'vozac',
   roba: 'roba',
+  vlaga: 'vlaga',
   dobavljac: 'dobavljac',
   mjestoIsporuke: 'mjestoIsporuke',
   brojNaloga: 'brojNaloga'
@@ -139,29 +138,25 @@ function PrvoVaganjeScreen(props: Props) {
 
   const handleSpremiPress = () => {
     props.handleSubmit(async values => {
-      const voziloId = values[fields.vozilo];
-      const { registracija } = await getRegistracijaById(voziloId);
-      const prikolicaId = values[fields.prikolica];
-      const prikolica = prikolicaId
-        ? (await getPrikolicaRegistracijaById(prikolicaId))
-            .registracijaPrikolice
-        : '';
-      const vozacId = values[fields.vozac];
-      const vozac = await getVozacById(vozacId);
+      const registracija = values[fields.vozilo];
+      const prikolica = values[fields.prikolica];
+      const vozac = values[fields.vozac];
       const tip = values[fields.tipoviVaganja];
-      const imeVozaca = vozac.ime + ' ' + vozac.prezime;
       const roba = values[fields.roba];
       const dobavljac = values[fields.dobavljac];
       const mjestoIsporuke = values[fields.mjestoIsporuke];
       const brojNaloga = values[fields.brojNaloga];
+      const vlaga = values[fields.vlaga];
+
       const detalji: Detalji = {
         tip,
         registracija,
         prikolica,
-        vozac: imeVozaca,
+        vozac,
         roba,
         dobavljac,
         mjestoIsporuke,
+        vlaga,
         brojNalog: brojNaloga
       };
       const ts = moment();
@@ -170,7 +165,7 @@ function PrvoVaganjeScreen(props: Props) {
         tip,
         registracija,
         prikolica,
-        imeVozaca,
+        vozac,
         dobavljac,
         roba,
         (sifraRobeRef.current as any).title,
@@ -205,7 +200,8 @@ function PrvoVaganjeScreen(props: Props) {
               [fields.roba]: undefined,
               [fields.tipoviVaganja]: '',
               [fields.vozac]: '',
-              [fields.vozilo]: ''
+              [fields.vozilo]: '',
+              [fields.vlaga]: ''
             },
             {
               errors: true, // errors will not be reset
@@ -252,7 +248,7 @@ function PrvoVaganjeScreen(props: Props) {
             control={control}
             name={fields.vozilo}
             as={
-              <Dropdown
+              <FreeDropdown
                 error={props.errors[fields.vozilo]}
                 width={250}
                 marginLeft={60}
@@ -272,7 +268,7 @@ function PrvoVaganjeScreen(props: Props) {
           control={control}
           name={fields.prikolica}
           as={
-            <Dropdown
+            <FreeDropdown
               width={250}
               marginLeft={60}
               data={props.prikolice.map(item => ({
@@ -292,7 +288,7 @@ function PrvoVaganjeScreen(props: Props) {
             control={control}
             name={fields.vozac}
             as={
-              <Dropdown
+              <FreeDropdown
                 error={props.errors[fields.vozac]}
                 width={350}
                 marginLeft={60}
@@ -381,6 +377,23 @@ function PrvoVaganjeScreen(props: Props) {
                 as={
                   <OutlinedTextField
                     error={props.errors[fields.brojNaloga]}
+                    width={250}
+                    marginLeft={60}
+                  />
+                }
+              />
+            </div>
+          </div>
+          <div className={classes.inputRow}>
+            <span className={classes.span}>Vlaga: </span>
+            <div className={classes.column}>
+              <Controller
+                defaultValue=""
+                control={control}
+                name={fields.vlaga}
+                as={
+                  <OutlinedTextField
+                    error={props.errors[fields.vlaga]}
                     width={250}
                     marginLeft={60}
                   />

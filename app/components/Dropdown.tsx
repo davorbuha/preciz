@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-wrap-multilines */
 import React from 'react';
 import { Select, OutlinedInput, MenuItem, makeStyles } from '@material-ui/core';
 import colors from '../styles/colors';
@@ -34,18 +35,33 @@ const useOutlinedInputStyles = makeStyles(theme => ({
   notchedOutline: {}
 }));
 
+const useStyles = makeStyles(() => ({
+  select: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0px 24px',
+    height: '100%'
+  }
+}));
+
 function Dropdown(p: Props) {
+  const classes = useStyles();
   const outlinedInputClasses = useOutlinedInputStyles();
   return (
     <div
       style={{
         marginLeft: p.marginLeft ? p.marginLeft : 200,
         minWidth: p.width ? p.width : 100,
-        height: 50
+        height: 38
       }}
     >
       <Select
-        style={{ minWidth: p.width ? p.width : 100, height: 50 }}
+        style={{
+          minWidth: p.width ? p.width : 100,
+          height: 38,
+          padding: '0px 0px'
+        }}
+        classes={{ select: classes.select }}
         MenuProps={{
           PaperProps: {
             style: {
@@ -58,7 +74,19 @@ function Dropdown(p: Props) {
             horizontal: 'left'
           }
         }}
-        input={<OutlinedInput classes={outlinedInputClasses} />}
+        input={
+          <OutlinedInput
+            inputProps={{
+              style: {
+                height: 38,
+                padding: '0px 0px !important',
+                fontSize: 12,
+                lineHeight: 14
+              }
+            }}
+            classes={outlinedInputClasses}
+          />
+        }
         value={p.value}
         onChange={ev => p.onChange!(ev.target.value)}
       >

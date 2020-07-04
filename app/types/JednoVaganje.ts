@@ -9,6 +9,7 @@ class JednoVaganje {
   vozac: string;
   dobavljac: string;
   roba: string;
+  vlaga?: string;
   mjestoIsporuke: string;
   brojNaloga: string;
   bruto: number;
@@ -28,7 +29,8 @@ class JednoVaganje {
     bruto: number,
     neto: number,
     tara: number,
-    ts: Moment
+    ts: Moment,
+    vlaga?: string
   ) {
     this.id = id;
     this.tip = tip;
@@ -37,6 +39,7 @@ class JednoVaganje {
     this.vozac = vozac;
     this.dobavljac = dobavljac;
     this.roba = roba;
+    this.vlaga = vlaga;
     this.mjestoIsporuke = mjestoIsporuke;
     this.brojNaloga = brojNaloga;
     this.bruto = bruto;
@@ -54,6 +57,7 @@ class JednoVaganje {
       maybe.vozac,
       maybe.dobavljac,
       maybe.roba,
+      maybe.vlaga,
       maybe.mjesto_isporuke,
       maybe.broj_naloga,
       maybe.bruto,
@@ -71,6 +75,7 @@ class JednoVaganje {
       vozac: this.vozac,
       dobavljac: this.dobavljac,
       roba: this.roba,
+      vlaga: this.vlaga,
       mjesto_isporuke: this.mjestoIsporuke,
       broj_naloga: this.brojNaloga,
       bruto: this.bruto,

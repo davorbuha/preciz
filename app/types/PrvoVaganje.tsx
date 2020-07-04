@@ -14,6 +14,7 @@ class PrvoVaganje {
   brojNaloga: string;
   bruto: number;
   ts: Moment;
+  vlaga?: string;
   drugoVaganjeId?: string;
   constructor(
     id: string,
@@ -28,6 +29,7 @@ class PrvoVaganje {
     brojNaloga: string,
     bruto: number,
     ts: Moment,
+    vlaga?: string,
     drugoVaganjeId?: string
   ) {
     this.id = id;
@@ -37,6 +39,7 @@ class PrvoVaganje {
     this.vozac = vozac;
     this.dobavljac = dobavljac;
     this.roba = roba;
+    this.vlaga = vlaga;
     this.sifraRobe = sifraRobe;
     this.mjestoIsporuke = mjestoIsporuke;
     this.brojNaloga = brojNaloga;
@@ -59,7 +62,8 @@ class PrvoVaganje {
       maybe.broj_naloga,
       maybe.bruto,
       moment(maybe.ts),
-      maybe.drugo_vaganje_id
+      maybe.drugo_vaganje_id,
+      maybe.vlaga
     );
   }
   public toJSON() {
@@ -76,7 +80,8 @@ class PrvoVaganje {
       broj_naloga: this.brojNaloga,
       bruto: this.bruto,
       ts: this.ts.toISOString(),
-      drugo_vaganje_id: this.drugoVaganjeId
+      drugo_vaganje_id: this.drugoVaganjeId,
+      vlaga: this.vlaga
     };
   }
 }
