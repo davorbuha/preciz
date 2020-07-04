@@ -62,8 +62,8 @@ class PrvoVaganje {
       maybe.broj_naloga,
       maybe.bruto,
       moment(maybe.ts),
-      maybe.drugo_vaganje_id,
-      maybe.vlaga
+      maybe.vlaga,
+      maybe.drugo_vaganje_id
     );
   }
   public toJSON() {
