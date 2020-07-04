@@ -57,13 +57,13 @@ class JednoVaganje {
       maybe.vozac,
       maybe.dobavljac,
       maybe.roba,
-      maybe.vlaga,
       maybe.mjesto_isporuke,
       maybe.broj_naloga,
       maybe.bruto,
       maybe.neto,
       maybe.tara,
-      moment(maybe.ts)
+      moment(maybe.ts),
+      maybe.vlaga
     );
   }
   public toJSON() {
