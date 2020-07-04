@@ -209,13 +209,13 @@ function JednoVaganjeScreen(props: Props) {
         imeVozaca,
         dobavljac,
         roba,
-        vlaga,
         mjestoIsporuke,
         brojNaloga,
         brutto,
         neto,
         tara,
-        ts
+        ts,
+        vlaga
       );
       ReactPDF.render(
         <JednoVaganjePDF

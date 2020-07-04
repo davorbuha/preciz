@@ -172,7 +172,8 @@ function PrvoVaganjeScreen(props: Props) {
         mjestoIsporuke,
         brojNaloga,
         brutto,
-        ts
+        ts,
+        vlaga
       );
       ReactPDF.render(
         <PrvoVaganjePDF
