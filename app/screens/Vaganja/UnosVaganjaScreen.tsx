@@ -176,8 +176,8 @@ function UnosVaganjaScreen(props: Props) {
         brojNaloga,
         parseInt(values[fields.vaganje1]),
         moment(prvoDate),
-        idDrugog,
-        vlaga
+        vlaga,
+        idDrugog
       );
       ReactPDF.render(
         <PrvoVaganjePDF
