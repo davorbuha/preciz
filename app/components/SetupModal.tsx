@@ -7,6 +7,7 @@ import useWindowDimensions from '../useDimensions';
 import colors from '../styles/colors';
 import CompanyDetails from '../types/CompanyDetails';
 import setToSetupDB from '../db/setupDatabaseFunctions';
+import MainContext from '../context/MainContext';
 
 function renderErrorForField(errors: any, fieldName: string) {
   if (errors[fieldName]) {
@@ -25,7 +26,7 @@ const fields = {
   mail: 'Mail'
 };
 
-function submit(cb: () => void) {
+function submit(cb: (cd: CompanyDetails) => any) {
   return (maybe: any) => {
     const companyDetails = new CompanyDetails(
       maybe[fields.companyName],
@@ -34,7 +35,7 @@ function submit(cb: () => void) {
       maybe[fields.phone],
       maybe[fields.mail]
     );
-    setToSetupDB(companyDetails, cb);
+    setToSetupDB(companyDetails, cb(companyDetails));
   };
 }
 
@@ -132,6 +133,7 @@ function SetupModal(props: Props) {
     mode: 'onChange'
   });
   const classes = useStyles({ width, height });
+  const { setCompany } = React.useContext(MainContext);
   return (
     <Modal
       disableAutoFocus
@@ -208,7 +210,12 @@ function SetupModal(props: Props) {
           </div>
         </div>
         <Button
-          onClick={handleSubmit(submit(() => props.setShowSetupModal(false)))}
+          onClick={handleSubmit(
+            submit((cd: CompanyDetails) => {
+              setCompany(cd);
+              props.setShowSetupModal(false);
+            })
+          )}
           variant="contained"
           style={{ width: '40%', height: '40px' }}
           color="primary"
