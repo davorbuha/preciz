@@ -154,8 +154,9 @@ function UnosVaganjaScreen(props: Props) {
           ? parseInt(values[fields.vaganje1]) -
             parseInt(values[fields.vaganje2])
           : parseInt(values[fields.vaganje2]) -
-            parseInt(values[fields.vaganje2]);
+            parseInt(values[fields.vaganje1]);
       const tara = bruto - neto;
+
       const drugoVaganje = new DrugoVaganje(
         idDrugog,
         bruto,
