@@ -19,9 +19,6 @@ class Vozac {
     if (!(maybe.prezime.length > 0 && maybe.prezime.length < 100)) {
       throw new Error('prezime not valid');
     }
-    if (maybe.oib.length !== 11) {
-      throw new Error('oib not valid');
-    }
     return new Vozac(maybe.id, maybe.ime, maybe.prezime, maybe.oib);
   }
 

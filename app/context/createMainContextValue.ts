@@ -6,10 +6,12 @@ import CompanyDetails from '../types/CompanyDetails';
 
 function createMainContextValue(
   state: State,
-  dispatch: React.Dispatch<any>
+  dispatch: React.Dispatch<any>,
+  setShowSetupModal: (v: boolean) => void
 ): MainContextType {
   return {
     state,
+    setShowSetupModal,
     setSettings: (settings: Postavke) =>
       dispatch({ type: SET_SETTINGS, settings }),
     setCompany: (company: CompanyDetails) =>

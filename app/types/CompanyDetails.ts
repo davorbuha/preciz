@@ -29,9 +29,6 @@ class CompanyDetails {
     if (maybe.address.length > 100) {
       throw new Error('Company address is too long');
     }
-    if (maybe.oib.length !== 11) {
-      throw new Error('Company oib length is not equal to 11');
-    }
     if (maybe.phone.length > 20) {
       throw new Error('Company phone is too long');
     }

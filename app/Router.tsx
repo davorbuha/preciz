@@ -10,6 +10,7 @@ import SetupModal from './components/SetupModal';
 import font from './assets/fonts/Poppins-Regular.ttf';
 import fontBold from './assets/fonts/Poppins-Bold.ttf';
 import { Font } from '@react-pdf/renderer';
+import PasswordModal from './components/PasswordModal';
 
 Font.register({
   family: 'Poppins-Regular',
@@ -35,10 +36,14 @@ const initialState: State = {
 };
 
 export default function RouterComponent() {
+  const [passwordModal, setPasswordModal] = React.useState(false);
   const [showSetupModal, setShowSetupModal] = React.useState(false);
   const [state, dispatch] = React.useReducer(mainReducer, initialState);
   const mainContext = React.useMemo(
-    () => createMainContextValue(state, dispatch),
+    () =>
+      createMainContextValue(state, dispatch, (v: boolean) =>
+        setShowSetupModal(v)
+      ),
     [state]
   );
 
@@ -48,12 +53,16 @@ export default function RouterComponent() {
   return (
     <ContextProvider value={mainContext}>
       <>
-        <SetupModal
-          setShowSetupModal={setShowSetupModal}
-          showSetupModal={showSetupModal}
-        />
         <HashRouter>
-          <Header />
+          <SetupModal
+            setShowSetupModal={setShowSetupModal}
+            showSetupModal={showSetupModal}
+          />
+          <PasswordModal
+            setPasswordModal={setPasswordModal}
+            passwordModal={passwordModal}
+          />
+          <Header showPasswordModal={() => setPasswordModal(true)} />
           <div>
             {Routes.map(item => {
               return (

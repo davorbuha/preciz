@@ -14,6 +14,7 @@ import MjestoIsporuke from '../../types/MjestoIsporuke';
 import dbnames from '../../db/dbnames';
 import VaganjeSpremljenoModal from '../../components/VaganjeSpremljenoModal';
 import { RoutesEnum } from '../../routes';
+import { delimiterStr } from '../Podesenja/ParametriVage';
 
 const app = require('electron').remote.app;
 const SerialPort = require('serialport');
@@ -69,7 +70,9 @@ function PrvoVaganjeContainer(p: any) {
         port = new SerialPort(state.settings.communicationPort, {
           baudRate: state.settings.baudRate
         });
-        const parser = new Readline();
+        const parser = new Readline(
+          state.settings.delimiter ? { delimiter: delimiterStr } : {}
+        );
         port.pipe(parser);
         parser.on('data', handleVagaChange);
         port.on('close', function() {

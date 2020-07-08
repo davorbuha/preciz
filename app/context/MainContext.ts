@@ -5,6 +5,7 @@ import CompanyDetails from '../types/CompanyDetails';
 
 export interface MainContextType {
   state: State;
+  setShowSetupModal: (v: boolean) => void;
   setCompany: (name: CompanyDetails) => void;
   setSettings: (settings: Postavke) => void;
 }

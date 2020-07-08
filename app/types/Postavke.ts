@@ -6,17 +6,20 @@ class Postavke {
   baudRate: number;
   startPostion: number;
   endPosition: number;
+  delimiter: boolean;
 
   constructor(
     communicationPort: string,
     baudRate: number,
     startPosition: number,
-    endPostion: number
+    endPostion: number,
+    delimiter: boolean
   ) {
     this.communicationPort = communicationPort;
     this.baudRate = baudRate;
     this.startPostion = startPosition;
     this.endPosition = endPostion;
+    this.delimiter = delimiter;
   }
 
   public static fromJSON(maybe: any) {
@@ -24,7 +27,8 @@ class Postavke {
       maybe.communication_port,
       maybe.baud_rate,
       maybe.start_position,
-      maybe.end_position
+      maybe.end_position,
+      maybe.delimiter ? true : false
     );
   }
 
@@ -33,7 +37,8 @@ class Postavke {
       communication_port: this.communicationPort,
       baud_rate: this.baudRate,
       start_position: this.startPostion,
-      end_position: this.endPosition
+      end_position: this.endPosition,
+      delimiter: this.delimiter
     };
   }
 }

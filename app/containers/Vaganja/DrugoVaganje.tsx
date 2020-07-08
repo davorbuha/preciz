@@ -5,6 +5,7 @@ import DrugoVaganjeScreen from '../../screens/Vaganja/DrugoVaganjeScreen';
 import dbnames from '../../db/dbnames';
 import PrvoVaganje from '../../types/PrvoVaganje';
 import MainContext from '../../context/MainContext';
+import { delimiterStr } from '../Podesenja/ParametriVage';
 
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
@@ -54,7 +55,9 @@ function DrugoVaganjeContainer() {
         port = new SerialPort(state.settings.communicationPort, {
           baudRate: state.settings.baudRate
         });
-        const parser = new Readline();
+        const parser = new Readline(
+          state.settings.delimiter ? { delimiter: delimiterStr } : {}
+        );
         port.pipe(parser);
         parser.on('data', handleVagaChange);
         port.on('close', function() {

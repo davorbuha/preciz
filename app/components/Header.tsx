@@ -47,7 +47,11 @@ const PodesenjaItems = [
   { path: RoutesEnum.ParametriVage, title: 'Parametri vage' }
 ];
 
-function Header() {
+interface Props {
+  showPasswordModal: () => void;
+}
+
+function Header(props: Props) {
   const { setSettings } = React.useContext(MainContext);
   React.useEffect(() => {
     storage.get(dbnames.postavke, (err, data) => {
@@ -62,7 +66,11 @@ function Header() {
         <SelectMenu title="Matični Podaci" menuItems={MaticniPodaciItems} />
         <SelectMenu title="Vaganja" menuItems={VaganjaItems} />
         <SelectMenu title="Izvješća" menuItems={IzvjescaItems} />
-        <SelectMenu title="Podešenja" menuItems={PodesenjaItems} />
+        <SelectMenu
+          showPasswordModal={props.showPasswordModal}
+          title="Podešenja"
+          menuItems={PodesenjaItems}
+        />
       </div>
     </>
   );

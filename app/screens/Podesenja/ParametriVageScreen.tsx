@@ -6,10 +6,12 @@ import {
   Controller
 } from 'react-hook-form';
 import storage from 'electron-json-storage';
-import { Button } from '@material-ui/core';
+import { Button, Checkbox } from '@material-ui/core';
 import Dropdown, { Element } from '../../components/Dropdown';
 import StringVage from '../../components/StringVage';
 import OutlinedTextField from '../../components/OutlinedTextField';
+import MainContext from '../../context/MainContext';
+import dbnames from '../../db/dbnames';
 
 function renderErrorForField(errors: any, fieldName: string) {
   if (errors[fieldName]) {
@@ -23,6 +25,8 @@ function renderErrorForField(errors: any, fieldName: string) {
 }
 
 interface Props {
+  delimiter: boolean;
+  setDelimiter: (v) => void;
   getValues: (a: string) => any;
   setValue: (k: string, v: any) => void;
   control: Control<Record<string, any>>;
@@ -35,7 +39,8 @@ export const fields = {
   communicationPort: 'communicationPort',
   baudRate: 'baudRate',
   startPosition: 'startPosition',
-  endPosition: 'endPosition'
+  endPosition: 'endPosition',
+  delimiter: 'delimiter'
 };
 
 const communicationPorts: Element[] = [
@@ -46,8 +51,7 @@ const communicationPorts: Element[] = [
   { title: 'COM5', value: 'COM5' },
   { title: 'COM6', value: 'COM6' },
   { title: 'COM7', value: 'COM7' },
-  { title: 'COM8', value: 'COM8' },
-  { title: '/dev/tty.usbserial-14320', value: '/dev/tty.usbserial-14320' }
+  { title: 'COM8', value: 'COM8' }
 ];
 
 const baudRates: Element[] = [
@@ -59,6 +63,7 @@ const baudRates: Element[] = [
 ];
 
 function ParametriVageScreen(p: Props) {
+  const { setShowSetupModal, setCompany } = React.useContext(MainContext);
   const { control, stringVage } = p;
   return (
     <div style={{ padding: '20px 50px' }}>
@@ -133,9 +138,42 @@ function ParametriVageScreen(p: Props) {
           {renderErrorForField(p.errors, fields.endPosition)}
         </div>
       </div>
-      <Button onClick={p.handleSubmit} variant="contained">
-        Spremi
-      </Button>
+      <div
+        style={{
+          marginTop: 40,
+          display: 'flex',
+          alignItems: 'center',
+          marginBottom: 40
+        }}
+      >
+        <span style={{ minWidth: '185px', fontSize: 20 }}>Delimiter:</span>
+        <div style={{ marginLeft: 60 }}>
+          <Checkbox
+            checked={p.delimiter ? true : false}
+            onChange={a => p.setDelimiter(a.target.checked)}
+            color="primary"
+            inputProps={{ 'aria-label': 'secondary checkbox' }}
+          />
+        </div>
+      </div>
+      <div style={{ width: '20%', display: 'flex', flexDirection: 'column' }}>
+        <Button
+          color="secondary"
+          style={{ marginBottom: 10 }}
+          onClick={() => {
+            setCompany({});
+            storage.set(dbnames.setup, {}, () => {
+              setShowSetupModal(true);
+            });
+          }}
+          variant="contained"
+        >
+          Obrisi Podatke Firme
+        </Button>
+        <Button onClick={p.handleSubmit} variant="contained">
+          Spremi
+        </Button>
+      </div>
     </div>
   );
 }

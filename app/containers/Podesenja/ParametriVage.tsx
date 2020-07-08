@@ -13,12 +13,15 @@ const Readline = require('@serialport/parser-readline');
 
 let portState: any;
 
+export const delimiterStr = '';
+
 function ParametriVageContainer() {
   const { setSettings, state } = React.useContext(MainContext);
   const { setValue, control, errors, handleSubmit, getValues } = useForm({
     mode: 'onChange'
   });
   const [stringVage, setStringVage] = React.useState('');
+  const [delimiter, setDelimiter] = React.useState(false);
   React.useEffect(() => {
     return () => {
       if (portState) portState.close();
@@ -30,7 +33,9 @@ function ParametriVageContainer() {
       const port = new SerialPort(state.settings.communicationPort, {
         baudRate: state.settings.baudRate
       });
-      const parser = new Readline();
+      const parser = new Readline(
+        state.settings.delimiter ? { delimiter: delimiterStr } : {}
+      );
       port.pipe(parser);
       portState = port;
       setStringVage('');
@@ -48,12 +53,15 @@ function ParametriVageContainer() {
         setValue(fields.baudRate, postavke.baudRate);
         setValue(fields.startPosition, postavke.startPostion);
         setValue(fields.endPosition, postavke.endPosition);
+        setDelimiter(postavke.delimiter);
+        console.log('postavke', postavke);
       });
     } else {
       setValue(fields.communicationPort, state.settings.communicationPort);
       setValue(fields.baudRate, state.settings.baudRate);
       setValue(fields.startPosition, state.settings.startPostion);
       setValue(fields.endPosition, state.settings.endPosition);
+      setDelimiter(state.settings.delimiter);
     }
   }, []);
 
@@ -63,7 +71,8 @@ function ParametriVageContainer() {
         values[fields.communicationPort],
         values[fields.baudRate],
         values[fields.startPosition],
-        values[fields.endPosition]
+        values[fields.endPosition],
+        delimiter
       );
       setSettings(postavke);
       storage.set(dbnames.postavke, postavke.toJSON(), () => {});
@@ -71,6 +80,8 @@ function ParametriVageContainer() {
   };
   return (
     <ParametriVageScreen
+      delimiter={delimiter}
+      setDelimiter={v => setDelimiter(v)}
       stringVage={stringVage}
       setValue={setValue}
       getValues={getValues}

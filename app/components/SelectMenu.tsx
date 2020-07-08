@@ -12,6 +12,7 @@ import { withRouter } from 'react-router';
 import { History } from 'history';
 import colors from '../styles/colors';
 import useWindowDimensions from '../useDimensions';
+import { RoutesEnum } from '../routes';
 
 interface MenuItemI {
   path: string;
@@ -22,6 +23,7 @@ interface Props {
   title: string;
   menuItems: MenuItemI[];
   history: History;
+  showPasswordModal: () => void;
 }
 
 function SelectMenu(props: Props) {
@@ -35,6 +37,11 @@ function SelectMenu(props: Props) {
 
   const handleClose = (path: string) => (event: any) => {
     if (anchorEl.current!.contains(event.target)) {
+      return;
+    }
+    if (path === RoutesEnum.ParametriVage) {
+      props.showPasswordModal();
+      setOpen(false);
       return;
     }
     props.history.push(path);
