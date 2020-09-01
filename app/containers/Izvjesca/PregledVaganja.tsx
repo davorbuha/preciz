@@ -135,6 +135,7 @@ function PregledVaganjaContainer() {
         );
       }}
       removePrvoArr={(ids: string[]) => {
+        console.log(prvaVaganja.filter(item => !ids.find(i => i === item.id)));
         setPrvaVaganja(
           prvaVaganja.filter(item => !ids.find(i => i === item.id))
         );
