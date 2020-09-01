@@ -1,10 +1,11 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable import/no-cycle */
 /* eslint-disable prefer-template */
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable radix */
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { Control, Controller } from 'react-hook-form';
 import ReactPDF, { Font } from '@react-pdf/renderer';
@@ -24,11 +25,6 @@ import DisabledOutlined from '../../components/DisabledOutlined';
 import FreeDropdown from '../../components/FreeDropdown';
 import OutlinedTextField from '../../components/OutlinedTextField';
 import PrvoVaganjeIzvaganaMasaComponent from '../../components/PrvoVaganjeIzvaganaMasaComponent';
-import {
-  getRegistracijaById,
-  getPrikolicaRegistracijaById,
-  getVozacById
-} from '../../components/helpers';
 import { Detalji } from '../../components/JednoVaganjePDF';
 import dbnames from '../../db/dbnames';
 import PrvoVaganjePDF from '../../components/PrvoVaganjePDF';
@@ -109,6 +105,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function PrvoVaganjeScreen(props: Props) {
+  const [brojVaganja, setBrojVaganja] = useState(0);
+  React.useEffect(() => {
+    storage.get(dbnames.prvoVaganje, (err, data) => {
+      if (Array.isArray(data)) {
+        const parsed = data
+          .map(PrvoVaganje.fromJSON)
+          .sort((a, b) => a.brojVaganja - b.brojVaganja);
+        setBrojVaganja(parsed[parsed.length - 1].brojVaganja + 1);
+      } else {
+        setBrojVaganja(1);
+      }
+    });
+  }, []);
   const { state } = React.useContext(MainContext);
   const classes = useStyles();
   const { control } = props;
@@ -173,6 +182,7 @@ function PrvoVaganjeScreen(props: Props) {
         brojNaloga,
         brutto,
         ts,
+        brojVaganja,
         vlaga
       );
       ReactPDF.render(
@@ -223,7 +233,7 @@ function PrvoVaganjeScreen(props: Props) {
   return (
     <div className={classes.container}>
       <div className={classes.titleRow}>
-        <h2>Prvo vaganje</h2>
+        <h2>Vagarski list {brojVaganja}</h2>
         <div className={classes.column}>
           <Controller
             rules={{ required: { value: true, message: 'Obavezan unos' } }}

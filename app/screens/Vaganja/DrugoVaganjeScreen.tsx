@@ -198,7 +198,7 @@ function DrugoVaganjeScreen(props: Props) {
         path={`${app.getPath('appData')}/DrugoVaganje.pdf`}
       />
       <div className={classes.titleRow}>
-        <h2>Drugo vaganje</h2>
+        <h2>Vagarski list {selected?.brojVaganja}</h2>
       </div>
 
       <TableContainer className={classes.tableContainer} component={Paper}>

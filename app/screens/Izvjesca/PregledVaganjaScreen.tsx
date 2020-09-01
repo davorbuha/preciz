@@ -80,12 +80,14 @@ interface Props {
   vaganja: PregledType[];
   removeJednoVaganje: (id: string) => void;
   removePrvoVaganje: (id: string) => void;
+  removeJednoArr: (ids: string[]) => void;
+  removePrvoArr: (ids: string[]) => void;
 }
 
 function PregledVaganjaScreen(props: Props) {
   const { state } = React.useContext(MainContext);
   const [selectedVaganje, setSelectedVaganje] = React.useState<
-    PregledType | undefined
+    PregledType[] | undefined
   >();
   const [selectedDatePrvo, setSelectedDatePrvo] = React.useState<Date | null>(
     null
@@ -156,65 +158,146 @@ function PregledVaganjaScreen(props: Props) {
     props.vaganja
   ]);
 
-  const handleStorniraj = () => {
-    storage.get(dbnames.jednoVaganje, (err, jednoData) => {
-      if (Array.isArray(jednoData)) {
-        const jednoVaganjeParsed = jednoData
-          .map(JednoVaganje.fromJSON)
-          .filter(jednoItem => jednoItem.id !== selectedVaganje!.id);
-        props.removeJednoVaganje(selectedVaganje!.id);
-        storage.set(dbnames.jednoVaganje, jednoVaganjeParsed, () => {});
-      }
-    });
-    storage.get(dbnames.prvoVaganje, (err, prvoData) => {
-      console.log(prvoData, selectedVaganje);
-      if (Array.isArray(prvoData)) {
-        const prvoVaganjeParsed = prvoData
-          .map(PrvoVaganje.fromJSON)
-          .filter(prvoItem => prvoItem.id !== selectedVaganje!.id);
-        console.log(prvoVaganjeParsed);
-        props.removePrvoVaganje(selectedVaganje!.id);
-        storage.set(dbnames.prvoVaganje, prvoVaganjeParsed, () => {});
-      }
-    });
+  const handleStorniraj = async () => {
+    if (selectedVaganje && selectedVaganje?.length === 1) {
+      const jednoSelected = selectedVaganje[0];
+      storage.get(dbnames.jednoVaganje, (err, jednoData) => {
+        if (Array.isArray(jednoData)) {
+          const jednoVaganjeParsed = jednoData
+            .map(JednoVaganje.fromJSON)
+            .filter(jednoItem => jednoItem.id !== jednoSelected!.id);
+          props.removeJednoVaganje(jednoSelected!.id);
+          storage.set(dbnames.jednoVaganje, jednoVaganjeParsed, () => {});
+        }
+      });
+      storage.get(dbnames.prvoVaganje, (err, prvoData) => {
+        if (Array.isArray(prvoData)) {
+          const prvoVaganjeParsed = prvoData
+            .map(PrvoVaganje.fromJSON)
+            .filter(prvoItem => prvoItem.id !== jednoSelected!.id);
+          props.removePrvoVaganje(jednoSelected!.id);
+          storage.set(dbnames.prvoVaganje, prvoVaganjeParsed, () => {});
+        }
+      });
+    }
+    if (selectedVaganje && selectedVaganje?.length > 1) {
+      const jednoParsed = await new Promise<JednoVaganje[]>(resolve =>
+        storage.get(dbnames.jednoVaganje, (err, jednoData) => {
+          if (Array.isArray(jednoData)) {
+            const jednoVaganjeParsed = jednoData.map(JednoVaganje.fromJSON);
+            resolve(jednoVaganjeParsed);
+          }
+        })
+      );
+      const prvoParsed = await new Promise<PrvoVaganje[]>(resolve =>
+        storage.get(dbnames.prvoVaganje, (err, prvoData) => {
+          if (Array.isArray(prvoData)) {
+            const prvoVaganjeParsed = prvoData.map(PrvoVaganje.fromJSON);
+            resolve(prvoVaganjeParsed);
+          }
+        })
+      );
+      props.removeJednoArr(selectedVaganje.map(i => i.id));
+      props.removePrvoArr(selectedVaganje.map(i => i.id));
+      // selectedVaganje.forEach(s => {
+      //   props.removeJednoVaganje(s.id);
+      //   props.removePrvoVaganje(s.id);
+      // });
+      storage.set(
+        dbnames.jednoVaganje,
+        jednoParsed.filter(j => !selectedVaganje.find(s => s.id === j.id)),
+        () => {}
+      );
+      storage.set(
+        dbnames.prvoVaganje,
+        prvoParsed.filter(p => !selectedVaganje.find(s => s.id === p.id)),
+        () => {}
+      );
+    }
   };
 
   const handlePrint = () => {
-    const detalji: Detalji = {
-      brojNalog: selectedVaganje!.brojNaloga,
-      dobavljac: selectedVaganje!.dobavljac,
-      mjestoIsporuke: selectedVaganje!.mjestoIsporuke,
-      prikolica: selectedVaganje!.prikolica,
-      registracija: selectedVaganje!.registracija,
-      roba: selectedVaganje!.roba,
-      tip: selectedVaganje!.tip,
-      vozac: selectedVaganje!.vozac
-    };
-    ReactPDF.render(
-      <UkupniIzvjestajPDF
-        ts1={selectedVaganje!.ts1}
-        ts2={selectedVaganje!.ts2}
-        vrijednostPrvo={
-          selectedVaganje!.tip === 'Ulaz'
-            ? selectedVaganje!.bruto
-            : selectedVaganje!.tara
+    if (selectedVaganje && selectedVaganje.length > 1) {
+      selectedVaganje.forEach(jednoSelected => {
+        const detalji: Detalji = {
+          brojNalog: jednoSelected!.brojNaloga,
+          dobavljac: jednoSelected!.dobavljac,
+          mjestoIsporuke: jednoSelected!.mjestoIsporuke,
+          prikolica: jednoSelected!.prikolica,
+          registracija: jednoSelected!.registracija,
+          roba: jednoSelected!.roba,
+          tip: jednoSelected!.tip,
+          vozac: jednoSelected!.vozac
+        };
+        ReactPDF.render(
+          <UkupniIzvjestajPDF
+            ts1={jednoSelected!.ts1}
+            ts2={jednoSelected!.ts2}
+            vrijednostPrvo={
+              jednoSelected!.tip === 'Ulaz'
+                ? jednoSelected!.bruto
+                : jednoSelected!.tara
+            }
+            vrijednostDrugog={
+              jednoSelected!.tip === 'Ulaz'
+                ? jednoSelected!.tara
+                : jednoSelected!.bruto
+            }
+            bruto={jednoSelected!.bruto}
+            neto={jednoSelected!.neto}
+            tara={jednoSelected!.tara}
+            detalji={detalji}
+            company={state.company}
+          />,
+          `${app.getPath('appData')}/UkupniIzvjestaj${jednoSelected.id}.pdf`,
+          () => {
+            ptp.print(
+              `${app.getPath('appData')}/UkupniIzvjestaj${jednoSelected.id}.pdf`
+            );
+          }
+        );
+      });
+    }
+    if (selectedVaganje && selectedVaganje?.length === 1) {
+      const jednoSelected = selectedVaganje[0];
+      const detalji: Detalji = {
+        brojNalog: jednoSelected!.brojNaloga,
+        dobavljac: jednoSelected!.dobavljac,
+        mjestoIsporuke: jednoSelected!.mjestoIsporuke,
+        prikolica: jednoSelected!.prikolica,
+        registracija: jednoSelected!.registracija,
+        roba: jednoSelected!.roba,
+        tip: jednoSelected!.tip,
+        vozac: jednoSelected!.vozac
+      };
+      ReactPDF.render(
+        <UkupniIzvjestajPDF
+          ts1={jednoSelected!.ts1}
+          ts2={jednoSelected!.ts2}
+          vrijednostPrvo={
+            jednoSelected!.tip === 'Ulaz'
+              ? jednoSelected!.bruto
+              : jednoSelected!.tara
+          }
+          vrijednostDrugog={
+            jednoSelected!.tip === 'Ulaz'
+              ? jednoSelected!.tara
+              : jednoSelected!.bruto
+          }
+          bruto={jednoSelected!.bruto}
+          neto={jednoSelected!.neto}
+          tara={jednoSelected!.tara}
+          detalji={detalji}
+          company={state.company}
+        />,
+        `${app.getPath('appData')}/UkupniIzvjestaj${jednoSelected.id}.pdf`,
+        () => {
+          ptp.print(
+            `${app.getPath('appData')}/UkupniIzvjestaj${jednoSelected.id}.pdf`
+          );
         }
-        vrijednostDrugog={
-          selectedVaganje!.tip === 'Ulaz'
-            ? selectedVaganje!.tara
-            : selectedVaganje!.bruto
-        }
-        bruto={selectedVaganje!.bruto}
-        neto={selectedVaganje!.neto}
-        tara={selectedVaganje!.tara}
-        detalji={detalji}
-        company={state.company}
-      />,
-      `${app.getPath('appData')}/UkupniIzvjestaj.pdf`,
-      () => {
-        ptp.print(`${app.getPath('appData')}/UkupniIzvjestaj.pdf`);
-      }
-    );
+      );
+    }
   };
   React.useEffect(() => {
     setSelectedPartner({

@@ -1,3 +1,4 @@
+/* eslint-disable no-unneeded-ternary */
 /* eslint-disable import/no-cycle */
 import React from 'react';
 import {
@@ -17,8 +18,8 @@ import colors from '../styles/colors';
 
 interface Props {
   vaganja: PregledType[];
-  selectedVaganje: PregledType | undefined;
-  setSelectedVaganje: (pregled: PregledType) => void;
+  selectedVaganje: PregledType[] | undefined;
+  setSelectedVaganje: (pregled: PregledType[]) => void;
 }
 
 const useStyles = makeStyles(() => ({
@@ -107,19 +108,33 @@ function PregledTable({ vaganja, selectedVaganje, setSelectedVaganje }: Props) {
           {vaganja.map(vaganje => (
             <TableRow
               className={classes.tr}
-              onClick={() => setSelectedVaganje(vaganje)}
+              onClick={() => {
+                if (selectedVaganje?.find(v => v.id === vaganje.id)) {
+                  setSelectedVaganje(
+                    selectedVaganje?.filter(v => v.id !== vaganje.id)
+                  );
+                } else {
+                  setSelectedVaganje([
+                    ...(selectedVaganje ? selectedVaganje : []),
+                    vaganje
+                  ]);
+                }
+              }}
               style={{
-                backgroundColor:
-                  vaganje.id === selectedVaganje?.id
-                    ? colors.primary
-                    : undefined
+                backgroundColor: selectedVaganje?.find(v => v.id === vaganje.id)
+                  ? colors.primary
+                  : undefined
               }}
               key={vaganje.id}
             >
               <TableCell style={style.cellStyle} align="left">
                 <Radio
                   color="primary"
-                  checked={selectedVaganje?.id === vaganje.id}
+                  checked={
+                    selectedVaganje?.find(v => v.id === vaganje.id)
+                      ? true
+                      : false
+                  }
                   name="radio-button-demo"
                   inputProps={{ 'aria-label': 'D' }}
                 />

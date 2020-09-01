@@ -14,6 +14,7 @@ class PrvoVaganje {
   brojNaloga: string;
   bruto: number;
   ts: Moment;
+  brojVaganja: number;
   vlaga?: string;
   drugoVaganjeId?: string;
   constructor(
@@ -29,6 +30,7 @@ class PrvoVaganje {
     brojNaloga: string,
     bruto: number,
     ts: Moment,
+    brojVaganja: number,
     vlaga?: string,
     drugoVaganjeId?: string
   ) {
@@ -46,6 +48,7 @@ class PrvoVaganje {
     this.bruto = bruto;
     this.ts = ts;
     this.drugoVaganjeId = drugoVaganjeId;
+    this.brojVaganja = brojVaganja;
   }
 
   public static fromJSON(maybe: any) {
@@ -62,6 +65,7 @@ class PrvoVaganje {
       maybe.broj_naloga,
       maybe.bruto,
       moment(maybe.ts),
+      maybe.broj_vaganja ? maybe.broj_vaganja : 0,
       maybe.vlaga,
       maybe.drugo_vaganje_id
     );
@@ -81,7 +85,8 @@ class PrvoVaganje {
       bruto: this.bruto,
       ts: this.ts.toISOString(),
       drugo_vaganje_id: this.drugoVaganjeId,
-      vlaga: this.vlaga
+      vlaga: this.vlaga,
+      broj_vaganja: this.brojVaganja
     };
   }
 }

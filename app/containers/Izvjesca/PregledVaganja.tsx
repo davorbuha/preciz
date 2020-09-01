@@ -77,6 +77,9 @@ function PregledVaganjaContainer() {
       });
     });
   }, []);
+  React.useEffect(() => {
+    console.log(prvaVaganja);
+  }, [prvaVaganja]);
   const vaganja = React.useMemo(() => {
     const prvaIDrugaConst = prvaVaganja
       .filter(item => item.drugoVaganjeId)
@@ -126,6 +129,16 @@ function PregledVaganjaContainer() {
   }, [prvaVaganja, drugaVaganja, jednaVaganja]);
   return (
     <PregledVaganjaScreen
+      removeJednoArr={(ids: string[]) => {
+        setJednaVaganja(
+          jednaVaganja.filter(item => !ids.find(i => i === item.id))
+        );
+      }}
+      removePrvoArr={(ids: string[]) => {
+        setPrvaVaganja(
+          prvaVaganja.filter(item => !ids.find(i => i === item.id))
+        );
+      }}
       removeJednoVaganje={(id: string) => {
         setJednaVaganja(jednaVaganja.filter(item => item.id !== id));
       }}
