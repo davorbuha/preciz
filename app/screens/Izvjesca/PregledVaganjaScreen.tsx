@@ -7,6 +7,7 @@ import {
   MuiPickersUtilsProvider
 } from '@material-ui/pickers';
 import storage from 'electron-json-storage';
+import moment from 'moment';
 import {
   TableContainer,
   Table,
@@ -19,7 +20,6 @@ import {
   Button
 } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
-import moment from 'moment';
 import ptp from 'pdf-to-printer';
 import ReactPDF from '@react-pdf/renderer';
 import DateFnsUtils from '@date-io/date-fns';
@@ -225,12 +225,16 @@ function PregledVaganjaScreen(props: Props) {
   const handlePrintZbirnog = () => {
     const uuid = uuidv4();
     ReactPDF.render(
-      <ZbirniIzvještajPDF company={state.company} />,
+      <ZbirniIzvještajPDF
+        date1={moment().subtract(2, 'days')}
+        date2={moment()}
+        company={state.company}
+      />,
       `${app.getPath('appData')}/ZbirniIzvjestaj${uuid}.pdf`,
       () => {
         ptp.print(`${app.getPath('appData')}/ZbirniIzvjestaj${uuid}.pdf`, {
-          unix: ['-o landscape', '-print-settings "fit"'],
-          win32: ['-o landscape', '-print-settings "fit"']
+          unix: ['-o landscape'],
+          win32: ['-o landscape']
         });
       }
     );
