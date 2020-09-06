@@ -188,6 +188,8 @@ function PregledVaganjaScreen(props: Props) {
           if (Array.isArray(jednoData)) {
             const jednoVaganjeParsed = jednoData.map(JednoVaganje.fromJSON);
             resolve(jednoVaganjeParsed);
+          } else {
+            resolve([]);
           }
         })
       );
@@ -196,6 +198,8 @@ function PregledVaganjaScreen(props: Props) {
           if (Array.isArray(prvoData)) {
             const prvoVaganjeParsed = prvoData.map(PrvoVaganje.fromJSON);
             resolve(prvoVaganjeParsed);
+          } else {
+            resolve([]);
           }
         })
       );
