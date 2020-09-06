@@ -92,10 +92,12 @@ function PregledVaganjaScreen(props: Props) {
     PregledType[] | undefined
   >();
   const [selectedDatePrvo, setSelectedDatePrvo] = React.useState<Date | null>(
-    null
+    moment()
+      .subtract(1, 'month')
+      .toDate()
   );
   const [selectedDateDrugo, setSelectedDateDrugo] = React.useState<Date | null>(
-    null
+    moment().toDate()
   );
   const [selectedVozilo, setSelectedVozilo] = React.useState<
     Element | undefined
@@ -226,8 +228,9 @@ function PregledVaganjaScreen(props: Props) {
     const uuid = uuidv4();
     ReactPDF.render(
       <ZbirniIzvještajPDF
-        date1={moment().subtract(2, 'days')}
-        date2={moment()}
+        filtered={filteredVaganja}
+        date1={moment(selectedDatePrvo)}
+        date2={moment(selectedDateDrugo)}
         company={state.company}
       />,
       `${app.getPath('appData')}/ZbirniIzvjestaj${uuid}.pdf`,
@@ -356,7 +359,7 @@ function PregledVaganjaScreen(props: Props) {
                 <KeyboardDatePicker
                   margin="none"
                   id="date-picker-dialog"
-                  format="MM/dd/yyyy"
+                  format="dd.MM.yyyy"
                   value={selectedDatePrvo}
                   onChange={handleDateChangePrvo}
                   KeyboardButtonProps={{
@@ -383,7 +386,7 @@ function PregledVaganjaScreen(props: Props) {
                 <KeyboardDatePicker
                   margin="none"
                   id="date-picker-dialog"
-                  format="MM/dd/yyyy"
+                  format="dd.MM.yyyy"
                   value={selectedDateDrugo}
                   onChange={handleDateChangeDrugo}
                   KeyboardButtonProps={{
@@ -454,9 +457,9 @@ function PregledVaganjaScreen(props: Props) {
           >
             <Button
               onClick={handlePrintZbirnog}
-              disabled={!selectedVaganje}
               variant="contained"
               color="primary"
+              style={{ marginBottom: 10 }}
             >
               Print zbirnog izvještaja
             </Button>

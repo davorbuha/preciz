@@ -1,9 +1,14 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable prefer-template */
+/* eslint-disable import/no-cycle */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
+import moment, { Moment } from 'moment';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import CompanyDetails from '../types/CompanyDetails';
-import moment, { Moment } from 'moment';
+import { PregledType } from '../containers/Izvjesca/PregledVaganja';
+import colors from '../styles/colors';
 
 const styles = StyleSheet.create({
   page: {
@@ -36,6 +41,14 @@ const styles = StyleSheet.create({
   },
   naslov: {
     alignSelf: 'center'
+  },
+  cell: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 80,
+    borderWidth: '1px',
+    borderColor: 'black',
+    borderStyle: 'solid'
   }
 });
 
@@ -43,6 +56,7 @@ interface Props {
   company: CompanyDetails;
   date1: Moment;
   date2: Moment;
+  filtered: PregledType[];
   kupci?: string;
   vozilo?: string;
   roba?: string;
@@ -51,7 +65,7 @@ interface Props {
 const ZbirniIzvještajPDF = (props: Props) => (
   <Document>
     <Page
-      style={{ paddingLeft: 20, paddingRight: 140, display: 'flex' }}
+      style={{ paddingLeft: 20, paddingRight: 100, display: 'flex' }}
       size="A4"
       orientation="landscape"
     >
@@ -82,6 +96,82 @@ const ZbirniIzvještajPDF = (props: Props) => (
         <Text style={styles.text}>
           {props.roba ? props.roba : 'za svu robu'}
         </Text>
+        <View style={{ marginTop: 20, display: 'flex' }}>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={styles.cell}>
+              <Text style={[styles.text]}>Redni broj</Text>
+            </View>
+            <View style={styles.cell}>
+              <Text style={[styles.text]}>Datum</Text>
+            </View>
+            <View style={styles.cell}>
+              <Text style={[styles.text]}>Vrijeme</Text>
+            </View>
+            <View style={styles.cell}>
+              <Text style={[styles.text]}>Registracija</Text>
+            </View>
+            <View style={[styles.cell, { width: 140 }]}>
+              <Text style={[styles.text]}>Vozač</Text>
+            </View>
+            <View style={[styles.cell, { width: 180 }]}>
+              <Text style={[styles.text]}>Kupac-Dobavljač</Text>
+            </View>
+            <View style={[styles.cell, { width: 180 }]}>
+              <Text style={[styles.text]}>Roba</Text>
+            </View>
+            <View style={[styles.cell]}>
+              <Text style={[styles.text]}>Masa 1</Text>
+            </View>
+            <View style={[styles.cell]}>
+              <Text style={[styles.text]}>Masa 2</Text>
+            </View>
+            <View style={[styles.cell]}>
+              <Text style={[styles.text]}>Neto</Text>
+            </View>
+          </View>
+          <View>
+            {props.filtered.map((item, i) => (
+              <View key={'zbirniRow' + i} style={{ flexDirection: 'row' }}>
+                <View style={styles.cell}>
+                  <Text style={[styles.text]}>{item.brojVaganja}</Text>
+                </View>
+                <View style={styles.cell}>
+                  <Text style={[styles.text]}>
+                    {item.ts2.format('DD.MM.YYYY')}
+                  </Text>
+                </View>
+                <View style={styles.cell}>
+                  <Text style={[styles.text]}>{item.ts2.format('HH:mm')}</Text>
+                </View>
+                <View style={styles.cell}>
+                  <Text style={[styles.text]}>{item.registracija}</Text>
+                </View>
+                <View style={[styles.cell, { width: 140 }]}>
+                  <Text style={[styles.text]}>{item.vozac}</Text>
+                </View>
+                <View style={[styles.cell, { width: 180 }]}>
+                  <Text style={[styles.text]}>{item.dobavljac}</Text>
+                </View>
+                <View style={[styles.cell, { width: 180 }]}>
+                  <Text style={[styles.text]}>{item.roba}</Text>
+                </View>
+                <View style={[styles.cell]}>
+                  <Text style={[styles.text]}>
+                    {item.tip === 'Ulaz' ? item.bruto : item.tara}
+                  </Text>
+                </View>
+                <View style={[styles.cell]}>
+                  <Text style={[styles.text]}>
+                    {item.tip === 'Ulaz' ? item.tara : item.bruto}
+                  </Text>
+                </View>
+                <View style={[styles.cell]}>
+                  <Text style={[styles.text]}>{item.neto}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </View>
       </View>
     </Page>
   </Document>
