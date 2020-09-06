@@ -159,6 +159,7 @@ function DrugoVaganjeScreen(props: Props) {
     };
     ReactPDF.render(
       <DrugoVaganjePDF
+        brojVaganja={selected?.brojVaganja}
         ts={ts}
         bruto={bruto}
         neto={neto}
@@ -206,6 +207,7 @@ function DrugoVaganjeScreen(props: Props) {
           <TableHead>
             <TableRow>
               <TableCell> </TableCell>
+              <TableCell align="left">Broj vaganja</TableCell>
               <TableCell align="left">Registracija</TableCell>
               <TableCell align="left">Vozač</TableCell>
               <TableCell align="left">Dobavljač/Kupac</TableCell>
@@ -235,6 +237,7 @@ function DrugoVaganjeScreen(props: Props) {
                     inputProps={{ 'aria-label': 'D' }}
                   />
                 </TableCell>
+                <TableCell align="left">{item.brojVaganja}</TableCell>
                 <TableCell align="left">{item.registracija}</TableCell>
                 <TableCell align="left">{item.vozac}</TableCell>
                 <TableCell align="left">{item.dobavljac}</TableCell>
@@ -259,7 +262,7 @@ function DrugoVaganjeScreen(props: Props) {
               maxWidth={140}
               minWidth={120}
               disabled
-              value={selected ? 1 : ''}
+              value={selected?.brojVaganja}
             />
             <span className={classes.span} style={{ marginLeft: 20 }}>
               Registracija:{' '}

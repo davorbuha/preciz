@@ -4,6 +4,7 @@ import React from 'react';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { Moment } from 'moment';
 import CompanyDetails from '../types/CompanyDetails';
+
 // Create styles
 const styles = StyleSheet.create({
   page: {
@@ -53,6 +54,7 @@ export interface Detalji {
 }
 
 interface Props {
+  brojVaganja?: number;
   company: CompanyDetails;
   detalji: Detalji;
   bruto: number;
@@ -70,7 +72,9 @@ const PrvoVaganjePDF = (props: Props) => (
         <Text style={styles.text}>Email: {props.company.mail}</Text>
       </View>
       <View style={styles.body}>
-        <Text style={[styles.regularText]}>Vaganje broj: 1</Text>
+        <Text style={[styles.regularText]}>
+          Vaganje broj: {props.brojVaganja ? props.brojVaganja : 1}
+        </Text>
         <Text
           style={[
             styles.regularText,

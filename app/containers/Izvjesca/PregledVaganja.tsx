@@ -12,6 +12,7 @@ import Roba from '../../types/Roba';
 import Partner from '../../types/Partner';
 
 export type PregledType = {
+  brojVaganja?: number;
   id: string;
   tip: string;
   registracija: string;
@@ -88,6 +89,7 @@ function PregledVaganjaContainer() {
           drugoI => drugoI.id === prvo.drugoVaganjeId
         )!;
         return {
+          brojVaganja: prvo.brojVaganja,
           id: prvo.id,
           tip: prvo.tip,
           registracija: prvo.registracija,

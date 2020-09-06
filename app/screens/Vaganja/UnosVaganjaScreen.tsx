@@ -196,6 +196,7 @@ function UnosVaganjaScreen(props: Props) {
       );
       ReactPDF.render(
         <PrvoVaganjePDF
+          brojVaganja={brojVaganja}
           ts={moment(prvoDate)}
           bruto={parseInt(values[fields.vaganje1])}
           detalji={detalji}
@@ -205,6 +206,7 @@ function UnosVaganjaScreen(props: Props) {
         () => {
           ReactPDF.render(
             <DrugoVaganjePDF
+              brojVaganja={brojVaganja}
               ts={moment(drugoDate)}
               bruto={bruto}
               neto={neto}

@@ -185,8 +185,10 @@ function PrvoVaganjeScreen(props: Props) {
         brojVaganja,
         vlaga
       );
+      console.log(brojVaganja);
       ReactPDF.render(
         <PrvoVaganjePDF
+          brojVaganja={brojVaganja}
           ts={ts}
           bruto={brutto}
           detalji={detalji}

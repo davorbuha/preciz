@@ -110,6 +110,7 @@ function PregledTable({ vaganja, selectedVaganje, setSelectedVaganje }: Props) {
               className={classes.tr}
               onClick={() => {
                 if (selectedVaganje?.find(v => v.id === vaganje.id)) {
+                  console.log(selectedVaganje);
                   setSelectedVaganje(
                     selectedVaganje?.filter(v => v.id !== vaganje.id)
                   );

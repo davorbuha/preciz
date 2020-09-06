@@ -56,6 +56,7 @@ export interface Detalji {
 }
 
 interface Props {
+  brojVaganja?: number;
   company: CompanyDetails;
   detalji: Detalji;
   bruto: number;
@@ -78,7 +79,10 @@ const UkupniIzvjestajPDF = (props: Props) => (
         <Text style={styles.text}>Email: {props.company.mail}</Text>
       </View>
       <View style={styles.body}>
-        <Text style={[styles.regularText]}>Ukupni izvještaj</Text>
+        <Text style={[styles.regularText]}>
+          Ukupni izvještaj vaganja broj:{' '}
+          {props.brojVaganja ? props.brojVaganja : 1}
+        </Text>
         <Text
           style={[
             styles.regularText,
