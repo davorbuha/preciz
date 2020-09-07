@@ -53,6 +53,7 @@ export interface Detalji {
 }
 
 interface Props {
+  brojVaganja: number;
   company: CompanyDetails;
   detalji: Detalji;
   bruto: number;
@@ -78,7 +79,7 @@ const JednoVaganjePDF = (props: Props) => (
             { marginBottom: 20, alignSelf: 'center' }
           ]}
         >
-          Tip vaganja (Ulaz / Izlaz): {props.detalji.tip}
+          Tip vaganja (Ulaz / Izlaz): {props.detalji.tip} {props.brojVaganja}
         </Text>
         <View style={styles.row}>
           <Text style={[styles.regularText, styles.minWidth]}>

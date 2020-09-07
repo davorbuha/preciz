@@ -35,9 +35,9 @@ class DrugoVaganje {
   public toJSON() {
     return {
       id: this.id,
-      bruto: this.bruto,
-      neto: this.neto,
-      tara: this.tara,
+      bruto: this.bruto ? this.bruto : 0,
+      neto: this.neto ? this.neto : 0,
+      tara: this.tara ? this.neto : 0,
       ts: this.ts.toISOString()
     };
   }

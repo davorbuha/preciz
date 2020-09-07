@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable import/no-cycle */
 import React from 'react';
@@ -157,6 +158,20 @@ function PregledVaganjaScreen(props: Props) {
     tipZaPrikaz
   ]);
 
+  const ukupnoUlaz = React.useMemo(() => {
+    return filteredVaganja.reduce((acc, item) => {
+      if (item.tip === 'Ulaz') return item.neto + acc;
+      return acc;
+    }, 0);
+  }, [filteredVaganja]);
+
+  const ukupnoIzlaz = React.useMemo(() => {
+    return filteredVaganja.reduce((acc, item) => {
+      if (item.tip === 'Izlaz') return item.neto + acc;
+      return acc;
+    }, 0);
+  }, [filteredVaganja]);
+
   const handleStorniraj = async () => {
     if (selectedVaganje && selectedVaganje?.length === 1) {
       const jednoSelected = selectedVaganje[0];
@@ -230,6 +245,8 @@ function PregledVaganjaScreen(props: Props) {
         date1={moment(selectedDatePrvo)}
         date2={moment(selectedDateDrugo)}
         company={state.company}
+        ulaz={ukupnoUlaz}
+        izlaz={ukupnoIzlaz}
       />,
       `${app.getPath('appData')}/ZbirniIzvjestaj${uuid}.pdf`,
       () => {
@@ -343,7 +360,7 @@ function PregledVaganjaScreen(props: Props) {
       title: props.vozila[0]?.registracija,
       value: props.vozila[0]?.id
     });
-  }, [props.kupci]);
+  }, [props.vozila]);
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div style={style.container}>
@@ -453,61 +470,79 @@ function PregledVaganjaScreen(props: Props) {
               flexDirection: 'column'
             }}
           >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                paddingTop: 20,
-                paddingBottom: 20,
-                alignSelf: 'flex-start'
-              }}
-            >
+            <div style={{ display: 'flex', flexDirection: 'row' }}>
               <div
                 style={{
                   display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center'
+                  flexDirection: 'column',
+                  paddingTop: 20,
+                  paddingBottom: 20,
+                  alignSelf: 'flex-start'
                 }}
               >
-                <Radio
-                  title="Sve"
-                  color="primary"
-                  checked={tipZaPrikaz === 'Sve'}
-                  onClick={() => setTipZaPrikaz('Sve')}
-                />
-                <p style={{ fontSize: 14, marginLeft: 10 }}>Sve</p>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Radio
+                    title="Sve"
+                    color="primary"
+                    checked={tipZaPrikaz === 'Sve'}
+                    onClick={() => setTipZaPrikaz('Sve')}
+                  />
+                  <p style={{ fontSize: 14, marginLeft: 10 }}>Sve</p>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Radio
+                    title="Ulaz"
+                    color="primary"
+                    checked={tipZaPrikaz === 'Ulaz'}
+                    onClick={() => setTipZaPrikaz('Ulaz')}
+                  />
+                  <p style={{ fontSize: 14, marginLeft: 10 }}>Ulaz</p>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Radio
+                    title="Izlaz"
+                    color="primary"
+                    checked={tipZaPrikaz === 'Izlaz'}
+                    onClick={() => setTipZaPrikaz('Izlaz')}
+                  />
+                  <p style={{ fontSize: 14, marginLeft: 10 }}>Izlaz</p>
+                </div>
               </div>
               <div
                 style={{
                   display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center'
+                  flexDirection: 'column',
+                  marginTop: 30,
+                  marginLeft: 50
                 }}
               >
-                <Radio
-                  title="Ulaz"
-                  color="primary"
-                  checked={tipZaPrikaz === 'Ulaz'}
-                  onClick={() => setTipZaPrikaz('Ulaz')}
-                />
-                <p style={{ fontSize: 14, marginLeft: 10 }}>Ulaz</p>
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center'
-                }}
-              >
-                <Radio
-                  title="Izlaz"
-                  color="primary"
-                  checked={tipZaPrikaz === 'Izlaz'}
-                  onClick={() => setTipZaPrikaz('Izlaz')}
-                />
-                <p style={{ fontSize: 14, marginLeft: 10 }}>Izlaz</p>
+                <p style={{ fontSize: 18, marginLeft: 10 }}>Ukupno ulaz:</p>
+                <p style={{ fontSize: 18, marginLeft: 10 }}>{ukupnoUlaz} kg</p>
+                <p style={{ fontSize: 18, marginLeft: 10, marginTop: 20 }}>
+                  Ukupno izlaz:
+                </p>
+                <p style={{ fontSize: 18, marginLeft: 10 }}>{ukupnoIzlaz} kg</p>
               </div>
             </div>
+
             <Button
               onClick={handlePrintZbirnog}
               variant="contained"

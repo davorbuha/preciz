@@ -29,6 +29,7 @@ import { Detalji } from '../../components/JednoVaganjePDF';
 import dbnames from '../../db/dbnames';
 import PrvoVaganjePDF from '../../components/PrvoVaganjePDF';
 import PrvoVaganje from '../../types/PrvoVaganje';
+import Brojac from '../../types/Brojac';
 
 const app = require('electron').remote.app;
 
@@ -107,15 +108,9 @@ const useStyles = makeStyles(theme => ({
 function PrvoVaganjeScreen(props: Props) {
   const [brojVaganja, setBrojVaganja] = useState(0);
   React.useEffect(() => {
-    storage.get(dbnames.prvoVaganje, (err, data) => {
-      if (Array.isArray(data)) {
-        const parsed = data
-          .map(PrvoVaganje.fromJSON)
-          .sort((a, b) => a.brojVaganja - b.brojVaganja);
-        setBrojVaganja(parsed[parsed.length - 1].brojVaganja + 1);
-      } else {
-        setBrojVaganja(1);
-      }
+    storage.get(dbnames.brojac, (err, data) => {
+      const brojac = Brojac.fromJSON(data);
+      setBrojVaganja(brojac.addOneAndReturn());
     });
   }, []);
   const { state } = React.useContext(MainContext);
@@ -185,7 +180,6 @@ function PrvoVaganjeScreen(props: Props) {
         brojVaganja,
         vlaga
       );
-      console.log(brojVaganja);
       ReactPDF.render(
         <PrvoVaganjePDF
           brojVaganja={brojVaganja}
@@ -203,6 +197,14 @@ function PrvoVaganjeScreen(props: Props) {
           prev = data.map(PrvoVaganje.fromJSON);
         }
         storage.set(dbnames.prvoVaganje, [vaganje, ...prev], err => {
+          storage.get(dbnames.brojac, (e, d) => {
+            const brojac = Brojac.fromJSON(d);
+            storage.set(
+              dbnames.brojac,
+              new Brojac(brojac.addOneAndReturn()).toJSON(),
+              () => {}
+            );
+          });
           (sifraRobeRef.current as any).setTitle('');
           props.reset(
             {

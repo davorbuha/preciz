@@ -82,7 +82,7 @@ class PrvoVaganje {
       sifra_robe: this.sifraRobe,
       mjesto_isporuke: this.mjestoIsporuke,
       broj_naloga: this.brojNaloga,
-      bruto: this.bruto,
+      bruto: this.bruto ? this.bruto : 0,
       ts: this.ts.toISOString(),
       drugo_vaganje_id: this.drugoVaganjeId,
       vlaga: this.vlaga,

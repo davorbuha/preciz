@@ -35,6 +35,7 @@ import JednoVaganjePDF, { Detalji } from '../../components/JednoVaganjePDF';
 import JednoVaganje from '../../types/JednoVaganje';
 import MainContext from '../../context/MainContext';
 import dbnames from '../../db/dbnames';
+import Brojac from '../../types/Brojac';
 
 const app = require('electron').remote.app;
 
@@ -111,6 +112,14 @@ interface Props {
 }
 
 function JednoVaganjeScreen(props: Props) {
+  const [brojVaganja, setBrojVaganja] = React.useState(0);
+
+  React.useEffect(() => {
+    storage.get(dbnames.brojac, (err, data) => {
+      const brojac = Brojac.fromJSON(data);
+      setBrojVaganja(brojac.addOneAndReturn());
+    });
+  }, []);
   const { state } = React.useContext(MainContext);
   const classes = useStyles();
   const { control } = props;
@@ -215,10 +224,12 @@ function JednoVaganjeScreen(props: Props) {
         neto,
         tara,
         ts,
+        brojVaganja,
         vlaga
       );
       ReactPDF.render(
         <JednoVaganjePDF
+          brojVaganja={brojVaganja}
           ts={ts}
           bruto={brutto}
           neto={neto}
@@ -235,6 +246,14 @@ function JednoVaganjeScreen(props: Props) {
           prev = data.map(JednoVaganje.fromJSON);
         }
         storage.set(dbnames.jednoVaganje, [vaganje, ...prev], err => {
+          storage.get(dbnames.brojac, (e, d) => {
+            const brojac = Brojac.fromJSON(d);
+            storage.set(
+              dbnames.brojac,
+              new Brojac(brojac.addOneAndReturn()).toJSON(),
+              () => {}
+            );
+          });
           (voziloMasaRef.current as any).setTitle('');
           (prikolicaMasaRef.current as any).setTitle('');
           (sifraRobeRef.current as any).setTitle('');
@@ -268,7 +287,7 @@ function JednoVaganjeScreen(props: Props) {
   return (
     <div className={classes.container}>
       <div className={classes.titleRow}>
-        <h2>Jedno vaganje</h2>
+        <h2>Jedno vaganje: {brojVaganja}</h2>
         <div className={classes.column}>
           <Controller
             rules={{ required: { value: true, message: 'Obavezan unos' } }}

@@ -45,6 +45,8 @@ function PregledVaganjaContainer() {
         const vozilaTemp = data.map(Vozilo.fromJSON);
         vozilaTemp.unshift(new Vozilo('0', 'sva vozila', '0', '0'));
         setVozila(vozilaTemp);
+      } else {
+        setVozila([new Vozilo('0', 'sva vozila', '0', '0')]);
       }
     });
     storage.get(dbnames.roba, (err, data) => {
@@ -52,6 +54,8 @@ function PregledVaganjaContainer() {
         const robaTemp = data.map(Roba.fromJSON);
         robaTemp.unshift(new Roba('0', 'sva roba', '0', '0'));
         setRoba(robaTemp);
+      } else {
+        setRoba([new Roba('0', 'sva roba', '0', '0')]);
       }
     });
     storage.get(dbnames.partneri, (err, data) => {
@@ -61,6 +65,10 @@ function PregledVaganjaContainer() {
           new Partner('0', '0', 'svi partneri', '0', '0', '0', '0', '0', '0')
         );
         setKupci(kupciTemp);
+      } else {
+        setKupci([
+          new Partner('0', '0', 'svi partneri', '0', '0', '0', '0', '0', '0')
+        ]);
       }
     });
     storage.get(dbnames.prvoVaganje, (err, prvaTemp) => {

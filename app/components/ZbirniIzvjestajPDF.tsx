@@ -30,6 +30,11 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     fontFamily: 'Poppins-Bold'
   },
+  biggerText: {
+    fontSize: 12,
+    fontWeight: 600,
+    fontFamily: 'Poppins-Bold'
+  },
   rowStyle: {
     display: 'flex',
     flexDirection: 'row',
@@ -46,7 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: 80,
-    borderWidth: '1px',
+    borderWidth: 1,
     borderColor: 'black',
     borderStyle: 'solid'
   }
@@ -60,6 +65,8 @@ interface Props {
   kupci?: string;
   vozilo?: string;
   roba?: string;
+  ulaz: string | number;
+  izlaz: string | number;
 }
 
 const ZbirniIzvještajPDF = (props: Props) => (
@@ -88,7 +95,7 @@ const ZbirniIzvještajPDF = (props: Props) => (
           {props.date2.format('DD.MM.YYYY')}
         </Text>
         <Text style={styles.text}>
-          {props.kupci ? 'Kupac: ' + props.kupci : 'za sve kupce'}
+          {props.kupci ? 'Partner: ' + props.kupci : 'za sve partnere'}
         </Text>
         <Text style={styles.text}>
           {props.vozilo ? 'Vozilo: ' + props.vozilo : 'za sva vozila'}
@@ -170,6 +177,19 @@ const ZbirniIzvještajPDF = (props: Props) => (
                 </View>
               </View>
             ))}
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                marginTop: 12,
+                alignSelf: 'flex-end'
+              }}
+            >
+              <Text style={styles.biggerText}>Ukupno ulaz {props.ulaz} kg</Text>
+              <Text style={[styles.biggerText, { marginLeft: 20 }]}>
+                Ukupno izlaz {props.izlaz} kg
+              </Text>
+            </View>
           </View>
         </View>
       </View>

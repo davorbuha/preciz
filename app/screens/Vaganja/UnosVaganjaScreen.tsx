@@ -37,6 +37,7 @@ import dbnames from '../../db/dbnames';
 import DrugoVaganje from '../../types/DrugoVaganje';
 import DrugoVaganjePDF from '../../components/DrugoVaganjePDF';
 import UkupniIzvjestajPDF from '../../components/UkupniIzvjestajPDF';
+import Brojac from '../../types/Brojac';
 
 const app = require('electron').remote.app;
 
@@ -117,15 +118,9 @@ interface Props {
 function UnosVaganjaScreen(props: Props) {
   const [brojVaganja, setBrojVaganja] = React.useState(0);
   React.useEffect(() => {
-    storage.get(dbnames.prvoVaganje, (err, data) => {
-      if (Array.isArray(data)) {
-        const parsed = data
-          .map(PrvoVaganje.fromJSON)
-          .sort((a, b) => a.brojVaganja - b.brojVaganja);
-        setBrojVaganja(parsed[parsed.length - 1].brojVaganja + 1);
-      } else {
-        setBrojVaganja(1);
-      }
+    storage.get(dbnames.brojac, (err, data) => {
+      const brojac = Brojac.fromJSON(data);
+      setBrojVaganja(brojac.addOneAndReturn());
     });
   }, []);
   const { state } = React.useContext(MainContext);
@@ -248,6 +243,14 @@ function UnosVaganjaScreen(props: Props) {
           prev = data.map(PrvoVaganje.fromJSON);
         }
         storage.set(dbnames.prvoVaganje, [vaganje, ...prev], err => {
+          storage.get(dbnames.brojac, (err, d) => {
+            const brojac = Brojac.fromJSON(d);
+            storage.set(
+              dbnames.brojac,
+              new Brojac(brojac.addOneAndReturn()).toJSON(),
+              () => {}
+            );
+          });
           (sifraRobeRef.current as any).setTitle('');
           props.reset(
             {
@@ -297,7 +300,7 @@ function UnosVaganjaScreen(props: Props) {
   return (
     <div className={classes.container}>
       <div className={classes.titleRow}>
-        <h2>Unos vaganja</h2>
+        <h2>Unos vaganja {brojVaganja}</h2>
         <div className={classes.column}>
           <Controller
             rules={{ required: { value: true, message: 'Obavezan unos' } }}

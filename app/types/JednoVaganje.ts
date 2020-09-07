@@ -30,6 +30,7 @@ class JednoVaganje {
     neto: number,
     tara: number,
     ts: Moment,
+    brojVaganja: number,
     vlaga?: string
   ) {
     this.id = id;

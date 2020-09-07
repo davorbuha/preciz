@@ -1,4 +1,5 @@
 export default {
+  brojac: 'brojac',
   vozila: 'vozila',
   setup: 'setup',
   prikolice: 'prikolice',
