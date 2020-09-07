@@ -97,7 +97,7 @@ function UnosVaganjaComponent(props: Props) {
             <KeyboardDatePicker
               margin="none"
               id="date-picker-dialog"
-              format="MM/dd/yyyy"
+              format="dd.MM.yyyy"
               value={selectedDatePrvo}
               onChange={handleDateChangePrvo}
               KeyboardButtonProps={{
@@ -157,7 +157,7 @@ function UnosVaganjaComponent(props: Props) {
             <KeyboardDatePicker
               margin="none"
               id="date-picker-dialog"
-              format="MM/dd/yyyy"
+              format="dd.MM.yyyy"
               value={selectedDateDrugo}
               onChange={handleDateChangeDrugo}
               KeyboardButtonProps={{

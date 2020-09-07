@@ -88,13 +88,13 @@ const ZbirniIzvještajPDF = (props: Props) => (
           {props.date2.format('DD.MM.YYYY')}
         </Text>
         <Text style={styles.text}>
-          {props.kupci ? props.kupci : 'za sve kupce'}
+          {props.kupci ? 'Kupac: ' + props.kupci : 'za sve kupce'}
         </Text>
         <Text style={styles.text}>
-          {props.vozilo ? props.vozilo : 'za sva vozila'}
+          {props.vozilo ? 'Vozilo: ' + props.vozilo : 'za sva vozila'}
         </Text>
         <Text style={styles.text}>
-          {props.roba ? props.roba : 'za svu robu'}
+          {props.roba ? 'Roba: ' + props.roba : 'za svu robu'}
         </Text>
         <View style={{ marginTop: 20, display: 'flex' }}>
           <View style={{ flexDirection: 'row' }}>

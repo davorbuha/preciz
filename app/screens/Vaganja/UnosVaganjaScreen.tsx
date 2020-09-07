@@ -445,7 +445,6 @@ function UnosVaganjaScreen(props: Props) {
             <span className={classes.span}>Broj naloga: </span>
             <div className={classes.column}>
               <Controller
-                rules={{ required: { value: true, message: 'Obavezan unos' } }}
                 defaultValue=""
                 control={control}
                 name={fields.brojNaloga}

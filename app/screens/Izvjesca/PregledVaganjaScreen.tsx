@@ -8,17 +8,7 @@ import {
 } from '@material-ui/pickers';
 import storage from 'electron-json-storage';
 import moment from 'moment';
-import {
-  TableContainer,
-  Table,
-  TableHead,
-  Paper,
-  TableRow,
-  TableCell,
-  TableBody,
-  makeStyles,
-  Button
-} from '@material-ui/core';
+import { Radio, Button } from '@material-ui/core';
 import { v4 as uuidv4 } from 'uuid';
 import ptp from 'pdf-to-printer';
 import ReactPDF from '@react-pdf/renderer';
@@ -88,6 +78,7 @@ interface Props {
 
 function PregledVaganjaScreen(props: Props) {
   const { state } = React.useContext(MainContext);
+  const [tipZaPrikaz, setTipZaPrikaz] = React.useState('Sve');
   const [selectedVaganje, setSelectedVaganje] = React.useState<
     PregledType[] | undefined
   >();
@@ -127,6 +118,9 @@ function PregledVaganjaScreen(props: Props) {
   };
   const filteredVaganja = React.useMemo(() => {
     let toReturn: PregledType[] = [...props.vaganja];
+    if (tipZaPrikaz !== 'Sve') {
+      toReturn = [...toReturn].filter(item => item.tip === tipZaPrikaz);
+    }
     if (selectedDatePrvo) {
       toReturn = [...toReturn].filter(vaganjeItem =>
         vaganjeItem.ts1.isAfter(moment(selectedDatePrvo))
@@ -159,7 +153,8 @@ function PregledVaganjaScreen(props: Props) {
     selectedDatePrvo,
     selectedPartner,
     selectedRoba,
-    props.vaganja
+    props.vaganja,
+    tipZaPrikaz
   ]);
 
   const handleStorniraj = async () => {
@@ -228,6 +223,9 @@ function PregledVaganjaScreen(props: Props) {
     const uuid = uuidv4();
     ReactPDF.render(
       <ZbirniIzvještajPDF
+        kupci={selectedPartner?.title}
+        roba={selectedRoba?.title}
+        vozilo={selectedVozilo?.title}
         filtered={filteredVaganja}
         date1={moment(selectedDatePrvo)}
         date2={moment(selectedDateDrugo)}
@@ -455,6 +453,61 @@ function PregledVaganjaScreen(props: Props) {
               flexDirection: 'column'
             }}
           >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                paddingTop: 20,
+                paddingBottom: 20,
+                alignSelf: 'flex-start'
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center'
+                }}
+              >
+                <Radio
+                  title="Sve"
+                  color="primary"
+                  checked={tipZaPrikaz === 'Sve'}
+                  onClick={() => setTipZaPrikaz('Sve')}
+                />
+                <p style={{ fontSize: 14, marginLeft: 10 }}>Sve</p>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center'
+                }}
+              >
+                <Radio
+                  title="Ulaz"
+                  color="primary"
+                  checked={tipZaPrikaz === 'Ulaz'}
+                  onClick={() => setTipZaPrikaz('Ulaz')}
+                />
+                <p style={{ fontSize: 14, marginLeft: 10 }}>Ulaz</p>
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center'
+                }}
+              >
+                <Radio
+                  title="Izlaz"
+                  color="primary"
+                  checked={tipZaPrikaz === 'Izlaz'}
+                  onClick={() => setTipZaPrikaz('Izlaz')}
+                />
+                <p style={{ fontSize: 14, marginLeft: 10 }}>Izlaz</p>
+              </div>
+            </div>
             <Button
               onClick={handlePrintZbirnog}
               variant="contained"
