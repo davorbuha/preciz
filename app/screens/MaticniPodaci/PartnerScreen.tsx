@@ -142,11 +142,6 @@ const rules = {
     maxLength: {
       value: 100,
       message: 'Napomena je predugačka'
-    },
-    required: true,
-    minLength: {
-      value: 2,
-      message: 'Napomena je prekratka'
     }
   }
 };

@@ -171,6 +171,7 @@ function DrugoVaganjeScreen(props: Props) {
       () => {
         ReactPDF.render(
           <UkupniIzvjestajPDF
+            brojVaganja={selected?.brojVaganja}
             ts1={selected!.ts}
             ts2={ts}
             vrijednostPrvo={selected!.bruto}

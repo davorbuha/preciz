@@ -35,12 +35,12 @@ function VozacContainer() {
       });
   }, []);
   const addVozac = (v: any) => {
-    if (
-      vozaci.find(voz => v[fields.oib].toLowerCase() === voz.oib.toLowerCase())
-    ) {
-      setErrorText('Uneseni OIB već postoji u bazi');
-      return;
-    }
+    // if (
+    //   vozaci.find(voz => v[fields.oib].toLowerCase() === voz.oib.toLowerCase())
+    // ) {
+    //   setErrorText('Uneseni OIB već postoji u bazi');
+    //   return;
+    // }
     setValue(fields.ime, '');
     setValue(fields.prezime, '');
     setValue(fields.oib, '');
@@ -64,15 +64,15 @@ function VozacContainer() {
   };
   const editVozac = () => {
     handleSubmit(z => {
-      if (
-        z[fields.oib].toLowerCase() !== vozaci[editId!].oib.toLowerCase() &&
-        vozaci.find(
-          voz => voz.oib.toLowerCase() === z[fields.oib].toLowerCase()
-        )
-      ) {
-        setErrorText('Uneseni OIB već postoji u bazi');
-        return;
-      }
+      // if (
+      //   z[fields.oib].toLowerCase() !== vozaci[editId!].oib.toLowerCase() &&
+      //   vozaci.find(
+      //     voz => voz.oib.toLowerCase() === z[fields.oib].toLowerCase()
+      //   )
+      // ) {
+      //   setErrorText('Uneseni OIB već postoji u bazi');
+      //   return;
+      // }
       const vozac = new Vozac(
         vozaci[editId!].id,
         z[fields.ime],
