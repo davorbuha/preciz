@@ -33,24 +33,24 @@ class Partner {
   }
 
   public static fromJSON(maybe: any): Partner {
-    if (!(maybe.naziv.length > 0 && maybe.naziv.length < 100)) {
-      throw new Error('naziv not valid');
-    }
-    if (!(maybe.ulica.length > 0 && maybe.ulica.length < 100)) {
-      throw new Error('ulica not valid');
-    }
-    if (!(maybe.grad.length > 0 && maybe.grad.length < 100)) {
-      throw new Error('grad not valid');
-    }
-    if (!(maybe.telefon.length > 0 && maybe.telefon.length < 20)) {
-      throw new Error('telefon not valid');
-    }
-    if (!(maybe.email.length > 0 && maybe.email.length < 100)) {
-      throw new Error('email not valid');
-    }
-    if (!(maybe.napomena.length > 0 && maybe.napomena.length < 100)) {
-      throw new Error('napomena not valid');
-    }
+    // if (!(maybe.naziv.length > 0 && maybe.naziv.length < 100)) {
+    //   throw new Error('naziv not valid');
+    // }
+    // if (!(maybe.ulica.length > 0 && maybe.ulica.length < 100)) {
+    //   throw new Error('ulica not valid');
+    // }
+    // if (!(maybe.grad.length > 0 && maybe.grad.length < 100)) {
+    //   throw new Error('grad not valid');
+    // }
+    // if (!(maybe.telefon.length > 0 && maybe.telefon.length < 20)) {
+    //   throw new Error('telefon not valid');
+    // }
+    // if (!(maybe.email.length > 0 && maybe.email.length < 100)) {
+    //   throw new Error('email not valid');
+    // }
+    // if (!(maybe.napomena.length > 0 && maybe.napomena.length < 100)) {
+    //   throw new Error('napomena not valid');
+    // }
     // if (!(maybe.fax.length > 0 && maybe.fax.length < 100)) {
     //   throw new Error('fax not valid');
     // }

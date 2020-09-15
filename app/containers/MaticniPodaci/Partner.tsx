@@ -44,7 +44,7 @@ function PartnerContainer() {
         par => p[fields.sifra].toLowerCase() === par.sifra.toLowerCase()
       )
     ) {
-      setErrorText('Unesena šifra robe već postoji u bazi');
+      setErrorText('Unesena šifra partnera već postoji u bazi');
       return;
     }
     setValue(fields.naziv, '');
