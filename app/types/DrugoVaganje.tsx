@@ -37,7 +37,7 @@ class DrugoVaganje {
       id: this.id,
       bruto: this.bruto ? this.bruto : 0,
       neto: this.neto ? this.neto : 0,
-      tara: this.tara ? this.neto : 0,
+      tara: this.tara ? this.tara : 0,
       ts: this.ts.toISOString()
     };
   }
