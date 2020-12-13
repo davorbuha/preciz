@@ -6,7 +6,7 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable radix */
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Button, Dialog, makeStyles } from '@material-ui/core';
 import { Control, Controller } from 'react-hook-form';
 import ReactPDF, { Font } from '@react-pdf/renderer';
 import moment from 'moment';
@@ -30,6 +30,7 @@ import dbnames from '../../db/dbnames';
 import PrvoVaganjePDF from '../../components/PrvoVaganjePDF';
 import PrvoVaganje from '../../types/PrvoVaganje';
 import Brojac from '../../types/Brojac';
+import CameraPreview from '../../components/CameraPreview';
 
 const app = require('electron').remote.app;
 
@@ -39,6 +40,7 @@ const tipoviVaganja = [
 ];
 
 interface Props {
+  
   vozila: Vozilo[];
   prikolice: Prikolica[];
   vozaci: Vozac[];
@@ -72,6 +74,11 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column'
   },
+  titleWrapper: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -102,11 +109,17 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center'
+  },buttonWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'transparent'
   }
 }));
 
 function PrvoVaganjeScreen(props: Props) {
   const [brojVaganja, setBrojVaganja] = useState(0);
+  const [isDialogOpened, setIsDialogOpened] = React.useState(false)
   React.useEffect(() => {
     storage.get(dbnames.brojac, (err, data) => {
       const brojac = Brojac.fromJSON(data);
@@ -236,6 +249,9 @@ function PrvoVaganjeScreen(props: Props) {
 
   return (
     <div className={classes.container}>
+            <CameraPreview isOpen={isDialogOpened} onClose={() => setIsDialogOpened(false)} onImageCapture={() => setIsDialogOpened(false)}/>
+
+      <div className={classes.titleWrapper}>
       <div className={classes.titleRow}>
         <h2>Vagarski list {brojVaganja}</h2>
         <div className={classes.column}>
@@ -252,6 +268,15 @@ function PrvoVaganjeScreen(props: Props) {
             }
           />
         </div>
+        </div>
+
+        <Button
+          onClick={() => setIsDialogOpened(true)}
+          variant="contained"
+          color="primary"
+        >
+          Uslikaj Tablicu
+        </Button>
       </div>
       <h3 className={classes.weigthingDataTitle}>PODACI O VAGANJU</h3>
       <div className={classes.inputRow}>

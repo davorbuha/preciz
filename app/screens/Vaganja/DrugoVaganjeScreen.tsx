@@ -15,7 +15,9 @@ import {
   TableCell,
   TableBody,
   Paper,
-  Radio
+  Radio,
+  Button,
+  Dialog
 } from '@material-ui/core';
 import moment from 'moment';
 import storage from 'electron-json-storage';
@@ -38,6 +40,7 @@ import { Detalji } from '../../components/PrvoVaganjePDF';
 import DrugoVaganjePDF from '../../components/DrugoVaganjePDF';
 import UkupniIzvjestajPDF from '../../components/UkupniIzvjestajPDF';
 import VaganjeSpremljenoModalUkupno from '../../components/VaganjeSpremljenoModalUkupno';
+import CameraPreview from '../../components/CameraPreview';
 
 const app = require('electron').remote.app;
 
@@ -87,18 +90,20 @@ const useStyles = makeStyles(theme => ({
   titleRow: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
   inputRow: {
     marginTop: 30,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center'
-  }
+  },
 }));
 
 function DrugoVaganjeScreen(props: Props) {
   const { state } = React.useContext(MainContext);
+  const [isDialogOpened, setIsDialogOpened] = React.useState(false)
   const [showSuccessModal, setShowSuccessModal] = React.useState(false);
   const vrijednostVageInt = React.useMemo(
     () => parseInt(props.vrijednostVage),
@@ -193,6 +198,7 @@ function DrugoVaganjeScreen(props: Props) {
   };
   return (
     <div className={classes.container}>
+      <CameraPreview isOpen={isDialogOpened} onClose={() => setIsDialogOpened(false)} onImageCapture={() => setIsDialogOpened(false)}/>
       <VaganjeSpremljenoModalUkupno
         show={showSuccessModal}
         hide={() => props.history.push(RoutesEnum.Home)}
@@ -201,6 +207,13 @@ function DrugoVaganjeScreen(props: Props) {
       />
       <div className={classes.titleRow}>
         <h2>Vagarski list {selected?.brojVaganja}</h2>
+        <Button
+          onClick={() => setIsDialogOpened(true)}
+          variant="contained"
+          color="primary"
+        >
+          Uslikaj Tablicu
+        </Button>
       </div>
 
       <TableContainer className={classes.tableContainer} component={Paper}>
