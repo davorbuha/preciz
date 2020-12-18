@@ -17,6 +17,8 @@ const convertFileToBase64 = (file: any) =>
 		reader.onerror = reject;
 	});
 
+const { spawn } = require('child_process');
+
 const useStyles = makeStyles(() => ({
   container: {
     display: 'flex',
@@ -39,30 +41,10 @@ function HomeScreen() {
  
  
 React.useEffect(() => {
-    // const nnnn = new Nvr({
-    //   ip: '192.168.1.100',
-    //   user: 'admin',
-    //   password: 'Admin12345',
-    //   // proxy: 'http://127.0.0.1:8080',
-    //   version: 2,
-    //   wasmUrl: 'http://127.0.0.1:9991/Decoder.wasm',
-    //   port: 80,
-    // });
+    spawn('./hikvision-server');
     var canvas = document.getElementById('chanel1');
-    var websocket = new WebSocket('ws://192.168.0.14:9999')
     //@ts-ignore
-    var player = new JSMpeg.Player('ws://192.168.0.14:9999', {canvas: canvas, autoplay: true});
-    // const renderer = new SuperRender(document.getElementById('chanel1'));
-    // nnnn.connect().then(() => {
-    //   const channel = nnnn.getChannelConnect();
-    //   channel.init().then(() => {
-    //     channel.addEventListener('video', a => {
-    //       renderer.displayFrameData(a.data);
-    //     });
-    //   });
-    // });
-    // nnnn.getChannelConnect();
-
+    var player = new JSMpeg.Player('ws://127.0.0.1:9999', {canvas: canvas, autoplay: true});
   }, []);
 
   return (
