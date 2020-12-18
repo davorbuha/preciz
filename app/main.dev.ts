@@ -14,10 +14,6 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 
-const { fork } = require('child_process');
-
-const ps = fork(`${__dirname}/server.js`);
-
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';

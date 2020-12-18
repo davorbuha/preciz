@@ -4,8 +4,8 @@
 import React from 'react';
 import { makeStyles, Button } from '@material-ui/core';
 import useWindowDimensions from '../useDimensions';
-import logo from '../assets/home.png';
-import { Nvr, SuperRender } from 'hikvision-api';
+
+const { spawn } = require('child_process');
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -25,26 +25,7 @@ function HomeScreen() {
   const { height, width } = useWindowDimensions();
   const classes = useStyles();
   React.useEffect(() => {
-    const nnnn = new Nvr({
-      ip: '192.168.1.100',
-      user: 'admin',
-      password: 'Admin12345',
-      // proxy: 'http://127.0.0.1:8080',
-      version: 2,
-      wasmUrl: 'http://localhost:9990/Decoder.wasm',
-      port: 80,
-      channelOffset: 0
-    });
-    const renderer = new SuperRender(document.getElementById('chanel1'));
-    nnnn.connect().then(() => {
-      const channel = nnnn.getChannelConnect();
-      channel.init().then(() => {
-        channel.addEventListener('video', a => {
-          renderer.displayFrameData(a.data);
-        });
-      });
-    });
-    nnnn.getChannelConnect();
+    spawn('./hikvision-server');
   }, []);
   return (
     <div className={classes.container} style={{ width, height }}>
