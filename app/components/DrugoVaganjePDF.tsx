@@ -1,7 +1,14 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+import {
+  Page,
+  Text,
+  View,
+  Document,
+  StyleSheet,
+  Image
+} from '@react-pdf/renderer';
 import { Moment } from 'moment';
 import CompanyDetails from '../types/CompanyDetails';
 // Create styles
@@ -59,6 +66,7 @@ interface Props {
   neto: number;
   tara: number;
   ts: Moment;
+  image?: string;
 }
 
 // Create Document Component
@@ -131,7 +139,7 @@ const DrugoVaganjePDF = (props: Props) => (
             <Text style={styles.regularText}>{props.ts.format('HH:mm')}</Text>
           </View>
         </View>
-        <View style={{ marginTop: 20 }}>
+        <View style={{ marginTop: 20, marginBottom: 20 }}>
           <View style={styles.row}>
             <Text style={[styles.regularText, styles.minWidth]}>Bruto:</Text>
             <Text style={styles.regularText}>{props.bruto} kg</Text>
@@ -149,6 +157,12 @@ const DrugoVaganjePDF = (props: Props) => (
             <Text style={[styles.regularText, styles.minWidth]}>Vozac:</Text>
           </View>
         </View>
+        {props.image ? (
+          <Image
+            style={{ alignSelf: 'center', width: 400, height: 200 }}
+            source={props.image}
+          />
+        ) : null}
       </View>
     </Page>
   </Document>

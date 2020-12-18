@@ -70,6 +70,10 @@ function ParametriVageContainer() {
       const postavke = new Postavke(
         values[fields.communicationPort],
         values[fields.baudRate],
+        values[fields.cameraIp],
+        values[fields.cameraUsername],
+        values[fields.cameraPassword],
+        values[fields.channelId],
         values[fields.startPosition],
         values[fields.endPosition],
         delimiter
