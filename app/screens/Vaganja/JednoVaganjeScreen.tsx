@@ -61,7 +61,7 @@ export const fields = {
 export async function saveImageToFile(imageSource: string, uuid: string) {
   return new Promise<void>(resolve =>
     fs.writeFile(
-      `${app.getPath('appData')}/plates-images${uuid}.jpeg`,
+      `${app.getPath('appData')}/plates-images/${uuid}.jpeg`,
       imageSource.replace('data:image/jpeg;base64,', ''),
       'base64',
       function(err) {
@@ -73,9 +73,10 @@ export async function saveImageToFile(imageSource: string, uuid: string) {
 }
 
 export async function readImageFromFile(uuid: string) {
+  console.log(`${app.getPath('appData')}\\plates-images\\${uuid}.jpeg`);
   return new Promise<string>((resolve, reject) =>
     fs.readFile(
-      `${app.getPath('appData')}/plates-images${uuid}.jpeg`,
+      `${app.getPath('appData')}/plates-images/${uuid}.jpeg`,
       'utf-8',
       (err, data) => {
         if (!err) {

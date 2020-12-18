@@ -4,6 +4,9 @@
 import React from 'react';
 import { makeStyles, Button } from '@material-ui/core';
 import useWindowDimensions from '../useDimensions';
+import fs from 'fs';
+
+const { app } = require('electron').remote;
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -23,6 +26,13 @@ function HomeScreen() {
   const { height, width } = useWindowDimensions();
   const classes = useStyles();
 
+  React.useEffect(() => {
+    const dir = app.getPath('appData') + '/plates-images';
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+  });
+
   return (
     <div className={classes.container} style={{ width, height }}>
       {counter > 5 ? (
@@ -39,8 +49,6 @@ function HomeScreen() {
         style={{ position: 'absolute', right: 0, top: '5vh' }}
         onClick={() => setCounter(counter + 1)}
       />
-      
-      
     </div>
   );
 }
