@@ -6,7 +6,7 @@
 /* eslint-disable react/jsx-wrap-multilines */
 /* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { Button, Dialog, makeStyles } from '@material-ui/core';
 import { Control, Controller } from 'react-hook-form';
 import storage from 'electron-json-storage';
 import ReactPDF, { Font } from '@react-pdf/renderer';
@@ -36,6 +36,7 @@ import JednoVaganje from '../../types/JednoVaganje';
 import MainContext from '../../context/MainContext';
 import dbnames from '../../db/dbnames';
 import Brojac from '../../types/Brojac';
+import CameraPreview from '../../components/CameraPreview';
 
 const app = require('electron').remote.app;
 
@@ -60,6 +61,11 @@ const useStyles = makeStyles(theme => ({
   column: {
     display: 'flex',
     flexDirection: 'column'
+  },
+  titleWrapper: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   container: {
     display: 'flex',
@@ -91,6 +97,12 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center'
+  },
+  buttonWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'transparent'
   }
 }));
 
@@ -113,6 +125,7 @@ interface Props {
 
 function JednoVaganjeScreen(props: Props) {
   const [brojVaganja, setBrojVaganja] = React.useState(0);
+  const [isDialogOpened, setIsDialogOpened] = React.useState(false)
 
   React.useEffect(() => {
     storage.get(dbnames.brojac, (err, data) => {
@@ -286,6 +299,9 @@ function JednoVaganjeScreen(props: Props) {
   };
   return (
     <div className={classes.container}>
+      <CameraPreview isOpen={isDialogOpened} onClose={() => setIsDialogOpened(false)} onImageCapture={() => setIsDialogOpened(false)}/>
+      <div className={classes.titleWrapper}>
+
       <div className={classes.titleRow}>
         <h2>Jedno vaganje: {brojVaganja}</h2>
         <div className={classes.column}>
@@ -296,12 +312,20 @@ function JednoVaganjeScreen(props: Props) {
             name={fields.tipoviVaganja}
             as={
               <Dropdown
-                error={props.errors[fields.tipoviVaganja]}
-                data={tipoviVaganja}
+              error={props.errors[fields.tipoviVaganja]}
+              data={tipoviVaganja}
               />
             }
-          />
+            />
         </div>
+      </div>
+      <Button
+          onClick={() => setIsDialogOpened(true)}
+          variant="contained"
+          color="primary"
+        >
+          Uslikaj Tablicu
+        </Button>
       </div>
       <h3 className={classes.weigthingDataTitle}>PODACI O VAGANJU</h3>
       <div className={classes.inputRow}>
