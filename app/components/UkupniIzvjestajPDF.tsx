@@ -66,6 +66,8 @@ interface Props {
 	ts2: Moment;
 	vrijednostDrugog: number;
 	vrijednostPrvo: number;
+	firstImage?: string;
+	secondImage?: string;
 }
 
 // Create Document Component
@@ -137,7 +139,7 @@ const UkupniIzvjestajPDF = (props: Props) => (
 						<Text style={[styles.regularText, styles.rowMinWidth]}>{props.vrijednostDrugog}</Text>
 					</View>
 				</View>
-				<View style={{ marginTop: 20 }}>
+				<View style={{ marginTop: 20, marginBottom: 20 }}>
 					<View style={styles.row}>
 						<Text style={[styles.regularText, styles.minWidth]}>Bruto:</Text>
 						<Text style={styles.regularText}>{props.bruto} kg</Text>
@@ -154,6 +156,12 @@ const UkupniIzvjestajPDF = (props: Props) => (
 						<Text style={[styles.regularText, styles.minWidth]}>Vagao:</Text>
 						<Text style={[styles.regularText, styles.minWidth]}>Vozac:</Text>
 					</View>
+				</View>
+				<View style={{ width: '100%', justifyContent: 'space-around' }}>
+					{props.firstImage ? <Image source={props.firstImage} style={{ width: 250, height: 130 }} /> : null}
+					{props.secondImage ? (
+						<Image source={props.secondImage} style={{ width: 250, height: 130 }} />
+					) : null}
 				</View>
 			</View>
 		</Page>
