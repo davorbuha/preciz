@@ -33,7 +33,6 @@ function CameraPreview(props: Props) {
 			.then(res =>
 				convertFileToBase64(res.data).then((res: any) => {
 					props.setImageSource(res);
-					console.log(res);
 				})
 			)
 			.catch(console.log);
