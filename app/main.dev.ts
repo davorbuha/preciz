@@ -16,10 +16,6 @@ import MenuBuilder from './menu';
 import storage from 'electron-json-storage';
 import dbnames from './db/dbnames';
 
-const Stream = require('node-rtsp-stream');
-
-const express = require('express');
-
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -69,49 +65,9 @@ const createWindow = async () => {
     }
   });
 
-  const defaultStream =
-    'rtsp://admin:Admin12345@192.168.1.100:554/Streaming/Channels/101';
-
-  const url = new Promise(resolve =>
-    storage.get(dbnames.camera, (err, data) => {
-      if (data) {
-        resolve((data as any).url);
-      } else {
-        storage.set(dbnames.camera, { url: defaultStream }, () => {});
-      }
-    })
-  );
-
-  let newStream = new Stream({
-    name: 'name',
-    streamUrl:
-      'rtsp://admin:Admin12345@192.168.1.100:554/Streaming/Channels/101',
-    wsPort: 9999,
-    ffmpegOptions: {
-      '-vf': 'scale=1280x680',
-      '-stats': '',
-      '-r': 30
-    }
-  });
-
-  const app = express();
-  app.get('/change', (req, res) => {
-    newStream.stop();
-    newStream = new Stream({
-      name: 'name',
-      streamUrl: req.query.url,
-      wsPort: 9999,
-      ffmpegOptions: {
-        '-vf': 'scale=1280x680',
-        '-stats': '',
-        '-r': 30
-      }
-    });
-    storage.set(dbnames.camera, { url: req.query.url }, () => {});
-    res.send('done');
-  });
-
-  app.listen(1024, () => console.log('done'));
+  var child = require('child_process').execFile;
+  var executablePath = 'C:\\Program Files\\DecodeServer\\server.exe';
+  child(executablePath);
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 

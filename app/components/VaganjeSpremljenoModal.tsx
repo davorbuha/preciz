@@ -32,6 +32,7 @@ interface Props {
 function VaganjeSpremljenoModal(p: Props) {
   const { width, height } = useWindowDimensions();
   const classes = useStyles({ width, height });
+  console.log(p.path);
   return (
     <Modal
       disableAutoFocus
