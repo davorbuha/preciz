@@ -55,11 +55,6 @@ function CameraPreview(props: Props) {
 
 	return (
 		<Dialog open={props.isOpen} onBackdropClick={props.onClose} PaperProps={{ style: { maxWidth: '2000px' } }}>
-			{props.imageSource !== '' ? (
-				<img src={props.imageSource} width="1280" height="680" />
-			) : (
-				<canvas id="camera" width="1280" height="680" />
-			)}
 			<div className={classes.buttonWrapper}>
 				<Button onClick={props.onClose} className={classes.button} variant="contained" color="primary">
 					Izađi
@@ -84,6 +79,11 @@ function CameraPreview(props: Props) {
 					</Button>
 				) : null}
 			</div>
+			{props.imageSource !== '' ? (
+				<img src={props.imageSource} width="1280" height="680" />
+			) : (
+				<canvas id="camera" width="1280" height="680" />
+			)}
 		</Dialog>
 	);
 }
