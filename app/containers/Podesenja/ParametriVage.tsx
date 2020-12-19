@@ -91,7 +91,7 @@ function ParametriVageContainer() {
 				values[fields.channelId]
 			) {
 				axios.get(
-					`http://127.0.0.1:1042/chage?url=rtsp://${values[fields.cameraUsername]}:${
+					`http://127.0.0.1:1024/chage?url=rtsp://${values[fields.cameraUsername]}:${
 						values[fields.cameraPassword]
 					}@${values[fields.cameraIp]}:554/Streaming/Channels/10${values[fields.channelId]}`
 				);
