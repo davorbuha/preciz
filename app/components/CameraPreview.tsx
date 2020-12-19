@@ -30,11 +30,11 @@ function CameraPreview(props: Props) {
 				},
 				responseType: 'blob',
 			})
-			.then(res =>
-				convertFileToBase64(res.data).then((res: any) => {
-					props.setImageSource(res);
-				})
-			)
+			.then(res => {
+				convertFileToBase64(res.data).then((as: any) => {
+					props.setImageSource(as);
+				});
+			})
 			.catch(console.log);
 	}, [props.setImageSource]);
 
