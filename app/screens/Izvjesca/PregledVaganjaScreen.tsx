@@ -29,6 +29,7 @@ import dbnames from '../../db/dbnames';
 import JednoVaganje from '../../types/JednoVaganje';
 import PrvoVaganje from '../../types/PrvoVaganje';
 import ZbirniIzvještajPDF from '../../components/ZbirniIzvjestajPDF';
+import { readImageFromFile } from '../Vaganja/JednoVaganjeScreen';
 
 const { app } = require('electron').remote;
 
@@ -258,9 +259,9 @@ function PregledVaganjaScreen(props: Props) {
     );
   };
 
-  const handlePrint = () => {
+  const handlePrint = async () => {
     if (selectedVaganje && selectedVaganje.length > 1) {
-      selectedVaganje.forEach(jednoSelected => {
+      selectedVaganje.forEach(async jednoSelected => {
         const detalji: Detalji = {
           brojNalog: jednoSelected!.brojNaloga,
           dobavljac: jednoSelected!.dobavljac,
@@ -271,8 +272,37 @@ function PregledVaganjaScreen(props: Props) {
           tip: jednoSelected!.tip,
           vozac: jednoSelected!.vozac
         };
+        const firstImage = await readImageFromFile(
+          String(
+            app.getPath('appData') +
+              '/plates-images/' +
+              jednoSelected!.id
+                .toString()
+                .split('-')
+                .reduce((prev, curr) => prev + curr, '') +
+              '.jpeg'
+          )
+        );
+
+        const secondImage = await readImageFromFile(
+          String(
+            app.getPath('appData') +
+              '/plates-images/' +
+              jednoSelected!.id
+                .toString()
+                .split('-')
+                .reduce((prev, curr) => prev + curr, '') +
+              '2.jpeg'
+          )
+        );
+
+        const firstImageUrl = 'data:image/jpeg;base64,' + firstImage;
+        const secondImageUrl = 'data:image/jpeg;base64,' + secondImage;
+
         ReactPDF.render(
           <UkupniIzvjestajPDF
+            firstImage={firstImageUrl}
+            secondImage={secondImageUrl}
             brojVaganja={jednoSelected!.brojVaganja}
             ts1={jednoSelected!.ts1}
             ts2={jednoSelected!.ts2}
@@ -303,6 +333,32 @@ function PregledVaganjaScreen(props: Props) {
     }
     if (selectedVaganje && selectedVaganje?.length === 1) {
       const jednoSelected = selectedVaganje[0];
+      const firstImage = await readImageFromFile(
+        String(
+          app.getPath('appData') +
+            '/plates-images/' +
+            jednoSelected!.id
+              .toString()
+              .split('-')
+              .reduce((prev, curr) => prev + curr, '') +
+            '.jpeg'
+        )
+      );
+
+      const secondImage = await readImageFromFile(
+        String(
+          app.getPath('appData') +
+            '/plates-images/' +
+            jednoSelected!.id
+              .toString()
+              .split('-')
+              .reduce((prev, curr) => prev + curr, '') +
+            '2.jpeg'
+        )
+      );
+
+      const firstImageUrl = 'data:image/jpeg;base64,' + firstImage;
+      const secondImageUrl = 'data:image/jpeg;base64,' + secondImage;
       const detalji: Detalji = {
         brojNalog: jednoSelected!.brojNaloga,
         dobavljac: jednoSelected!.dobavljac,
@@ -315,6 +371,8 @@ function PregledVaganjaScreen(props: Props) {
       };
       ReactPDF.render(
         <UkupniIzvjestajPDF
+          firstImage={firstImageUrl}
+          secondImage={secondImageUrl}
           brojVaganja={jednoSelected!.brojVaganja}
           ts1={jednoSelected!.ts1}
           ts2={jednoSelected!.ts2}

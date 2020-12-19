@@ -5,6 +5,7 @@ import React from 'react';
 import { makeStyles, Button } from '@material-ui/core';
 import useWindowDimensions from '../useDimensions';
 import fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
 const { app } = require('electron').remote;
 
@@ -31,7 +32,7 @@ function HomeScreen() {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
     }
-  });
+  }, []);
 
   return (
     <div className={classes.container} style={{ width, height }}>
