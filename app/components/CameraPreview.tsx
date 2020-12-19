@@ -51,7 +51,7 @@ function CameraPreview(props: Props) {
 				})
 				.catch(console.log);
 		}
-	}, [props.setImageSource]);
+	}, [props.setImageSource, parametri]);
 
 	React.useEffect(() => {
 		setTimeout(() => {
