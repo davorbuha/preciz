@@ -10,5 +10,6 @@ export default {
   postavke: 'postavke',
   jednoVaganje: 'jednoVaganje',
   prvoVaganje: 'prvoVaganje',
-  drugoVaganje: 'drugoVaganje'
+  drugoVaganje: 'drugoVaganje',
+  camera: 'camera'
 };
