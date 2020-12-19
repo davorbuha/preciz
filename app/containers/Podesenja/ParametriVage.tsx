@@ -5,6 +5,7 @@ import ParametriVageScreen, { fields } from '../../screens/Podesenja/ParametriVa
 import dbnames from '../../db/dbnames';
 import Postavke from '../../types/Postavke';
 import MainContext from '../../context/MainContext';
+import axios from 'axios';
 
 const SerialPort = require('serialport');
 const Readline = require('@serialport/parser-readline');
@@ -83,6 +84,18 @@ function ParametriVageContainer() {
 				delimiter
 			);
 			setSettings(postavke);
+			if (
+				values[fields.cameraIp] &&
+				values[fields.cameraUsername] &&
+				values[fields.cameraPassword] &&
+				values[fields.channelId]
+			) {
+				axios.get(
+					`http://127.0.0.1:1042/chage?url=rtsp://${values[fields.cameraUsername]}:${
+						values[fields.cameraPassword]
+					}@${values[fields.cameraIp]}:554/Streaming/Channels/10${values[fields.channelId]}`
+				);
+			}
 			storage.set(dbnames.postavke, postavke.toJSON(), () => {});
 		})();
 	};
