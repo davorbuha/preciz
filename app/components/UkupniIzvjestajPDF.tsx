@@ -157,10 +157,22 @@ const UkupniIzvjestajPDF = (props: Props) => (
 						<Text style={[styles.regularText, styles.minWidth]}>Vozac:</Text>
 					</View>
 				</View>
-				<View style={{ width: '100%', justifyContent: 'space-around' }}>
-					{props.firstImage ? <Image source={props.firstImage} style={{ width: 250, height: 130 }} /> : null}
+				<View style={{ width: '100%', justifyContent: 'space-around', flexDirection: 'row' }}>
+					{props.firstImage ? (
+						<View>
+							<View style={{ marginBottom: 10 }}>
+								<Text style={styles.regularText}>Prvo vaganje</Text>
+							</View>
+							<Image source={props.firstImage} style={{ width: 250, height: 130 }} />
+						</View>
+					) : null}
 					{props.secondImage ? (
-						<Image source={props.secondImage} style={{ width: 250, height: 130 }} />
+						<View>
+							<View style={{ marginBottom: 10 }}>
+								<Text style={styles.regularText}>Drugo Vaganje</Text>
+							</View>
+							<Image source={props.secondImage} style={{ width: 250, height: 130 }} />
+						</View>
 					) : null}
 				</View>
 			</View>
