@@ -53,6 +53,7 @@ export interface Detalji {
 	mjestoIsporuke: string;
 	brojNalog: string;
 	vlaga?: string;
+	comment?: string;
 }
 
 interface Props {
@@ -156,6 +157,12 @@ const UkupniIzvjestajPDF = (props: Props) => (
 						<Text style={[styles.regularText, styles.minWidth]}>Vagao:</Text>
 						<Text style={[styles.regularText, styles.minWidth]}>Vozac:</Text>
 					</View>
+					{props.detalji.comment ? (
+						<View>
+							<Text style={[styles.regularText, styles.minWidth]}>Napomena:</Text>
+							<Text style={[styles.regularText, styles.minWidth]}>{props.detalji.comment}</Text>
+						</View>
+					) : null}
 				</View>
 				<View style={{ width: '100%', justifyContent: 'space-around', flexDirection: 'row' }}>
 					{props.firstImage ? (

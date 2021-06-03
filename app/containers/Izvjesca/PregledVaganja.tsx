@@ -29,6 +29,7 @@ export type PregledType = {
 	tara: number;
 	ts1: Moment;
 	ts2: Moment;
+	comment: string;
 };
 
 function PregledVaganjaContainer() {
@@ -83,9 +84,7 @@ function PregledVaganjaContainer() {
 			});
 		});
 	}, []);
-	React.useEffect(() => {
-		console.log(prvaVaganja);
-	}, [prvaVaganja]);
+
 	const vaganja = React.useMemo(() => {
 		const prvaIDrugaConst = prvaVaganja
 			.filter(item => item.drugoVaganjeId)
@@ -108,6 +107,7 @@ function PregledVaganjaContainer() {
 					ts1: prvo.ts,
 					ts2: drugo.ts,
 					dobavljac: prvo.dobavljac,
+					comment: drugo.comment,
 				} as PregledType;
 			});
 		const jednaVaganjaConst = jednaVaganja.map(

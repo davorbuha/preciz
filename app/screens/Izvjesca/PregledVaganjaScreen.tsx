@@ -137,10 +137,6 @@ function PregledVaganjaScreen(props: Props) {
 		tipZaPrikaz,
 	]);
 
-	React.useEffect(() => {
-		if (props.vaganja.length) storeExcel(props.vaganja, 'file');
-	}, [props.vaganja]);
-
 	const ukupnoUlaz = React.useMemo(() => {
 		return filteredVaganja.reduce((acc, item) => {
 			if (item.tip === 'Ulaz') return item.neto + acc;
@@ -253,6 +249,7 @@ function PregledVaganjaScreen(props: Props) {
 					roba: jednoSelected!.roba,
 					tip: jednoSelected!.tip,
 					vozac: jednoSelected!.vozac,
+					comment: jednoSelected!.comment,
 				};
 				const firstImage = await readImageFromFile(
 					String(
@@ -340,6 +337,7 @@ function PregledVaganjaScreen(props: Props) {
 				roba: jednoSelected!.roba,
 				tip: jednoSelected!.tip,
 				vozac: jednoSelected!.vozac,
+				comment: jednoSelected!.comment,
 			};
 			ReactPDF.render(
 				<UkupniIzvjestajPDF
@@ -384,7 +382,7 @@ function PregledVaganjaScreen(props: Props) {
 	return (
 		<MuiPickersUtilsProvider utils={DateFnsUtils}>
 			<div style={style.container}>
-				<div style={{ marginLeft: '5%', display: 'flex', flexDirection: 'row' }}>
+				<div style={{ marginLeft: '5%', display: 'flex', flexDirection: 'row', marginRight: '5%' }}>
 					<div>
 						<div style={style.dateRow}>
 							<span style={style.regularText}>Od Datuma:</span>
@@ -553,16 +551,40 @@ function PregledVaganjaScreen(props: Props) {
 							</div>
 						</div>
 
-						<Button
-							onClick={handlePrintZbirnog}
-							variant="contained"
-							color="primary"
-							style={{ marginBottom: 10 }}>
-							Print zbirnog izvještaja
-						</Button>
-						<Button onClick={handlePrint} disabled={!selectedVaganje} variant="contained" color="primary">
-							Print
-						</Button>
+						<div style={{ display: 'flex', marginBottom: 10 }}>
+							<Button
+								onClick={handlePrintZbirnog}
+								variant="contained"
+								color="primary"
+								style={{ marginRight: 5 }}>
+								Print zbirnog izvještaja
+							</Button>
+							<Button
+								onClick={() => storeExcel(filteredVaganja, 'file')}
+								variant="contained"
+								color="primary"
+								style={{ marginLeft: 5 }}>
+								Excel zbirnog izvještaja
+							</Button>
+						</div>
+						<div style={{ display: 'flex', marginBottom: 10 }}>
+							<Button
+								onClick={handlePrint}
+								disabled={!selectedVaganje}
+								variant="contained"
+								color="primary"
+								style={{ marginRight: 5, width: '100%' }}>
+								Print
+							</Button>
+							<Button
+								onClick={() => storeExcel(selectedVaganje, 'file')}
+								disabled={!selectedVaganje}
+								variant="contained"
+								color="primary"
+								style={{ marginLeft: 5, width: '100%' }}>
+								Excel
+							</Button>
+						</div>
 						<Button
 							style={{ marginTop: 10 }}
 							onClick={handleStorniraj}

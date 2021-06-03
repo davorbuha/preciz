@@ -36,8 +36,7 @@ import dbnames from '../../db/dbnames';
 import VaganjeSpremljenoModal from '../../components/VaganjeSpremljenoModal';
 import { RoutesEnum } from '../../routes';
 import MainContext from '../../context/MainContext';
-import { Detalji } from '../../components/PrvoVaganjePDF';
-import DrugoVaganjePDF from '../../components/DrugoVaganjePDF';
+import DrugoVaganjePDF, { Detalji } from '../../components/DrugoVaganjePDF';
 import UkupniIzvjestajPDF from '../../components/UkupniIzvjestajPDF';
 import VaganjeSpremljenoModalUkupno from '../../components/VaganjeSpremljenoModalUkupno';
 import CameraPreview from '../../components/CameraPreview';
@@ -107,6 +106,7 @@ function DrugoVaganjeScreen(props: Props) {
 	const [isDialogOpened, setIsDialogOpened] = React.useState(false);
 	const [showSuccessModal, setShowSuccessModal] = React.useState(false);
 	const [imageSource2, setImageSource2] = React.useState('');
+	const [comment, setComment] = React.useState('');
 	const vrijednostVageInt = React.useMemo(() => parseInt(props.vrijednostVage), [props.vrijednostVage]);
 	const classes = useStyles();
 	const [selected, setSelected] = React.useState<PrvoVaganje>();
@@ -145,7 +145,7 @@ function DrugoVaganjeScreen(props: Props) {
 			)
 		).catch(console.log);
 		const firstImageUrl = 'data:image/jpeg;base64,' + firstImage;
-		const drugoVaganje = new DrugoVaganje(id, bruto, neto, tara, ts);
+		const drugoVaganje = new DrugoVaganje(id, bruto, neto, tara, ts, comment);
 		storage.set(
 			dbnames.prvoVaganje,
 			props.prvaVaganja.map(item => {
@@ -174,6 +174,7 @@ function DrugoVaganjeScreen(props: Props) {
 			roba: selected!.roba,
 			mjestoIsporuke: selected!.mjestoIsporuke,
 			brojNalog: selected!.brojNaloga,
+			comment,
 		};
 		ReactPDF.render(
 			<DrugoVaganjePDF
@@ -381,6 +382,19 @@ function DrugoVaganjeScreen(props: Props) {
 					neto={neto}
 					mirnaVaga={props.mirnaVaga}
 					vrijednostVage={vrijednostVageInt}
+				/>
+			</div>
+			<div className={classes.inputRow}>
+				<span className={classes.span}>Napomena: </span>
+				<OutlinedTextField
+					marginLeft={40}
+					value={comment}
+					multiline
+					customWidth={436}
+					rows={3}
+					onChange={e => {
+						setComment(e.target.value);
+					}}
 				/>
 			</div>
 		</div>
