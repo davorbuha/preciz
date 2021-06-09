@@ -560,7 +560,9 @@ function PregledVaganjaScreen(props: Props) {
 								Print zbirnog izvještaja
 							</Button>
 							<Button
-								onClick={() => storeExcel(filteredVaganja, 'file')}
+								onClick={() =>
+									storeExcel(filteredVaganja, 'ZbirniIzvještaj' + moment().format('DD_MM_YYYY'))
+								}
 								variant="contained"
 								color="primary"
 								style={{ marginLeft: 5 }}>
@@ -577,7 +579,9 @@ function PregledVaganjaScreen(props: Props) {
 								Print
 							</Button>
 							<Button
-								onClick={() => storeExcel(selectedVaganje, 'file')}
+								onClick={() =>
+									storeExcel(selectedVaganje || [], 'ZbirniIzvještaj' + moment().format('DD_MM_YYYY'))
+								}
 								disabled={!selectedVaganje}
 								variant="contained"
 								color="primary"

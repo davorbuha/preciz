@@ -123,16 +123,17 @@ function DrugoVaganjeScreen(props: Props) {
 	const handleSpremiPress = async () => {
 		const ts = moment();
 		const id = uuidv4();
-		await saveImageToFile(
-			imageSource2,
-			app.getPath('appData') +
-				'/plates-images/' +
-				selected?.id
-					.toString()
-					.split('-')
-					.reduce((prev, curr) => prev + curr, '') +
-				'2.jpeg'
-		);
+		if (firstImage)
+			await saveImageToFile(
+				imageSource2,
+				app.getPath('appData') +
+					'/plates-images/' +
+					selected?.id
+						.toString()
+						.split('-')
+						.reduce((prev, curr) => prev + curr, '') +
+					'2.jpeg'
+			);
 		const firstImage = await readImageFromFile(
 			String(
 				app.getPath('appData') +
@@ -144,7 +145,7 @@ function DrugoVaganjeScreen(props: Props) {
 					'.jpeg'
 			)
 		).catch(console.log);
-		const firstImageUrl = 'data:image/jpeg;base64,' + firstImage;
+		const firstImageUrl = firstImage ? 'data:image/jpeg;base64,' + firstImage : undefined;
 		const drugoVaganje = new DrugoVaganje(id, bruto, neto, tara, ts, comment);
 		storage.set(
 			dbnames.prvoVaganje,
