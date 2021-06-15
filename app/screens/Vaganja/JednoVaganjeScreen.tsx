@@ -68,7 +68,7 @@ export async function saveImageToFile(imageSource: string, uuid: string) {
 export async function readImageFromFile(uuid: string) {
 	return new Promise<string>((resolve, reject) => {
 		fs.readFile(uuid, 'base64', (err, data) => {
-			if (!err) {
+			if (!err && data !== 'undefine') {
 				resolve(data);
 			}
 			console.log(err, 'err');

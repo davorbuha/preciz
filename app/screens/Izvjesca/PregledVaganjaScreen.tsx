@@ -261,7 +261,7 @@ function PregledVaganjaScreen(props: Props) {
 								.reduce((prev, curr) => prev + curr, '') +
 							'.jpeg'
 					)
-				);
+				).catch(console.log);
 
 				const secondImage = await readImageFromFile(
 					String(
@@ -273,10 +273,9 @@ function PregledVaganjaScreen(props: Props) {
 								.reduce((prev, curr) => prev + curr, '') +
 							'2.jpeg'
 					)
-				);
-
-				const firstImageUrl = 'data:image/jpeg;base64,' + firstImage;
-				const secondImageUrl = 'data:image/jpeg;base64,' + secondImage;
+				).catch(console.log);
+				const firstImageUrl = firstImage ? 'data:image/jpeg;base64,' + firstImage : '';
+				const secondImageUrl = secondImage ? 'data:image/jpeg;base64,' + secondImage : '';
 
 				ReactPDF.render(
 					<UkupniIzvjestajPDF
@@ -312,8 +311,7 @@ function PregledVaganjaScreen(props: Props) {
 							.reduce((prev, curr) => prev + curr, '') +
 						'.jpeg'
 				)
-			);
-
+			).catch(console.log);
 			const secondImage = await readImageFromFile(
 				String(
 					app.getPath('appData') +
@@ -324,10 +322,9 @@ function PregledVaganjaScreen(props: Props) {
 							.reduce((prev, curr) => prev + curr, '') +
 						'2.jpeg'
 				)
-			);
-
-			const firstImageUrl = 'data:image/jpeg;base64,' + firstImage;
-			const secondImageUrl = 'data:image/jpeg;base64,' + secondImage;
+			).catch(console.log);
+			const firstImageUrl = firstImage ? 'data:image/jpeg;base64,' + firstImage : undefined;
+			const secondImageUrl = secondImage ? 'data:image/jpeg;base64,' + secondImage : undefined;
 			const detalji: Detalji = {
 				brojNalog: jednoSelected!.brojNaloga,
 				dobavljac: jednoSelected!.dobavljac,
@@ -339,6 +336,10 @@ function PregledVaganjaScreen(props: Props) {
 				vozac: jednoSelected!.vozac,
 				comment: jednoSelected!.comment,
 			};
+			console.log(jednoSelected.id, secondImage);
+			console.log(firstImage, secondImage);
+			console.log(firstImageUrl, secondImage);
+
 			ReactPDF.render(
 				<UkupniIzvjestajPDF
 					firstImage={firstImageUrl}
