@@ -123,7 +123,7 @@ function DrugoVaganjeScreen(props: Props) {
 	const handleSpremiPress = async () => {
 		const ts = moment();
 		const id = uuidv4();
-		if (firstImage)
+		if (imageSource2)
 			await saveImageToFile(
 				imageSource2,
 				app.getPath('appData') +

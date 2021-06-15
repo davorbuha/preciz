@@ -241,7 +241,7 @@ function JednoVaganjeScreen(props: Props) {
 						.split('-')
 						.reduce((prev, curr) => prev + curr, '') +
 					'.jpeg'
-			);
+			).catch(console.log);
 			const vaganje = new JednoVaganje(
 				uuid,
 				tip,
