@@ -222,6 +222,7 @@ function UnosVaganjaScreen(props: Props) {
                   tara={tara}
                   detalji={detalji}
                   company={state.company}
+                  brojVaganja={brojVaganja}
                 />,
                 `${app.getPath('appData')}/UkupniIzvjestaj.pdf`,
                 () => {}
